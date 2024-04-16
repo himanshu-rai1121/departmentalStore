@@ -1,5 +1,6 @@
 package com.himanshu.departmentalStore.service;
 
+import com.himanshu.departmentalStore.exception.ResourceNotFountException;
 import com.himanshu.departmentalStore.model.Backorder;
 import com.himanshu.departmentalStore.model.Discount;
 import com.himanshu.departmentalStore.model.Order;
@@ -30,28 +31,22 @@ public class OrderService {
     @Autowired
     private BackorderService backorderService;
 
+
     private Boolean isProductsAvailable(Order order){
         if(order.getProduct().isAvailability() && order.getProduct().getCount()>=order.getQuantity()){
 //            reduce product quantity
             Product product = order.getProduct();
             product.setCount(product.getCount()-order.getQuantity());
-
-            Product updatedProduct = productService.updateProduct(product.getId(), product);
-
+            productService.updateProduct(product.getId(), product);
             return true;
         } else{
 //            Place back order
-                System.out.println(order.getProduct()+" "+order.getQuantity()+" "+order.getCustomer()+" "+order.getTimestamp()+" "+order.getDiscount());
-                Backorder backorder = new Backorder();
-                backorder.setQuantity(order.getQuantity());
-                backorder.setCustomer(order.getCustomer());
-                backorder.setProduct(order.getProduct());
-                backorder.setTimestamp(order.getTimestamp());
-                Backorder updatedBackorder = backorderService.saveBackorder(backorder);
-
-//            edit this with logger
-            System.out.println(updatedBackorder);
-
+            Backorder backorder = new Backorder();
+            backorder.setQuantity(order.getQuantity());
+            backorder.setCustomer(order.getCustomer());
+            backorder.setProduct(order.getProduct());
+            backorder.setTimestamp(order.getTimestamp());
+            backorderService.saveBackorder(backorder);
             return false;
         }
 
@@ -86,7 +81,9 @@ public class OrderService {
     }
 
     public Order getOrderById(Long order_id){
-        return orderRepository.findById(order_id).orElse(null);
+        return orderRepository
+                .findById(order_id)
+                .orElseThrow(()->new ResourceNotFountException("Order", "Id", order_id));
     }
 
     // no need to update order... only for admin
@@ -95,27 +92,25 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public CompletableFuture<Boolean> deleteOrder(Long order_id){
-        return CompletableFuture.supplyAsync(() -> {
+    public Boolean deleteOrder(Long order_id){
             Optional<Order> optionalOrder = orderRepository.findById(order_id);
             if (optionalOrder.isPresent()) {
-
-                // increase product quantity
-                // then check backorder if fulfill then send notification then delete from backorder
-                // reset discount
-
+                /**
+                 * increase product quantity
+                 * then check backorder if fulfill then send notification then delete from backorder
+                 * reset discount
+                 */
                 Product product = optionalOrder.get().getProduct();
                 product.setCount(product.getCount()+optionalOrder.get().getQuantity());
                 Product updatedProduct = productService.updateProduct(product.getId(), product);
                 Long productId = updatedProduct.getId();
-//                int  productQuantity = updatedProduct.getCount();
-//                productQuantity = productQuantity - b.getQuantity();
-
-//                AttomoicInteger is used because the veriable inside lambda expression should be final
-//                Therefor we can not use productQuantity = productQuantity - b.getQuantity(); in lambda expression
-
+                /**
+                 * int  productQuantity = updatedProduct.getCount();
+                 * productQuantity = productQuantity - b.getQuantity();
+                 * Atomic Integer is used because the variable inside lambda expression should be final
+                 * Therefor we can not use productQuantity = productQuantity - b.getQuantity(); in lambda expression
+                 */
                 AtomicInteger productQuantity = new AtomicInteger(updatedProduct.getCount());
-
                 List<Backorder> backorderList = backorderService.getAllBackordersByProductId(productId);
                 // Process backorders using lambda expression
                 backorderList.forEach(backorder -> {
@@ -134,6 +129,5 @@ public class OrderService {
             } else {
                 return false;
             }
-        });
     }
 }

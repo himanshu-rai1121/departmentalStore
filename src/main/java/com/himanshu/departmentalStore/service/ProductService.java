@@ -1,5 +1,6 @@
 package com.himanshu.departmentalStore.service;
 
+import com.himanshu.departmentalStore.exception.ResourceNotFountException;
 import com.himanshu.departmentalStore.model.Order;
 import com.himanshu.departmentalStore.model.Product;
 import com.himanshu.departmentalStore.repository.ProductRepository;
@@ -19,7 +20,7 @@ public class ProductService {
     }
 
     public Product getProductById(Long id) {
-        return productRepository.findById(id).orElse(null);
+        return productRepository.findById(id).orElseThrow(()->new ResourceNotFountException("Product", "Id", id));
     }
 
     public Product saveProduct(Product product) {
@@ -44,10 +45,7 @@ public class ProductService {
 //    }
 
     public Boolean deleteProduct(Long id) {
-
             Optional<Product> optionalProduct = productRepository.findById(id);
-            System.out.println((optionalProduct));
-//        return true;
             if (optionalProduct.isPresent()) {
                 productRepository.deleteById(id);
                 return true;

@@ -1,12 +1,12 @@
 package com.himanshu.departmentalStore.service;
 
+import com.himanshu.departmentalStore.exception.ResourceNotFountException;
 import com.himanshu.departmentalStore.model.Backorder;
 import com.himanshu.departmentalStore.repository.BackorderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class BackorderService {
@@ -18,7 +18,9 @@ public class BackorderService {
     }
 
     public Backorder getBackorderById(Long id) {
-        return backorderRepository.findById(id).orElse(null);
+        return backorderRepository
+                .findById(id)
+                .orElseThrow(()->new ResourceNotFountException("Backorder", "Id", id));
     }
 
     public List<Backorder> getAllBackordersByProductId(Long orderId) {
@@ -29,22 +31,18 @@ public class BackorderService {
         return backorderRepository.save(backorder);
     }
 
-    public CompletableFuture<Boolean> deleteBackorder(Long id) {
-        return CompletableFuture.supplyAsync(() -> {
-            Optional<Backorder> optionalBackorder = backorderRepository.findById(id);
-            if (optionalBackorder.isPresent()) {
-                backorderRepository.deleteById(id);
-                return true;
-            } else {
-                return false;
-            }
-        });
+    public Boolean deleteBackorder(Long id) {
+        Optional<Backorder> optionalBackorder = backorderRepository.findById(id);
+        if (optionalBackorder.isPresent()) {
+            backorderRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Backorder updateBackorder(Long id, Backorder backorder){
         backorder.setId(id);
         return backorderRepository.save(backorder);
     }
-
-//    add functionality to update
 }

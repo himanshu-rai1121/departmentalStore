@@ -39,15 +39,25 @@ public class DiscountController {
     }
 
     @DeleteMapping("/{id}")
-    public CompletableFuture<ResponseEntity<String>> deleteDiscount(@PathVariable("id") Long id){
-        return discountService.deleteDiscount(id)
-                .thenApply(deleted -> {
-                    if (deleted) {
-                        return ResponseEntity.status(HttpStatus.OK).body("Resource with ID " + id + " deleted successfully.");
-                    } else {
-                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource with ID " + id + " not found.");
-                    }
-                })
-                .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the consumer."));
+    public ResponseEntity<String> deleteDiscount(@PathVariable("id") Long id){
+        boolean deleted = discountService.deleteDiscount(id);
+        if (deleted) {
+            return ResponseEntity.status(HttpStatus.OK).body("Resource with ID " + id + " deleted successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource with ID " + id + " not found.");
+        }
     }
+
+//    @DeleteMapping("/{id}")
+//    public CompletableFuture<ResponseEntity<String>> deleteDiscount(@PathVariable("id") Long id){
+//        return discountService.deleteDiscount(id)
+//                .thenApply(deleted -> {
+//                    if (deleted) {
+//                        return ResponseEntity.status(HttpStatus.OK).body("Resource with ID " + id + " deleted successfully.");
+//                    } else {
+//                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource with ID " + id + " not found.");
+//                    }
+//                })
+//                .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the consumer."));
+//    }
 }

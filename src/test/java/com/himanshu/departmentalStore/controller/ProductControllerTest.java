@@ -103,7 +103,7 @@ class ProductControllerTest {
         when(productService.deleteProduct(productId)).thenReturn(true);
 
         // Test
-        ResponseEntity<String> result = productController.deleteProduct(productId).join();
+        ResponseEntity<String> result = productController.deleteProduct(productId);
 
         // Verification
         assertEquals(HttpStatus.OK, result.getStatusCode());

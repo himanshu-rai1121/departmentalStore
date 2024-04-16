@@ -1,4 +1,4 @@
-package com.himanshu.departmentalStore.dao;
+package com.himanshu.departmentalStore.dto;
 
 import lombok.Data;
 

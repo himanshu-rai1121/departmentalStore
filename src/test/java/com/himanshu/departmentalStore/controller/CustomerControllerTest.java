@@ -40,7 +40,7 @@ class CustomerControllerTest {
         when(customerService.getAllCustomers()).thenReturn(customers);
 
         // Test
-        List<Customer> result = customerController.getAllCustomers();
+        List<Customer> result = customerController.getAllCustomers().getBody();
 
         // Verification
         assertEquals(2, result.size());
@@ -54,7 +54,7 @@ class CustomerControllerTest {
         when(customerService.getCustomerById(customerId)).thenReturn(customer);
 
         // Test
-        Customer result = customerController.getCustomerById(customerId);
+        Customer result = customerController.getCustomerById(customerId).getBody();
 
         // Verification
         assertEquals(customerId, result.getId());
@@ -67,7 +67,7 @@ class CustomerControllerTest {
         when(customerService.saveCustomer(customer)).thenReturn(customer);
 
         // Test
-        Customer result = customerController.saveCustomer(customer);
+        Customer result = customerController.saveCustomer(customer).getBody();
 
         // Verification
         assertEquals(customer.getId(), result.getId());
@@ -82,7 +82,7 @@ class CustomerControllerTest {
 
         customer.setFullName("John");
         // Test
-        Customer result = customerController.updateCustomer(customerId, customer);
+        Customer result = customerController.updateCustomer(customerId, customer).getBody();
 
         // Verification
         assertEquals(customerId, result.getId());
@@ -92,10 +92,10 @@ class CustomerControllerTest {
     void deleteCustomer() {
         // Mocking behavior
         Long customerId = 1L;
-        when(customerService.deleteCustomer(customerId)).thenReturn(CompletableFuture.completedFuture(true));
+        when(customerService.deleteCustomer(customerId)).thenReturn(true);
 
         // Test
-        ResponseEntity<String> result = customerController.deleteCustomer(customerId).join();
+        ResponseEntity<String> result = customerController.deleteCustomer(customerId);
 
         // Verification
         assertEquals(HttpStatus.OK, result.getStatusCode());

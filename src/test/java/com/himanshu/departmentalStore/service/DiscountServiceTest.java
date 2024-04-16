@@ -113,7 +113,7 @@ class DiscountServiceTest {
         doNothing().when(discountRepository).deleteById(discountId);
 
         // Test
-        boolean result = discountService.deleteDiscount(discountId).join();
+        boolean result = discountService.deleteDiscount(discountId);
 
         // Verification
         assertTrue(result);

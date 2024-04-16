@@ -1,5 +1,6 @@
 package com.himanshu.departmentalStore.service;
 
+import com.himanshu.departmentalStore.exception.ResourceNotFountException;
 import com.himanshu.departmentalStore.model.Backorder;
 import com.himanshu.departmentalStore.model.Discount;
 import com.himanshu.departmentalStore.repository.DiscountRepository;
@@ -31,7 +32,7 @@ public class DiscountService {
     }
 
     public Discount getDiscountById(Long id) {
-        return discountRepository.findById(id).orElse(null);
+        return discountRepository.findById(id).orElseThrow(()->new ResourceNotFountException("Discount", "Id", id));
     }
 
     public Discount updateDiscount(Long id, Discount discount){
@@ -41,16 +42,14 @@ public class DiscountService {
 
 
 
-    public CompletableFuture<Boolean> deleteDiscount(Long id) {
-        return CompletableFuture.supplyAsync(() -> {
-            Optional<Discount> optionalDiscount = discountRepository.findById(id);
-            if (optionalDiscount.isPresent()) {
-                discountRepository.deleteById(id);
-                return true;
-            } else {
-                return false;
-            }
-        });
+    public Boolean deleteDiscount(Long id) {
+        Optional<Discount> optionalDiscount = discountRepository.findById(id);
+        if (optionalDiscount.isPresent()) {
+            discountRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Additional methods for applying discounts, fetching specific discounts, etc.

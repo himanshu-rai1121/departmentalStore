@@ -94,10 +94,10 @@ class DiscountControllerTest {
     void deleteDiscount() {
         // Mocking behavior
         Long discountId = 1L;
-        when(discountService.deleteDiscount(discountId)).thenReturn(CompletableFuture.completedFuture(true));
+        when(discountService.deleteDiscount(discountId)).thenReturn(true);
 
         // Test
-        ResponseEntity<String> result = discountController.deleteDiscount(discountId).join();
+        ResponseEntity<String> result = discountController.deleteDiscount(discountId);
 
         // Verification
         assertEquals(HttpStatus.OK, result.getStatusCode());

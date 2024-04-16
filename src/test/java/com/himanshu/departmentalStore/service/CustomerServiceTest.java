@@ -105,10 +105,10 @@ class CustomerServiceTest {
         doNothing().when(customerRepository).deleteById(customerId);
 
         // Test
-        CompletableFuture<Boolean> result = customerService.deleteCustomer(customerId);
+        Boolean result = customerService.deleteCustomer(customerId);
 
         // Verification
-        assertTrue(result.join());
+        assertTrue(result);
     }
 
     private Customer createCustomerMock(Long id, String fullName, String address, String contactNumber) {
