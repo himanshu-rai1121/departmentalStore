@@ -43,11 +43,17 @@ public class OrderController {
         return orderService.getOrderById(id);
     }
 
+//    @PostMapping
+//    public ResponseEntity<Order> createOrder(@RequestBody OrderRequestBody orderRequestBody) {
+//
+//        Order order = orderDtoToOrder(orderRequestBody);
+//        return ResponseEntity.ok(orderService.createOrder(order));
+//    }
     @PostMapping
-    public ResponseEntity<Object> createOrder(@RequestBody OrderRequestBody orderRequestBody) {
+    public Order createOrder(@RequestBody OrderRequestBody orderRequestBody) {
 
         Order order = orderDtoToOrder(orderRequestBody);
-        return ResponseEntity.ok(orderService.createOrder(order));
+        return orderService.createOrder(order);
     }
     private Order orderDtoToOrder(OrderRequestBody orderRequestBody) {
         Customer customer = customerService.getCustomerById(orderRequestBody.getCustomerId());
@@ -77,11 +83,12 @@ public class OrderController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteOrder(@PathVariable("id") Long id){
-        boolean deleted = orderService.deleteOrder(id);
-        if (deleted) {
+        try {
+            boolean deleted = orderService.deleteOrder(id);
             return ResponseEntity.status(HttpStatus.OK).body("Resource with ID " + id + " deleted successfully.");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource with ID " + id + " not found.");
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource with ID " + id + " not found. " + e.getStackTrace());
+
         }
     }
 }

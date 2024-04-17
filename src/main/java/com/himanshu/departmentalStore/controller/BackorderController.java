@@ -1,11 +1,18 @@
 package com.himanshu.departmentalStore.controller;
 
-import com.himanshu.departmentalStore.model.Backorder;
+import com.himanshu.departmentalStore.dto.BackOrderRequestBody;
+import com.himanshu.departmentalStore.dto.OrderRequestBody;
+import com.himanshu.departmentalStore.model.*;
 import com.himanshu.departmentalStore.service.BackorderService;
+import com.himanshu.departmentalStore.service.CustomerService;
+import com.himanshu.departmentalStore.service.DiscountService;
+import com.himanshu.departmentalStore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -14,6 +21,14 @@ public class BackorderController {
 
     @Autowired
     private BackorderService backorderService;
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private DiscountService discountService;
 
     @GetMapping
     public List<Backorder> getAllBackorders() {
@@ -26,14 +41,32 @@ public class BackorderController {
     }
 
     @PostMapping
-    public Backorder createBackorder(@RequestBody Backorder backorder) {
+    public Backorder createBackorder(@RequestBody BackOrderRequestBody backOrderRequestBody) {
+        Backorder backorder = backorderDtoToBackorder(backOrderRequestBody);
         return backorderService.saveBackorder(backorder);
+    }
+
+    private Backorder backorderDtoToBackorder(BackOrderRequestBody orderRequestBody) {
+        Customer customer = customerService.getCustomerById(orderRequestBody.getCustomerId());
+        Product product = productService.getProductById(orderRequestBody.getProductId());
+
+        if (customer == null || product==null) {
+//            Handle Exception
+            return null;
+        }
+        Backorder order = new Backorder();
+        order.setProduct(product);
+        order.setCustomer(customer);
+        order.setTimestamp(LocalDateTime.now());
+        order.setQuantity(orderRequestBody.getQuantity());
+        return  order;
     }
 
     // No need to update a backorder or delete a backorder in this basic example
 
     @PutMapping("/{id}")
-    public Backorder updateBackorder(@PathVariable("id") Long id, @RequestBody Backorder backorder){
+    public Backorder updateBackorder(@PathVariable("id") Long id, @RequestBody BackOrderRequestBody backOrderRequestBody){
+        Backorder backorder = backorderDtoToBackorder(backOrderRequestBody);
         return backorderService.updateBackorder(id, backorder);
     }
 

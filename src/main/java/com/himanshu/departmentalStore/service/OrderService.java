@@ -52,7 +52,7 @@ public class OrderService {
 
     }
 
-    public ResponseEntity<Object> createOrder(Order order){
+    public Order createOrder(Order order){
 
         // Apply discount if available
 
@@ -61,12 +61,14 @@ public class OrderService {
 
         if (isProductsAvailable(order)) {
             // update product---- updated in method isProductsAvailable
-            Order savedOrder = orderRepository.save(order); // Successfully placed order
-            return ResponseEntity.ok(savedOrder); // Return OK status with the saved order
+            return orderRepository.save(order); // Successfully placed order
         } else {
             // create backorder---- created in method isProductAvailable
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Products are not available or cannot fulfill the quantity. Order cannot be placed. Backorder Created");
+            //handle exception and remove below line
+
+            return order;
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                    .body("Products are not available or cannot fulfill the quantity. Order cannot be placed. Backorder Created");
         }
     }
     private Discount findApplicableDiscount(Order order) {

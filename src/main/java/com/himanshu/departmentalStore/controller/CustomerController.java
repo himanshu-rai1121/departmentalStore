@@ -5,7 +5,14 @@ import com.himanshu.departmentalStore.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 
@@ -38,7 +45,7 @@ public class CustomerController {
      * @return The customer with the specified ID.
      */
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable("id") Long id) {
+    public ResponseEntity<Customer> getCustomerById(@PathVariable("id")  Long id) {
         return ResponseEntity.ok(customerService.getCustomerById(id));
     }
 

@@ -14,7 +14,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 class CustomerControllerTest {
@@ -77,15 +79,18 @@ class CustomerControllerTest {
     void updateCustomer() {
         // Mocking behavior
         Long customerId = 1L;
-        Customer customer = createCustomerMock(customerId, "John Doe", "123 Main St", "1234567890");
-        when(customerService.updateCustomer(customerId, customer)).thenReturn(customer);
+        Customer originalCustomer = createCustomerMock(customerId, "John Doe", "123 Main St", "1234567890");
+        Customer updatedCustomer = createCustomerMock(customerId, "John", "123 Main St", "1234567890");
+        when(customerService.updateCustomer(eq(customerId), any(Customer.class))).thenReturn(updatedCustomer);
 
-        customer.setFullName("John");
         // Test
-        Customer result = customerController.updateCustomer(customerId, customer).getBody();
+        Customer result = customerController.updateCustomer(customerId, updatedCustomer).getBody();
 
         // Verification
         assertEquals(customerId, result.getId());
+        System.out.println(updatedCustomer.getFullName()+" "+ result.getFullName());
+        assertEquals(updatedCustomer.getFullName(), result.getFullName());
+        assertNotEquals(originalCustomer.getFullName(), result.getFullName());
     }
 
     @Test

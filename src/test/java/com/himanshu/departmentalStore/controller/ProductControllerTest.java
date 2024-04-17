@@ -44,10 +44,10 @@ class ProductControllerTest {
         when(productService.getAllProducts()).thenReturn(products);
 
         // Test
-        List<Product> result = productController.getAllProducts();
+        ResponseEntity<List<Product>> result = productController.getAllProducts();
 
         // Verification
-        assertEquals(2, result.size());
+        assertEquals(2, result.getBody().size());
     }
 
     @Test
@@ -59,10 +59,10 @@ class ProductControllerTest {
         when(productService.getProductById(productId)).thenReturn(product);
 
         // Test
-        Product result = productController.getProductById(productId);
+        ResponseEntity<Product> result = productController.getProductById(productId);
 
         // Verification
-        assertEquals(productId, result.getId());
+        assertEquals(productId, result.getBody().getId());
     }
 
     @Test
@@ -73,10 +73,10 @@ class ProductControllerTest {
         when(productService.saveProduct(product)).thenReturn(product);
 
         // Test
-        Product result = productController.saveProduct(product);
+        ResponseEntity<Product> result = productController.saveProduct(product);
 
         // Verification
-        assertEquals(product.getId(), result.getId());
+        assertEquals(product.getId(), result.getBody().getId());
     }
 
     @Test
@@ -89,11 +89,11 @@ class ProductControllerTest {
 
         product.setName("Updated Product");
         // Test
-        Product result = productController.updateProduct(productId, product);
+        ResponseEntity<Product> result = productController.updateProduct(productId, product);
 
         // Verification
-        assertEquals(productId, result.getId());
-        assertEquals("Updated Product", result.getName());
+        assertEquals(productId, result.getBody().getId());
+        assertEquals("Updated Product", result.getBody().getName());
     }
 
     @Test
