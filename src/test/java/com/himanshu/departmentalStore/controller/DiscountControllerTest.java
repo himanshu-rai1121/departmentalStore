@@ -42,10 +42,10 @@ class DiscountControllerTest {
         when(discountService.getAllActiveDiscounts()).thenReturn(discounts);
 
         // Test
-        List<Discount> result = discountController.getAllActiveDiscounts();
+        ResponseEntity<List<Discount>> result = discountController.getAllActiveDiscounts();
 
         // Verification
-        assertEquals(2, result.size());
+        assertEquals(2, result.getBody().size());
     }
 
     @Test
@@ -56,10 +56,10 @@ class DiscountControllerTest {
         when(discountService.getDiscountById(discountId)).thenReturn(discount);
 
         // Test
-        Discount result = discountController.getDiscountById(discountId);
+        ResponseEntity<Discount> result = discountController.getDiscountById(discountId);
 
         // Verification
-        assertEquals(discountId, result.getId());
+        assertEquals(discountId, result.getBody().getId());
     }
 
     @Test
@@ -69,10 +69,10 @@ class DiscountControllerTest {
         when(discountService.saveDiscount(discount)).thenReturn(discount);
 
         // Test
-        Discount result = discountController.createDiscount(discount);
+        ResponseEntity<Discount> result = discountController.createDiscount(discount);
 
         // Verification
-        assertEquals(discount.getId(), result.getId());
+        assertEquals(discount.getId(), result.getBody().getId());
     }
 
     @Test
@@ -84,10 +84,10 @@ class DiscountControllerTest {
 
         discount.setName("40% off");
         // Test
-        Discount result = discountController.updateDiscount(discountId, discount);
+        ResponseEntity<Discount> result = discountController.updateDiscount(discountId, discount);
 
         // Verification
-        assertEquals(discountId, result.getId());
+        assertEquals(discountId, result.getBody().getId());
     }
 
     @Test

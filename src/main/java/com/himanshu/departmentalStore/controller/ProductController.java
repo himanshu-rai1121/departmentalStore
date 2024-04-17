@@ -76,22 +76,16 @@ public class ProductController {
     }
     /**
      * Deletes a product by its ID.
-     *
+     * Exception handled in service if product is not available with given "id".
      * @param id The ID of the product to delete
      * @return ResponseEntity with a success or error message and appropriate HTTP status
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") final Long id) {
-        boolean deleted = productService.deleteProduct(id);
-        if (deleted) {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Resource with ID " + id + " deleted successfully.");
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("Resource with ID " + id + " not found.");
-        }
+        productService.deleteProduct(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Resource with ID " + id + " deleted successfully.");
     }
 
 

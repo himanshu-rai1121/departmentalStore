@@ -6,14 +6,23 @@ import com.himanshu.departmentalStore.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Service class for managing Customer entities.
- * Provides methods for retrieving, saving, updating, and deleting customers.
+ * This class provides methods for retrieving, saving, updating, and deleting customers.
  */
 @Service
 public class CustomerService {
+
+    /**
+     * Constant representing the entity type - Customer
+     */
+    private static final String CUSTOMERCONSTANT = "Customer";
+
+    /**
+     * Autowired field for accessing the CustomerRepository.
+     * This repository is used for database operations related to Customer entities.
+     */
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -27,12 +36,14 @@ public class CustomerService {
 
     /**
      * Retrieves a customer by their ID.
-     *
      * @param id The ID of the customer to retrieve.
-     * @return The customer with the specified ID, or null if not found.
+     * @return The customer with the specified ID.
+     * @throws ResourceNotFountException If the customer with the given ID is not found.
      */
-    public Customer getCustomerById(Long id) {
-        return customerRepository.findById(id).orElseThrow(()->new ResourceNotFountException("Customer", "Id", id));
+    public Customer getCustomerById(final Long id) {
+        return customerRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFountException(CUSTOMERCONSTANT, "Id", id));
     }
 
     /**
@@ -41,38 +52,45 @@ public class CustomerService {
      * @param customer The customer to save or update.
      * @return The saved or updated customer.
      */
-    public Customer saveCustomer(Customer customer) {
+    public Customer saveCustomer(final Customer customer) {
         return customerRepository.save(customer);
     }
 
 
     /**
      * Updates an existing customer.
-     *
      * @param id       The ID of the customer to update.
      * @param customer The updated customer object.
      * @return The updated customer.
+     * @throws ResourceNotFountException If the customer with the given ID is not found.
      */
-    public Customer updateCustomer(Long id, Customer customer) {
-        customer.setId(id);
-        return customerRepository.save(customer);
+    public Customer updateCustomer(final Long id, final Customer customer) {
+        boolean isCustomerExist = customerRepository.existsById(id);
+        if (isCustomerExist) {
+            customer.setId(id);
+            return customerRepository.save(customer);
+        } else {
+            throw new ResourceNotFountException(CUSTOMERCONSTANT, "Id", id);
+        }
     }
 
 
     /**
      * Deletes a customer by their ID.
-     *
      * @param id The ID of the customer to delete.
-     * @return A CompletableFuture indicating whether the deletion was successful.
+     * @return True if the customer was deleted successfully, otherwise false.
+     * @throws ResourceNotFountException If the customer with the given ID is not found.
      */
-    public Boolean deleteCustomer(Long id) {
-            Optional<Customer> optionalCustomer = customerRepository.findById(id);
-            if (optionalCustomer.isPresent()) {
-                customerRepository.deleteById(id);
-                return true;
-            } else {
-                return false;
-            }
+    public Boolean deleteCustomer(final Long id) {
+        Customer optionalCustomer = customerRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFountException(CUSTOMERCONSTANT, "Id", id));
+        if (optionalCustomer != null) {
+            customerRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
         }
+    }
 
 }

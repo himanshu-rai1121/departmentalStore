@@ -51,10 +51,10 @@ class BackorderControllerTest {
         when(backorderService.getAllBackorders()).thenReturn(backorders);
 
         // Test
-        List<Backorder> result = backorderController.getAllBackorders();
+        ResponseEntity<List<Backorder>> result = backorderController.getAllBackorders();
 
         // Verification
-        assertEquals(2, result.size());
+        assertEquals(2, result.getBody().size());
     }
 
     @Test
@@ -65,10 +65,10 @@ class BackorderControllerTest {
         when(backorderService.getBackorderById(backorderId)).thenReturn(backorder);
 
         // Test
-        Backorder result = backorderController.getBackorderById(backorderId);
+        ResponseEntity<Backorder> result = backorderController.getBackorderById(backorderId);
 
         // Verification
-        assertEquals(backorderId, result.getId());
+        assertEquals(backorderId, result.getBody().getId());
     }
 
     @Test
@@ -82,10 +82,10 @@ class BackorderControllerTest {
 
 
         // Test
-        Backorder result = backorderController.createBackorder(backorderRequestBody);
+        ResponseEntity<Backorder> result = backorderController.createBackorder(backorderRequestBody);
 
         // Verification
-        assertEquals(backorder.getId(), result.getId());
+        assertEquals(backorder.getId(), result.getBody().getId());
     }
 
 
@@ -102,10 +102,10 @@ class BackorderControllerTest {
 
         backorderRequestBody.setQuantity(10);
         // Test
-        Backorder result = backorderController.updateBackorder(backorderId, backorderRequestBody);
+        ResponseEntity<Backorder> result = backorderController.updateBackorder(backorderId, backorderRequestBody);
 
         // Verification
-        assertEquals(backorderId, result.getId());
+        assertEquals(backorderId, result.getBody().getId());
     }
 
     @Test

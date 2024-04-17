@@ -54,10 +54,10 @@ class OrderControllerTest {
         when(orderService.getAllOrders()).thenReturn(orders);
 
         // Test
-        List<Order> result = orderController.getAllOrders();
+        ResponseEntity<List<Order>> result = orderController.getAllOrders();
 
         // Verification
-        assertEquals(2, result.size());
+        assertEquals(2, result.getBody().size());
     }
 
     @Test
@@ -68,10 +68,10 @@ class OrderControllerTest {
         when(orderService.getOrderById(orderId)).thenReturn(order);
 
         // Test
-        Order result = orderController.getOrderById(orderId);
+        ResponseEntity<Order> result = orderController.getOrderById(orderId);
 
         // Verification
-        assertEquals(orderId, result.getId());
+        assertEquals(orderId, result.getBody().getId());
     }
 
     @Test
@@ -86,12 +86,12 @@ class OrderControllerTest {
 
 
         // Test
-        Order result = orderController.createOrder(orderRequestBody);
+        ResponseEntity<Order> result = orderController.createOrder(orderRequestBody);
 
         // Verification
         System.out.println(order);
         System.out.println(result);
-        assertEquals(order.getId(), result.getId());
+        assertEquals(order.getId(), result.getBody().getId());
     }
 
 
@@ -109,10 +109,10 @@ class OrderControllerTest {
 
         orderRequestBody.setQuantity(10);
         // Test
-        Order result = orderController.updateOrder(orderId, orderRequestBody);
+        ResponseEntity<Order> result = orderController.updateOrder(orderId, orderRequestBody);
 
         // Verification
-        assertEquals(orderId, result.getId());
+        assertEquals(orderId, result.getBody().getId());
     }
 
     @Test

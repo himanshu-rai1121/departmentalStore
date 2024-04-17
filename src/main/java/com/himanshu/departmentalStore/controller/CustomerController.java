@@ -24,6 +24,9 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
 
+    /**
+     * The CustomerService responsible for handling customer-related business logic.
+     */
     @Autowired
     private CustomerService customerService;
 
@@ -45,7 +48,7 @@ public class CustomerController {
      * @return The customer with the specified ID.
      */
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable("id")  Long id) {
+    public ResponseEntity<Customer> getCustomerById(@PathVariable("id") final Long id) {
         return ResponseEntity.ok(customerService.getCustomerById(id));
     }
 
@@ -57,7 +60,7 @@ public class CustomerController {
      * @return The saved customer.
      */
     @PostMapping
-    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Customer> saveCustomer(@RequestBody final Customer customer) {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.saveCustomer(customer));
     }
 
@@ -70,7 +73,7 @@ public class CustomerController {
      * @return The updated customer.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") Long id, @RequestBody Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") final Long id, @RequestBody final Customer customer) {
         return ResponseEntity.status(HttpStatus.OK).body(customerService.updateCustomer(id, customer));
     }
 
@@ -82,7 +85,7 @@ public class CustomerController {
      * @return A CompletableFuture representing the result of the deletion.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteCustomer(@PathVariable("id") final Long id) {
         boolean deleted = customerService.deleteCustomer(id);
         if (deleted) {
             return ResponseEntity.status(HttpStatus.OK).body("Resource with ID " + id + " deleted successfully.");

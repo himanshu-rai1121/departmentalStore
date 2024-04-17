@@ -87,6 +87,8 @@ class CustomerServiceTest {
         customer.setAddress("123 Main St");
         customer.setContactNumber("1234567890");
         when(customerRepository.save(customer)).thenReturn(customer);
+        when(customerRepository.existsById(customerId)).thenReturn(true);
+
 
         customer.setFullName("John");
         // Test

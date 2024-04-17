@@ -3,9 +3,20 @@ package com.himanshu.departmentalStore.exception;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * Represents an API response containing a message and status.
+ */
 @Data
 @AllArgsConstructor
 public class ApiResponse {
+
+    /**
+     * The message included in the API response.
+     */
     private String message;
+
+    /**
+     * The status indicating the success or failure of the API operation.
+     */
     private boolean status;
 }
