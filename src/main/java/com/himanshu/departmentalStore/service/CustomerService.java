@@ -1,6 +1,6 @@
 package com.himanshu.departmentalStore.service;
 
-import com.himanshu.departmentalStore.exception.ResourceNotFountException;
+import com.himanshu.departmentalStore.exception.ResourceNotFoundException;
 import com.himanshu.departmentalStore.model.Customer;
 import com.himanshu.departmentalStore.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +38,12 @@ public class CustomerService {
      * Retrieves a customer by their ID.
      * @param id The ID of the customer to retrieve.
      * @return The customer with the specified ID.
-     * @throws ResourceNotFountException If the customer with the given ID is not found.
+     * @throws ResourceNotFoundException If the customer with the given ID is not found.
      */
     public Customer getCustomerById(final Long id) {
         return customerRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFountException(CUSTOMERCONSTANT, "Id", id));
+                .orElseThrow(() -> new ResourceNotFoundException(CUSTOMERCONSTANT, "Id", id));
     }
 
     /**
@@ -62,7 +62,7 @@ public class CustomerService {
      * @param id       The ID of the customer to update.
      * @param customer The updated customer object.
      * @return The updated customer.
-     * @throws ResourceNotFountException If the customer with the given ID is not found.
+     * @throws ResourceNotFoundException If the customer with the given ID is not found.
      */
     public Customer updateCustomer(final Long id, final Customer customer) {
         boolean isCustomerExist = customerRepository.existsById(id);
@@ -70,7 +70,7 @@ public class CustomerService {
             customer.setId(id);
             return customerRepository.save(customer);
         } else {
-            throw new ResourceNotFountException(CUSTOMERCONSTANT, "Id", id);
+            throw new ResourceNotFoundException(CUSTOMERCONSTANT, "Id", id);
         }
     }
 
@@ -79,12 +79,12 @@ public class CustomerService {
      * Deletes a customer by their ID.
      * @param id The ID of the customer to delete.
      * @return True if the customer was deleted successfully, otherwise false.
-     * @throws ResourceNotFountException If the customer with the given ID is not found.
+     * @throws ResourceNotFoundException If the customer with the given ID is not found.
      */
     public Boolean deleteCustomer(final Long id) {
         Customer optionalCustomer = customerRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFountException(CUSTOMERCONSTANT, "Id", id));
+                .orElseThrow(() -> new ResourceNotFoundException(CUSTOMERCONSTANT, "Id", id));
         if (optionalCustomer != null) {
             customerRepository.deleteById(id);
             return true;

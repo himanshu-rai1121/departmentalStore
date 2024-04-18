@@ -96,6 +96,7 @@ class DiscountServiceTest {
         discount.setMinPrice(BigDecimal.ZERO);
         discount.setCouponCode("HALFOFF");
         when(discountRepository.save(discount)).thenReturn(discount);
+        when(discountRepository.existsById(discountId)).thenReturn(true);
 
         discount.setName("40% off");
         // Test

@@ -1,6 +1,6 @@
 package com.himanshu.departmentalStore.service;
 
-import com.himanshu.departmentalStore.exception.ResourceNotFountException;
+import com.himanshu.departmentalStore.exception.ResourceNotFoundException;
 import com.himanshu.departmentalStore.model.Product;
 import com.himanshu.departmentalStore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class ProductService {
      * @throws ResourceNotFoundException if the product with the specified ID does not exist
      */
     public Product getProductById(final Long id) {
-        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFountException(PRODUCTCONSTANT, "Id", id));
+        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
     }
 
     /**
@@ -64,7 +64,7 @@ public class ProductService {
             product.setId(id);
             return productRepository.save(product);
         } else {
-            throw new ResourceNotFountException(PRODUCTCONSTANT, "Id", id);
+            throw new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id);
         }
     }
 
@@ -72,10 +72,10 @@ public class ProductService {
      * Deletes a product with the specified ID.
      * @param id The ID of the product to delete
      * @return true if the product was deleted successfully, false otherwise
-     * @throws ResourceNotFoundException if the product with the specified ID does not exist
+     * @throws ResourceNotFoundException ResourceNotFountException if the product with the specified ID does not exist
      */
     public boolean deleteProduct(final Long id) {
-        Product optionalProduct = productRepository.findById(id).orElseThrow(() -> new ResourceNotFountException(PRODUCTCONSTANT, "Id", id));
+        Product optionalProduct = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
         if (optionalProduct!=null) {
             productRepository.deleteById(id);
             return true;

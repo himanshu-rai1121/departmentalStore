@@ -31,6 +31,9 @@ class CustomerRepositoryTest {
 
         // Check if the customer is saved with an ID
         assertNotNull(savedCustomer.getId());
+
+
+
         customerRepository.delete(customer);
     }
 
