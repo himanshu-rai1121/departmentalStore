@@ -40,8 +40,8 @@ class DiscountRepositoryTest {
         Discount discount = new Discount();
         discount.setName("50% off");
         discount.setValue(new BigDecimal("50"));
-        discount.setStartDate(LocalDateTime.now());
-        discount.setEndDate(LocalDateTime.now().plusDays(7));
+        discount.setStartDateTime(LocalDateTime.now());
+        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
         discount.setDescription("Half price sale");
         discount.setMinPrice(BigDecimal.ZERO);
         discount.setCouponCode("HALFOFF");
@@ -60,8 +60,8 @@ class DiscountRepositoryTest {
         Discount discount1 = new Discount();
         discount1.setName("50% off");
         discount1.setValue(new BigDecimal("50"));
-        discount1.setStartDate(LocalDateTime.now());
-        discount1.setEndDate(LocalDateTime.now().plusDays(7));
+        discount1.setStartDateTime(LocalDateTime.now());
+        discount1.setEndDateTime(LocalDateTime.now().plusDays(7));
         discount1.setDescription("Half price sale");
         discount1.setMinPrice(BigDecimal.ZERO);
         discount1.setCouponCode("HALFOFF");
@@ -70,8 +70,8 @@ class DiscountRepositoryTest {
         Discount discount2 = new Discount();
         discount2.setName("20% off");
         discount2.setValue(new BigDecimal("20"));
-        discount2.setStartDate(LocalDateTime.now());
-        discount2.setEndDate(LocalDateTime.now().plusDays(5));
+        discount2.setStartDateTime(LocalDateTime.now());
+        discount2.setEndDateTime(LocalDateTime.now().plusDays(5));
         discount2.setDescription("Spring sale");
         discount2.setMinPrice(new BigDecimal("50"));
         discount2.setCouponCode("SPRING20");
@@ -93,11 +93,11 @@ class DiscountRepositoryTest {
         Discount discount = new Discount();
         discount.setName("50% off");
         discount.setValue(new BigDecimal("50.00"));
-        discount.setStartDate(LocalDateTime.now());
+        discount.setStartDateTime(LocalDateTime.now());
 //        LocalDateTime expectedDateTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
 
-        discount.setEndDate(LocalDateTime.now().plusDays(7));
+        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
         discount.setDescription("Half price sale");
         discount.setMinPrice(new BigDecimal("0.00"));
         discount.setCouponCode("HALFOFF");
@@ -127,8 +127,8 @@ class DiscountRepositoryTest {
         Discount discount = new Discount();
         discount.setName("50% off");
         discount.setValue(new BigDecimal("50"));
-        discount.setStartDate(LocalDateTime.now());
-        discount.setEndDate(LocalDateTime.now().plusDays(7));
+        discount.setStartDateTime(LocalDateTime.now());
+        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
         discount.setDescription("Half price sale");
         discount.setMinPrice(BigDecimal.ZERO);
         discount.setCouponCode("HALFOFF");
@@ -147,8 +147,8 @@ class DiscountRepositoryTest {
         Discount discount = new Discount();
         discount.setName("50% off");
         discount.setValue(new BigDecimal("50"));
-        discount.setStartDate(LocalDateTime.now());
-        discount.setEndDate(LocalDateTime.now().plusDays(7));
+        discount.setStartDateTime(LocalDateTime.now());
+        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
         discount.setDescription("Half price sale");
         discount.setMinPrice(BigDecimal.ZERO);
         discount.setCouponCode("HALFOFF");

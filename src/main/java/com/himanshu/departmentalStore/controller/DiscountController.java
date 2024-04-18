@@ -30,11 +30,21 @@ public class DiscountController {
 
     /**
      * Retrieves all active discounts.
+     * Based on Start and End DateTime
      * @return List of active discounts
      */
     @GetMapping("/active")
     public ResponseEntity<List<Discount>> getAllActiveDiscounts() {
         return ResponseEntity.ok(discountService.getAllActiveDiscounts());
+    }
+
+    /**
+     * Retrieves all discounts.
+     * @return List of discounts
+     */
+    @GetMapping
+    public ResponseEntity<List<Discount>> getAllDiscounts() {
+        return ResponseEntity.ok(discountService.getAllDiscounts());
     }
 
     /**

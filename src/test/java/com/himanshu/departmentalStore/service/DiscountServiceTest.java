@@ -68,8 +68,8 @@ class DiscountServiceTest {
         discount.setId(1L);
         discount.setName("50% off");
         discount.setValue(new BigDecimal("50"));
-        discount.setStartDate(LocalDateTime.now());
-        discount.setEndDate(LocalDateTime.now().plusDays(7));
+        discount.setStartDateTime(LocalDateTime.now());
+        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
         discount.setDescription("Half price sale");
         discount.setMinPrice(BigDecimal.ZERO);
         discount.setCouponCode("HALFOFF");
@@ -90,8 +90,8 @@ class DiscountServiceTest {
         discount.setId(discountId);
         discount.setName("50% off");
         discount.setValue(new BigDecimal("50"));
-        discount.setStartDate(LocalDateTime.now());
-        discount.setEndDate(LocalDateTime.now().plusDays(7));
+        discount.setStartDateTime(LocalDateTime.now());
+        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
         discount.setDescription("Half price sale");
         discount.setMinPrice(BigDecimal.ZERO);
         discount.setCouponCode("HALFOFF");
@@ -124,8 +124,8 @@ class DiscountServiceTest {
         discount.setId(id);
         discount.setName(name);
         discount.setValue(value);
-        discount.setStartDate(startDate);
-        discount.setEndDate(endDate);
+        discount.setStartDateTime(startDate);
+        discount.setEndDateTime(endDate);
         discount.setDescription(description);
         discount.setMinPrice(minPrice);
         discount.setCouponCode(couponCode);

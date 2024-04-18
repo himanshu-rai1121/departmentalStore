@@ -37,12 +37,12 @@ public class Discount {
     /**
      * The start date of the discount.
      */
-    private LocalDateTime startDate;
+    private LocalDateTime startDateTime;
 
     /**
      * The end date of the discount.
      */
-    private LocalDateTime endDate;
+    private LocalDateTime endDateTime;
 
     /**
      * The description of the discount.

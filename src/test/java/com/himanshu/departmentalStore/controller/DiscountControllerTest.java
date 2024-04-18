@@ -108,8 +108,8 @@ class DiscountControllerTest {
         discount.setId(id);
         discount.setName(name);
         discount.setValue(value);
-        discount.setStartDate(startDate);
-        discount.setEndDate(endDate);
+        discount.setStartDateTime(startDate);
+        discount.setEndDateTime(endDate);
         discount.setDescription(description);
         discount.setMinPrice(minPrice);
         discount.setCouponCode(couponCode);
