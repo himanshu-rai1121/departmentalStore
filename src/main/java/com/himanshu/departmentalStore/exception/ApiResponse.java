@@ -19,4 +19,9 @@ public class ApiResponse {
      * The status indicating the success or failure of the API operation.
      */
     private boolean status;
+
+    /**
+     * The body include the response body.
+     */
+    private Object body;
 }

@@ -3,6 +3,8 @@ package com.himanshu.departmentalStore.service;
 import com.himanshu.departmentalStore.exception.ResourceNotFoundException;
 import com.himanshu.departmentalStore.model.Discount;
 import com.himanshu.departmentalStore.repository.DiscountRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -14,6 +16,8 @@ import java.util.List;
  */
 @Service
 public class DiscountService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DiscountService.class);
 
     /**
      * Constant representing the entity type - Discount.
@@ -33,6 +37,7 @@ public class DiscountService {
      * @return A list of all active discounts.
      */
     public List<Discount> getAllActiveDiscounts() {
+        logger.info("Fetching all active discounts");
         LocalDateTime currentDateTime = LocalDateTime.now();
         List<Discount> discountList = discountRepository.findAll();
         return discountList.stream()
@@ -51,6 +56,7 @@ public class DiscountService {
      * @return A list of all discounts.
      */
     public List<Discount> getAllDiscounts() {
+        logger.info("Fetching all discounts");
         return discountRepository.findAll();
     }
 
@@ -61,9 +67,26 @@ public class DiscountService {
      * @throws ResourceNotFoundException If the discount with the given ID is not found.
      */
     public Discount getDiscountById(final Long id) {
+        logger.info("Fetching discount by ID: {}", id);
         return discountRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(DISCOUNTCONSTANT, "Id", id));
+    }
+    /**
+     * Retrieves a discount by its ID.
+     * @param id The ID of the discount to retrieve.
+     * @return The discount with the specified ID.
+     *          or null if not available.
+     *          used so that set discount to null if discount not applied
+     * in getDiscountById() method it through exception instead of null
+     * therefore created a new method which send null
+     * it will only be used for order
+     */
+    public Discount getDiscountByIdForOrder(final Long id) {
+        logger.info("fetching discount with ID {}", id);
+        return discountRepository
+                .findById(id)
+                .orElse(null);
     }
     /**
      * Saves a new discount.
@@ -71,6 +94,7 @@ public class DiscountService {
      * @return The saved discount.
      */
     public Discount saveDiscount(final Discount discount) {
+        logger.info("Saving discount: {}", discount);
         return discountRepository.save(discount);
     }
 
@@ -82,6 +106,7 @@ public class DiscountService {
      * @throws ResourceNotFoundException If the discount with the given ID is not found.
      */
     public Discount updateDiscount(final Long id, final Discount discount) {
+        logger.info("Updating discount with ID {}: {}", id, discount);
         boolean isDiscountExist = discountRepository.existsById(id);
         if (isDiscountExist) {
             discount.setId(id);
@@ -98,6 +123,7 @@ public class DiscountService {
      * @throws ResourceNotFoundException If the discount with the given ID is not found.
      */
     public Boolean deleteDiscount(final Long id) {
+        logger.info("Deleting discount with ID: {}", id);
         Discount optionalDiscount = discountRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(DISCOUNTCONSTANT, "Id", id));

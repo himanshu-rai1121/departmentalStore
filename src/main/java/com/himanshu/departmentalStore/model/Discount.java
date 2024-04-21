@@ -5,6 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -13,7 +16,8 @@ import java.time.LocalDateTime;
  * This entity stores information about discounts including their name, value, duration, and conditions.
  */
 @Entity
-@Data
+@Getter
+@Setter
 public class Discount {
 
     /**

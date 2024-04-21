@@ -2,6 +2,8 @@ package com.himanshu.departmentalStore.controller;
 
 import com.himanshu.departmentalStore.model.Product;
 import com.himanshu.departmentalStore.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,9 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
+
     /**
      * The ProductService responsible for handling product-related business logic.
      */
@@ -35,7 +40,10 @@ public class ProductController {
      */
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
+        logger.info("Request received to fetch all products");
+        List<Product> products = productService.getAllProducts();
+        logger.info("Returning {} products", products.size());
+        return ResponseEntity.ok(products);
     }
 
     /**
@@ -46,8 +54,10 @@ public class ProductController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") final Long id) {
-        return ResponseEntity.ok(productService.getProductById(id));
-    }
+        logger.info("Request received to fetch product with ID {}", id);
+        Product product = productService.getProductById(id);
+        logger.info("Returning product with ID {}: {}", id, product);
+        return ResponseEntity.ok(product);    }
 
     /**
      * Saves a new product.
@@ -57,9 +67,10 @@ public class ProductController {
      */
     @PostMapping
     public ResponseEntity<Product> saveProduct(@RequestBody final Product product) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(productService.saveProduct(product));
+        logger.info("Request received to save a new product: {}", product);
+        Product savedProduct = productService.saveProduct(product);
+        logger.info("Saved product: {}", savedProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
     }
 
     /**
@@ -71,8 +82,10 @@ public class ProductController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") final Long id, @RequestBody final Product product) {
-        return ResponseEntity
-                .ok(productService.updateProduct(id, product));
+        logger.info("Request received to update product with ID {}: {}", id, product);
+        Product updatedProduct = productService.updateProduct(id, product);
+        logger.info("Updated product with ID {}: {}", id, updatedProduct);
+        return ResponseEntity.ok(updatedProduct);
     }
     /**
      * Deletes a product by its ID.
@@ -82,7 +95,9 @@ public class ProductController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") final Long id) {
+        logger.info("Request received to delete product with ID {}", id);
         productService.deleteProduct(id);
+        logger.info("Product with ID {} deleted successfully", id);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body("Resource with ID " + id + " deleted successfully.");

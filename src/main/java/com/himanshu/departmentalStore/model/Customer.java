@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Represents a Customer entity in the departmental store system.
@@ -13,7 +15,8 @@ import lombok.Data;
  */
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Customer {
 
     /**

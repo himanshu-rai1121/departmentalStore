@@ -3,6 +3,8 @@ package com.himanshu.departmentalStore.service;
 import com.himanshu.departmentalStore.exception.ResourceNotFoundException;
 import com.himanshu.departmentalStore.model.Product;
 import com.himanshu.departmentalStore.repository.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
  */
 @Service
 public class ProductService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+
     /**
      * A static string representing the entity name "Product" used for exception handling.
      * Used as a constant to reduce redundancy.
@@ -29,7 +34,10 @@ public class ProductService {
      * @return List of all products
      */
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        logger.info("Fetching all products from the database");
+        List<Product> products = productRepository.findAll();
+        logger.info("Fetched {} products", products.size());
+        return products;
     }
 
     /**
@@ -39,8 +47,11 @@ public class ProductService {
      * @throws ResourceNotFoundException if the product with the specified ID does not exist
      */
     public Product getProductById(final Long id) {
-        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
-    }
+        logger.info("Fetching product with ID {}", id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
+        logger.info("Fetched product: {}", product);
+        return product;    }
 
     /**
      * Saves a new product or updates an existing one.
@@ -48,6 +59,7 @@ public class ProductService {
      * @return The saved or updated product
      */
     public Product saveProduct(final Product product) {
+        logger.info("Saving new product: {}", product);
         return productRepository.save(product);
     }
 
@@ -59,11 +71,13 @@ public class ProductService {
      * @throws ResourceNotFoundException if the product with the specified ID does not exist
      */
     public Product updateProduct(final Long id, final Product product) {
+        logger.info("Updating product with ID {}: {}", id, product);
         boolean isProductExist  = productRepository.existsById(id);
         if (isProductExist) {
             product.setId(id);
             return productRepository.save(product);
         } else {
+            logger.error("Product with ID {} not found", id);
             throw new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id);
         }
     }
@@ -75,11 +89,13 @@ public class ProductService {
      * @throws ResourceNotFoundException ResourceNotFountException if the product with the specified ID does not exist
      */
     public boolean deleteProduct(final Long id) {
+        logger.info("Deleting product with ID {}", id);
         Product optionalProduct = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
         if (optionalProduct!=null) {
             productRepository.deleteById(id);
             return true;
         } else {
+            logger.info("Product with ID {} not found", id);
             return false;
         }
     }

@@ -7,6 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 /**
@@ -14,7 +17,8 @@ import java.time.LocalDateTime;
  * which indicates an order for a product that cannot be immediately fulfilled.
  */
 @Entity
-@Data
+@Getter
+@Setter
 public class Backorder {
 
     /**

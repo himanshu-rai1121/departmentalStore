@@ -1,9 +1,6 @@
 package com.himanshu.departmentalStore.service;
 
-import com.himanshu.departmentalStore.model.Backorder;
-import com.himanshu.departmentalStore.model.Customer;
-import com.himanshu.departmentalStore.model.Order;
-import com.himanshu.departmentalStore.model.Product;
+import com.himanshu.departmentalStore.model.*;
 import com.himanshu.departmentalStore.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +10,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,8 +42,8 @@ class OrderServiceTest {
     void getAllOrders() {
         // Mocking behavior
         List<Order> orders = Arrays.asList(
-                createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), 5),
-                createOrderMock(2L, createProductMock(), createCustomerMock(), LocalDateTime.now(), 10)
+                createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), createDiscountMock(), 5),
+                createOrderMock(2L, createProductMock(), createCustomerMock(), LocalDateTime.now(), createDiscountMock(), 10)
         );
         when(orderRepository.findAll()).thenReturn(orders);
 
@@ -60,7 +58,7 @@ class OrderServiceTest {
     void getOrderById() {
         // Mocking behavior
         Long orderId = 1L;
-        Order order = createOrderMock(orderId, createProductMock(), createCustomerMock(), LocalDateTime.now(), 5);
+        Order order = createOrderMock(orderId, createProductMock(), createCustomerMock(), LocalDateTime.now(), createDiscountMock(),5);
         when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
 
         // Test
@@ -74,7 +72,7 @@ class OrderServiceTest {
     @Test
     void saveOrder() {
         // Mocking behavior
-        Order order = createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), 5);
+        Order order = createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), createDiscountMock(), 5);
         when(orderRepository.save(order)).thenReturn(order);
 
         // Test
@@ -88,12 +86,17 @@ class OrderServiceTest {
     void updateOrder() {
         // Mocking behavior
         Long orderId = 1L;
-        Order order = createOrderMock(orderId, createProductMock(), createCustomerMock(), LocalDateTime.now(), 5);
-        when(orderRepository.save(order)).thenReturn(order);
+        Order previousOrder = createOrderMock(orderId, createProductMock(), createCustomerMock(), LocalDateTime.now(), createDiscountMock(), 5);
 
-        order.setQuantity(10);
+        // Set the quantity to a different value for the updated order
+        Order updatedOrder = createOrderMock(orderId, previousOrder.getProduct(), previousOrder.getCustomer(), LocalDateTime.now(), previousOrder.getDiscount(), 10);
+
+        when(orderRepository.save(updatedOrder)).thenReturn(updatedOrder);
+        when(orderRepository.findById(orderId)).thenReturn(Optional.of(previousOrder));
+        when(productService.updateProduct(orderId, updatedOrder.getProduct())).thenReturn(updatedOrder.getProduct());
+
         // Test
-        Order result = orderService.updateOrder(orderId, order);
+        Order result = orderService.updateOrder(orderId, updatedOrder);
 
         // Verification
         assertEquals(orderId, result.getId());
@@ -104,8 +107,8 @@ class OrderServiceTest {
     void deleteOrder() {
         // Mocking behavior
         List<Order> orders = Arrays.asList(
-                createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), 5),
-                createOrderMock(2L, createProductMock(), createCustomerMock(), LocalDateTime.now(), 10)
+                createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), createDiscountMock(), 5),
+                createOrderMock(2L, createProductMock(), createCustomerMock(), LocalDateTime.now(), createDiscountMock(),10)
         );
         Long orderId = 1L;
         Order fetchedOrder = orders
@@ -130,12 +133,13 @@ class OrderServiceTest {
         assertTrue(result);
     }
 
-    private Order createOrderMock(Long id, Product product, Customer customer, LocalDateTime timestamp, int quantity) {
+    private Order createOrderMock(Long id, Product product, Customer customer, LocalDateTime timestamp, Discount discount, int quantity) {
         Order order = new Order();
         order.setId(id);
         order.setProduct(product);
         order.setCustomer(customer);
         order.setTimestamp(timestamp);
+        order.setDiscount(discount);
         order.setQuantity(quantity);
         return order;
     }
@@ -159,5 +163,21 @@ class OrderServiceTest {
         customer.setAddress("123 Main St");
         customer.setContactNumber("1234567890");
         return customer;
+    }
+    private Discount createDiscountMock() {
+        Discount discount = new Discount();
+        discount.setName("50% Discount");
+        discount.setValue(new BigDecimal(50.00));
+//        String startDateTimeString = "2024-03-15 00:00:00";
+//        String endDateTimeString = "2025-03-15T00:00:00";
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+//        discount.setStartDateTime(LocalDateTime.parse(startDateTimeString, formatter));
+//        discount.setEndDateTime(LocalDateTime.parse(endDateTimeString, formatter));
+        discount.setStartDateTime(LocalDateTime.now().minusDays(7));
+        discount.setEndDateTime(LocalDateTime.now().plusDays(10));
+        discount.setDescription("Enjoy 50% discount on all orders.");
+        discount.setMinPrice(new BigDecimal(0.00));
+        discount.setCouponCode("FLAT50");
+        return discount;
     }
 }

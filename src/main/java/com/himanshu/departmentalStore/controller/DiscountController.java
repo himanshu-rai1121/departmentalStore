@@ -2,6 +2,8 @@ package com.himanshu.departmentalStore.controller;
 
 import com.himanshu.departmentalStore.model.Discount;
 import com.himanshu.departmentalStore.service.DiscountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,8 @@ import java.util.List;
 @RequestMapping("/discounts")
 public class DiscountController {
 
+    private static final Logger logger = LoggerFactory.getLogger(DiscountController.class);
+
     /**
      * The DiscountService responsible for handling discount-related business logic.
      */
@@ -35,7 +39,10 @@ public class DiscountController {
      */
     @GetMapping("/active")
     public ResponseEntity<List<Discount>> getAllActiveDiscounts() {
-        return ResponseEntity.ok(discountService.getAllActiveDiscounts());
+        logger.info("Received request to Fetch all active discounts");
+        List<Discount> discountList = discountService.getAllActiveDiscounts();
+        logger.info("Fetched all active discounts : {}", discountList);
+        return ResponseEntity.ok(discountList);
     }
 
     /**
@@ -44,7 +51,10 @@ public class DiscountController {
      */
     @GetMapping
     public ResponseEntity<List<Discount>> getAllDiscounts() {
-        return ResponseEntity.ok(discountService.getAllDiscounts());
+        logger.info("Received request to Fetch all discounts");
+        List<Discount> discountList = discountService.getAllDiscounts();
+        logger.info("Fetched all discounts : {}", discountList);
+        return ResponseEntity.ok(discountList);
     }
 
     /**
@@ -54,7 +64,10 @@ public class DiscountController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Discount> getDiscountById(@PathVariable("id") final Long id) {
-        return ResponseEntity.ok(discountService.getDiscountById(id));
+        logger.info("Received request to Fetch discount by Id : {}", id);
+        Discount discount = discountService.getDiscountById(id);
+        logger.info("Fetched discounts with Id : {}, discount : {}", id, discount);
+        return ResponseEntity.ok(discount);
     }
 
     /**
@@ -64,6 +77,7 @@ public class DiscountController {
      */
     @PostMapping
     public ResponseEntity<Discount> createDiscount(@RequestBody final Discount discount) {
+        logger.info("Received request to create new discount: {}", discount);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(discountService.saveDiscount(discount));
@@ -79,6 +93,7 @@ public class DiscountController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Discount> updateDiscount(@PathVariable("id") final Long id, @RequestBody final Discount discount) {
+        logger.info("Received request to update discount with ID {}: {}", id, discount);
         return ResponseEntity.ok(discountService.updateDiscount(id, discount));
     }
 
@@ -89,6 +104,7 @@ public class DiscountController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteDiscount(@PathVariable("id") final Long id) {
+        logger.info("Received request to delete discount with ID {}", id);
         boolean deleted = discountService.deleteDiscount(id);
         if (deleted) {
             return ResponseEntity

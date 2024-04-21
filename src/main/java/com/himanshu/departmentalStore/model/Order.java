@@ -7,8 +7,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Represents an order entity in the departmental store system.
@@ -16,7 +20,8 @@ import lombok.Data;
  * It includes the product, customer, timestamp, quantity, and associated discount.
  */
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "customer_order")
 public class Order {
 
@@ -53,8 +58,15 @@ public class Order {
 
     /**
      * The discount associated with the order (if any).
+     * optional so that we can set discount to null if not applicable.
      */
     @ManyToOne
     @JoinColumn(name = "discount_id")
     private Discount discount;
+
+    /**
+     * The total price associated with the order.
+     * After adding discount if applicable.
+     */
+    private BigDecimal amount;
 }

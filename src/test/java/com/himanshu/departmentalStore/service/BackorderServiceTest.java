@@ -83,6 +83,7 @@ class BackorderServiceTest {
         Long backorderId = 1L;
         Backorder backorder = createBackorderMock(backorderId, createProductMock(), createCustomerMock(), LocalDateTime.now(), 5);
         when(backorderRepository.save(backorder)).thenReturn(backorder);
+        when(backorderRepository.existsById(backorderId)).thenReturn(true);
 
         backorder.setQuantity(10);
         // Test
