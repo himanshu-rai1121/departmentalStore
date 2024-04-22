@@ -1,11 +1,10 @@
 package com.himanshu.departmentalStore.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,20 +29,20 @@ public class Customer {
      * The full name of the customer.
      * Cannot be null.
      */
-    @NotNull(message = "name can not be null")
+    @NotNull(message = "Name can not be null")
     private String fullName;
 
     /**
      * The address of the customer.
      * Cannot be null.
      */
-    @NotNull
+    @NotNull(message = "Address can not be null")
     private String address;
 
     /**
      * The contact number of the customer.
      * Cannot be null.
      */
-    @NotNull
+    @NotNull(message = "Contact Number can not be null")
     private String contactNumber;
 }

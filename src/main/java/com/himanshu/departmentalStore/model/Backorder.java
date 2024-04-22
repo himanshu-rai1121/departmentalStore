@@ -6,10 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 
 /**
@@ -32,14 +31,16 @@ public class Backorder {
     /**
      * The product associated with the backorder.
      */
-    @ManyToOne
+    @NotNull(message = "Product_id can not be null")
+    @ManyToOne(optional = false)
     @JoinColumn(name = "product_id")
     private Product product;
 
     /**
      * The customer who placed the backorder.
      */
-    @ManyToOne
+    @NotNull(message = "Customer_Id can not be null")
+    @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

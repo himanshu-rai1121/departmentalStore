@@ -4,16 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
  * Represents a product entity in the departmental store system.
- * <p>This entity stores information about products including their name, description, price, expiry date, availability, and count in stock.
+ * This entity stores information about products including their name, description, price, expiry date, availability, and count in stock.
  */
 @Entity
 @Getter
@@ -30,6 +29,7 @@ public class Product {
     /**
      * The name of the product.
      */
+    @NotNull(message = "Name Can not be null")
     private String name;
 
     /**
@@ -40,6 +40,7 @@ public class Product {
     /**
      * The price of the product.
      */
+    @NotNull(message = "Price Can not be null")
     private BigDecimal price;
 
     /**

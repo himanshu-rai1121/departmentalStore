@@ -24,7 +24,12 @@ import java.util.List;
 @RequestMapping("/discounts")
 public class DiscountController {
 
-    private static final Logger logger = LoggerFactory.getLogger(DiscountController.class);
+    /**
+     * Logger for logging messages related to DiscountController class.
+     * This logger is used to log various messages, such as debug, info, error, etc.,
+     * related to the operations performed within the DiscountController class.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(DiscountController.class);
 
     /**
      * The DiscountService responsible for handling discount-related business logic.
@@ -39,9 +44,9 @@ public class DiscountController {
      */
     @GetMapping("/active")
     public ResponseEntity<List<Discount>> getAllActiveDiscounts() {
-        logger.info("Received request to Fetch all active discounts");
+        LOGGER.info("Received request to Fetch all active discounts");
         List<Discount> discountList = discountService.getAllActiveDiscounts();
-        logger.info("Fetched all active discounts : {}", discountList);
+        LOGGER.info("Fetched all active discounts : {}", discountList);
         return ResponseEntity.ok(discountList);
     }
 
@@ -51,9 +56,9 @@ public class DiscountController {
      */
     @GetMapping
     public ResponseEntity<List<Discount>> getAllDiscounts() {
-        logger.info("Received request to Fetch all discounts");
+        LOGGER.info("Received request to Fetch all discounts");
         List<Discount> discountList = discountService.getAllDiscounts();
-        logger.info("Fetched all discounts : {}", discountList);
+        LOGGER.info("Fetched all discounts : {}", discountList);
         return ResponseEntity.ok(discountList);
     }
 
@@ -64,9 +69,9 @@ public class DiscountController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Discount> getDiscountById(@PathVariable("id") final Long id) {
-        logger.info("Received request to Fetch discount by Id : {}", id);
+        LOGGER.info("Received request to Fetch discount by Id : {}", id);
         Discount discount = discountService.getDiscountById(id);
-        logger.info("Fetched discounts with Id : {}, discount : {}", id, discount);
+        LOGGER.info("Fetched discounts with Id : {}, discount : {}", id, discount);
         return ResponseEntity.ok(discount);
     }
 
@@ -77,13 +82,12 @@ public class DiscountController {
      */
     @PostMapping
     public ResponseEntity<Discount> createDiscount(@RequestBody final Discount discount) {
-        logger.info("Received request to create new discount: {}", discount);
+        LOGGER.info("Received request to create new discount: {}", discount);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(discountService.saveDiscount(discount));
     }
 
-    // No need to update a discount or delete a discount in this basic example
 
     /**
      * Updates an existing discount.
@@ -93,7 +97,7 @@ public class DiscountController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Discount> updateDiscount(@PathVariable("id") final Long id, @RequestBody final Discount discount) {
-        logger.info("Received request to update discount with ID {}: {}", id, discount);
+        LOGGER.info("Received request to update discount with ID {}: {}", id, discount);
         return ResponseEntity.ok(discountService.updateDiscount(id, discount));
     }
 
@@ -104,29 +108,10 @@ public class DiscountController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteDiscount(@PathVariable("id") final Long id) {
-        logger.info("Received request to delete discount with ID {}", id);
-        boolean deleted = discountService.deleteDiscount(id);
-        if (deleted) {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Resource with ID " + id + " deleted successfully.");
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("Resource with ID " + id + " not found.");
-        }
+        LOGGER.info("Received request to delete discount with ID {}", id);
+        discountService.deleteDiscount(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Resource with ID " + id + " deleted successfully.");
     }
-
-//    @DeleteMapping("/{id}")
-//    public CompletableFuture<ResponseEntity<String>> deleteDiscount(@PathVariable("id") Long id){
-//        return discountService.deleteDiscount(id)
-//                .thenApply(deleted -> {
-//                    if (deleted) {
-//                        return ResponseEntity.status(HttpStatus.OK).body("Resource with ID " + id + " deleted successfully.");
-//                    } else {
-//                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource with ID " + id + " not found.");
-//                    }
-//                })
-//                .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the consumer."));
-//    }
 }

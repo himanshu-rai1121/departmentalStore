@@ -17,7 +17,13 @@ import java.util.List;
 @Service
 public class DiscountService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DiscountService.class);
+    /**
+     * Logger for logging messages related to DiscountService class.
+     * This logger is used to log various messages, such as debug, info, error, etc.,
+     * related to the operations performed within the DiscountService class.
+     */
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DiscountService.class);
 
     /**
      * Constant representing the entity type - Discount.
@@ -31,13 +37,14 @@ public class DiscountService {
     @Autowired
     private DiscountRepository discountRepository;
 
+
     /**
      * Retrieves all active discounts.
      * Active discounts are those whose start date and end date are within the current date and time.
      * @return A list of all active discounts.
      */
     public List<Discount> getAllActiveDiscounts() {
-        logger.info("Fetching all active discounts");
+        LOGGER.info("Fetching all active discounts");
         LocalDateTime currentDateTime = LocalDateTime.now();
         List<Discount> discountList = discountRepository.findAll();
         return discountList.stream()
@@ -56,7 +63,7 @@ public class DiscountService {
      * @return A list of all discounts.
      */
     public List<Discount> getAllDiscounts() {
-        logger.info("Fetching all discounts");
+        LOGGER.info("Fetching all discounts");
         return discountRepository.findAll();
     }
 
@@ -67,7 +74,7 @@ public class DiscountService {
      * @throws ResourceNotFoundException If the discount with the given ID is not found.
      */
     public Discount getDiscountById(final Long id) {
-        logger.info("Fetching discount by ID: {}", id);
+        LOGGER.info("Fetching discount by ID: {}", id);
         return discountRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(DISCOUNTCONSTANT, "Id", id));
@@ -83,7 +90,10 @@ public class DiscountService {
      * it will only be used for order
      */
     public Discount getDiscountByIdForOrder(final Long id) {
-        logger.info("fetching discount with ID {}", id);
+        LOGGER.info("fetching discount with ID {}", id);
+        if (id == null) {
+            return null;
+        }
         return discountRepository
                 .findById(id)
                 .orElse(null);
@@ -94,7 +104,7 @@ public class DiscountService {
      * @return The saved discount.
      */
     public Discount saveDiscount(final Discount discount) {
-        logger.info("Saving discount: {}", discount);
+        LOGGER.info("Saving discount: {}", discount);
         return discountRepository.save(discount);
     }
 
@@ -106,7 +116,7 @@ public class DiscountService {
      * @throws ResourceNotFoundException If the discount with the given ID is not found.
      */
     public Discount updateDiscount(final Long id, final Discount discount) {
-        logger.info("Updating discount with ID {}: {}", id, discount);
+        LOGGER.info("Updating discount with ID {}: {}", id, discount);
         boolean isDiscountExist = discountRepository.existsById(id);
         if (isDiscountExist) {
             discount.setId(id);
@@ -123,7 +133,7 @@ public class DiscountService {
      * @throws ResourceNotFoundException If the discount with the given ID is not found.
      */
     public Boolean deleteDiscount(final Long id) {
-        logger.info("Deleting discount with ID: {}", id);
+        LOGGER.info("Deleting discount with ID: {}", id);
         Discount optionalDiscount = discountRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(DISCOUNTCONSTANT, "Id", id));

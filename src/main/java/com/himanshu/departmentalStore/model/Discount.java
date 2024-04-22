@@ -4,10 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -30,22 +29,26 @@ public class Discount {
     /**
      * The name of the discount.
      */
+    @NotNull(message = "Discount name can not be null.")
     private String name;
 
     /**
      * The value of the discount.
      * (in percentage)
      */
+    @NotNull(message = "Value must not be null")
     private BigDecimal value;
 
     /**
      * The start date of the discount.
      */
+    @NotNull(message = "Choose the start date time for discount.")
     private LocalDateTime startDateTime;
 
     /**
      * The end date of the discount.
      */
+    @NotNull(message = "Choose the end date time for discount.")
     private LocalDateTime endDateTime;
 
     /**
@@ -56,10 +59,12 @@ public class Discount {
     /**
      * The minimum price required for the discount to be applicable.
      */
+    @NotNull(message = "Give minimum price for the discount")
     private BigDecimal minPrice;
 
     /**
      * The coupon code associated with the discount.
      */
+    @NotNull(message = "Provide coupon code for the discount.")
     private String couponCode;
 }

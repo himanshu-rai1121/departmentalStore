@@ -13,18 +13,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class OrderControllerTest {
 
@@ -38,7 +37,7 @@ class OrderControllerTest {
     private ProductService productService;
     @InjectMocks
     private OrderController orderController;
-
+    private ModelMapper modelMapper = mock(ModelMapper.class);
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -83,7 +82,7 @@ class OrderControllerTest {
         when(customerService.getCustomerById(orderRequestBody.getCustomerId())).thenReturn(order.getCustomer());
         when(discountService.getDiscountById(orderRequestBody.getDiscountId())).thenReturn(order.getDiscount());
         when(productService.getProductById(orderRequestBody.getProductId())).thenReturn(order.getProduct());
-
+        when(modelMapper.map(any(), any())).thenReturn(order);
 
         // Test
         ResponseEntity<Order> result = orderController.createOrder(orderRequestBody);
@@ -103,10 +102,7 @@ class OrderControllerTest {
         OrderRequestBody orderRequestBody = createOrderRequestBodyMock();
 
         when(orderService.updateOrder(eq(orderId), any(Order.class))).thenReturn(order);
-        when(customerService.getCustomerById(orderRequestBody.getCustomerId())).thenReturn(order.getCustomer());
-        when(discountService.getDiscountById(orderRequestBody.getDiscountId())).thenReturn(order.getDiscount());
-        when(productService.getProductById(orderRequestBody.getProductId())).thenReturn(order.getProduct());
-
+        when(modelMapper.map(any(), any())).thenReturn(order);
         orderRequestBody.setQuantity(10);
         // Test
         ResponseEntity<Order> result = orderController.updateOrder(orderId, orderRequestBody);

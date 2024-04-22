@@ -14,4 +14,5 @@ public interface BackorderRepository extends JpaRepository<Backorder, Long> {
      * @return A list of backorders associated with the specified product ID
      */
     List<Backorder> findByProductId(Long productId);
+
 }

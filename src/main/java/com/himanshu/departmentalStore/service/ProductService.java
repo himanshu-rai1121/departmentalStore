@@ -15,7 +15,13 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+    /**
+     * Logger for logging messages related to ProductService class.
+     * This logger is used to log various messages, such as debug, info, error, etc.,
+     * related to the operations performed within the ProductService class.
+     */
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
 
     /**
      * A static string representing the entity name "Product" used for exception handling.
@@ -34,9 +40,9 @@ public class ProductService {
      * @return List of all products
      */
     public List<Product> getAllProducts() {
-        logger.info("Fetching all products from the database");
+        LOGGER.info("Fetching all products from the database");
         List<Product> products = productRepository.findAll();
-        logger.info("Fetched {} products", products.size());
+        LOGGER.info("Fetched {} products", products.size());
         return products;
     }
 
@@ -47,10 +53,10 @@ public class ProductService {
      * @throws ResourceNotFoundException if the product with the specified ID does not exist
      */
     public Product getProductById(final Long id) {
-        logger.info("Fetching product with ID {}", id);
+        LOGGER.info("Fetching product with ID {}", id);
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
-        logger.info("Fetched product: {}", product);
+        LOGGER.info("Fetched product: {}", product);
         return product;    }
 
     /**
@@ -59,7 +65,7 @@ public class ProductService {
      * @return The saved or updated product
      */
     public Product saveProduct(final Product product) {
-        logger.info("Saving new product: {}", product);
+        LOGGER.info("Saving new product: {}", product);
         return productRepository.save(product);
     }
 
@@ -71,13 +77,13 @@ public class ProductService {
      * @throws ResourceNotFoundException if the product with the specified ID does not exist
      */
     public Product updateProduct(final Long id, final Product product) {
-        logger.info("Updating product with ID {}: {}", id, product);
+        LOGGER.info("Updating product with ID {}: {}", id, product);
         boolean isProductExist  = productRepository.existsById(id);
         if (isProductExist) {
             product.setId(id);
             return productRepository.save(product);
         } else {
-            logger.error("Product with ID {} not found", id);
+            LOGGER.error("Product with ID {} not found", id);
             throw new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id);
         }
     }
@@ -89,28 +95,16 @@ public class ProductService {
      * @throws ResourceNotFoundException ResourceNotFountException if the product with the specified ID does not exist
      */
     public boolean deleteProduct(final Long id) {
-        logger.info("Deleting product with ID {}", id);
+        LOGGER.info("Deleting product with ID {}", id);
         Product optionalProduct = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
-        if (optionalProduct!=null) {
+        if (optionalProduct != null) {
             productRepository.deleteById(id);
             return true;
         } else {
-            logger.info("Product with ID {} not found", id);
+            LOGGER.info("Product with ID {} not found", id);
             return false;
         }
     }
-
-//    public CompletableFuture<Boolean> deleteProduct(Long id) {
-//        return CompletableFuture.supplyAsync(() -> {
-//            Optional<Product> optionalProduct = productRepository.findById(id);
-//            if (optionalProduct.isPresent()) {
-//                productRepository.deleteById(id);
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        });
-//    }
 }
 
 

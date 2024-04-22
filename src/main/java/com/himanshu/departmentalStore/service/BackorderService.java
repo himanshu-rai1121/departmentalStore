@@ -15,7 +15,12 @@ import java.util.List;
  */
 @Service
 public class BackorderService {
-    private static final Logger logger = LoggerFactory.getLogger(BackorderService.class);
+    /**
+     * Logger for logging messages related to BackorderService class.
+     * This logger is used to log various messages, such as debug, info, error, etc.,
+     * related to the operations performed within the BackorderService class.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(BackorderService.class);
 
 
     /**
@@ -35,7 +40,7 @@ public class BackorderService {
      * @return A list of all backorders.
      */
     public List<Backorder> getAllBackorders() {
-        logger.info("Fetching all backorders");
+        LOGGER.info("Fetching all backorders");
         return backorderRepository.findAll();
     }
 
@@ -46,7 +51,7 @@ public class BackorderService {
      * @throws ResourceNotFoundException If the backorder with the given ID is not found.
      */
     public Backorder getBackorderById(final Long id) {
-        logger.info("Fetching backorder by Id : {}", id);
+        LOGGER.info("Fetching backorder by Id : {}", id);
         return backorderRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(BACKORDERCONSTANT, "Id", id));
@@ -61,7 +66,7 @@ public class BackorderService {
      * it is used in order class. to delete backorder and send notification
      */
     public List<Backorder> getAllBackordersByProductId(final Long productId) {
-        logger.info("Fetching all backorder having productId: {}", productId);
+        LOGGER.info("Fetching all backorder having productId: {}", productId);
         return backorderRepository.findByProductId(productId);
     }
 
@@ -71,7 +76,7 @@ public class BackorderService {
      * @return The saved backorder.
      */
     public Backorder saveBackorder(final Backorder backorder) {
-        logger.info("Saving backorder");
+        LOGGER.info("Saving backorder");
         return backorderRepository.save(backorder);
     }
 
@@ -83,7 +88,7 @@ public class BackorderService {
      * @throws ResourceNotFoundException If the backorder with the given ID is not found.
      */
     public Backorder updateBackorder(final Long id, final Backorder backorder) {
-        logger.info("Updating backorder");
+        LOGGER.info("Updating backorder");
         boolean isBackorderExist = backorderRepository.existsById(id);
         if (isBackorderExist) {
             backorder.setId(id);
@@ -100,7 +105,7 @@ public class BackorderService {
      * @throws ResourceNotFoundException If the backorder with the given ID is not found.
      */
     public Boolean deleteBackorder(final Long id) {
-        logger.info("Deleting backorder");
+        LOGGER.info("Deleting backorder");
         Backorder optionalBackorder = backorderRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(BACKORDERCONSTANT, "Id", id));
@@ -111,4 +116,5 @@ public class BackorderService {
             return false;
         }
     }
+
 }

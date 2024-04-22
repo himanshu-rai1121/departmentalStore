@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -23,6 +24,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class BackorderControllerTest {
@@ -35,6 +37,8 @@ class BackorderControllerTest {
     private ProductService productService;
     @InjectMocks
     private BackorderController backorderController;
+
+    private ModelMapper modelMapper = mock(ModelMapper.class);
 
     @BeforeEach
     void setUp() {
@@ -79,6 +83,7 @@ class BackorderControllerTest {
         when(backorderService.saveBackorder(any(Backorder.class))).thenReturn(backorder);
         when(customerService.getCustomerById(backorderRequestBody.getCustomerId())).thenReturn(backorder.getCustomer());
         when(productService.getProductById(backorderRequestBody.getProductId())).thenReturn(backorder.getProduct());
+        when(modelMapper.map(any(), any())).thenReturn(backorder);
 
 
         // Test
@@ -99,6 +104,7 @@ class BackorderControllerTest {
         when(backorderService.updateBackorder(eq(backorderId), any(Backorder.class))).thenReturn(backorder);
         when(customerService.getCustomerById(backorderRequestBody.getCustomerId())).thenReturn(backorder.getCustomer());
         when(productService.getProductById(backorderRequestBody.getProductId())).thenReturn(backorder.getProduct());
+        when(modelMapper.map(any(), any())).thenReturn(backorder);
 
         backorderRequestBody.setQuantity(10);
         // Test

@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
  * Utility class for working with date and time.
  * Provides methods for formatting LocalDateTime objects to strings and parsing strings to LocalDateTime objects.
  */
-public class DateTimeUtils {
+class DateTimeUtils {
     /**
      * The default date-time format used by the utility methods.
      */

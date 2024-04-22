@@ -26,7 +26,12 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+    /**
+     * Logger for logging messages related to CustomerController class.
+     * This logger is used to log various messages, such as debug, info, error, etc.,
+     * related to the operations performed within the CustomerController class.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
     /**
      * The CustomerService responsible for handling customer-related business logic.
      */
@@ -39,24 +44,23 @@ public class CustomerController {
      */
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
-        logger.info("Received request to retrieve all customers.");
+        LOGGER.info("Received request to retrieve all customers.");
         List<Customer> customers = customerService.getAllCustomers();
-        logger.info("Retrieved {} customers.", customers.size());
+        LOGGER.info("Retrieved {} customers.", customers.size());
         return ResponseEntity.status(HttpStatus.OK).body(customers);
     }
 
 
     /**
      * Retrieves a customer by their ID.
-     *
      * @param id The ID of the customer to retrieve.
      * @return The customer with the specified ID.
      */
     @GetMapping(value = "/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable("id") final Long id) {
-        logger.info("Request received to fetch customer with ID {}", id);
+        LOGGER.info("Request received to fetch customer with ID {}", id);
         Customer customer = customerService.getCustomerById(id);
-        logger.info("Returning customer with ID {}: {}", id, customer);
+        LOGGER.info("Returning customer with ID {}: {}", id, customer);
         return ResponseEntity.ok(customer);    }
 
 
@@ -67,9 +71,9 @@ public class CustomerController {
      */
     @PostMapping
     public ResponseEntity<Customer> saveCustomer(@RequestBody final Customer customer) {
-        logger.info("Request received to save a new customer: {}", customer);
+        LOGGER.info("Request received to save a new customer: {}", customer);
         Customer savedCustomer = customerService.saveCustomer(customer);
-        logger.info("Saved customer: {}", savedCustomer);
+        LOGGER.info("Saved customer: {}", savedCustomer);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCustomer);
     }
 
@@ -82,9 +86,9 @@ public class CustomerController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable("id") final Long id, @RequestBody final Customer customer) {
-        logger.info("Request received to update customer with ID {}: {}", id, customer);
+        LOGGER.info("Request received to update customer with ID {}: {}", id, customer);
         Customer updatedCustomer = customerService.updateCustomer(id, customer);
-        logger.info("Updated customer with ID {}: {}", id, updatedCustomer);
+        LOGGER.info("Updated customer with ID {}: {}", id, updatedCustomer);
         return ResponseEntity.status(HttpStatus.OK).body(updatedCustomer);    }
 
 
@@ -95,22 +99,11 @@ public class CustomerController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCustomer(@PathVariable("id") final Long id) {
-        logger.info("Request received to delete customer with ID {}", id);
+        LOGGER.info("Request received to delete customer with ID {}", id);
         customerService.deleteCustomer(id);
-        logger.info("Customer with ID {} deleted successfully", id);
-        return ResponseEntity.status(HttpStatus.OK).body("Resource with ID " + id + " deleted successfully.");
+        LOGGER.info("Customer with ID {} deleted successfully", id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Resource with ID " + id + " deleted successfully.");
     }
-
-//    @DeleteMapping("/{id}")
-//    public CompletableFuture<ResponseEntity<String>> deleteCustomer(@PathVariable("id") Long id) {
-//        return customerService.deleteCustomer(id)
-//                .thenApply(deleted -> {
-//                    if (deleted) {
-//                        return ResponseEntity.status(HttpStatus.OK).body("Resource with ID " + id + " deleted successfully.");
-//                    } else {
-//                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource with ID " + id + " not found.");
-//                    }
-//                })
-//                .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the consumer."));
-//    }
 }

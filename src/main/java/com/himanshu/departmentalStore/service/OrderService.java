@@ -24,7 +24,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class OrderService {
 
-    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
+    /**
+     * Logger for logging messages related to OrderService class.
+     * This logger is used to log various messages, such as debug, info, error, etc.,
+     * related to the operations performed within the OrderService class.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
 
 
     /**
@@ -39,12 +44,6 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     /**
-     * Service for managing discounts.
-     */
-    @Autowired
-    private DiscountService discountService;
-
-    /**
      * Service for managing products.
      */
     @Autowired
@@ -57,13 +56,19 @@ public class OrderService {
     private BackorderService backorderService;
 
     /**
+     * Service for managing discount service.
+     */
+    @Autowired
+    private  DiscountService discountService;
+
+    /**
      * Retrieves all orders from the database.
      * @return A list of all orders.
      */
     public List<Order> getAllOrders() {
-        logger.info("Fetching all orders");
+        LOGGER.info("Fetching all orders");
         List<Order> orders = orderRepository.findAll();
-        logger.info("Order Fetched");
+        LOGGER.info("Order Fetched");
         return orders;
     }
     /**
@@ -73,11 +78,11 @@ public class OrderService {
      * @throws ResourceNotFoundException If the order with the given ID does not exist.
      */
     public Order getOrderById(final Long orderId) {
-        logger.info("Fetching all orders with Id : {}", orderId);
+        LOGGER.info("Fetching all orders with Id : {}", orderId);
         Order order = orderRepository
                 .findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException(ORDERCONSTANT, "Id", orderId));
-        logger.info("Order fetched with Id : {}, order : {}",orderId, order);
+        LOGGER.info("Order fetched with Id : {}, order : {}", orderId, order);
         return  order;
     }
     /**
@@ -92,27 +97,28 @@ public class OrderService {
         /** Check Product is available or not and it can fulfill the quantity or not*/
          /** if available then place order else place backorder. */
 
-        logger.info("Placing order.");
+        LOGGER.info("Placing order.");
         int orderQuantity = order.getQuantity();
-        Product product = order.getProduct();
-        logger.info("Checking isProductAvailable");
-        if (isProductsAvailable(product, order.getQuantity())) {
+        Product product = productService.getProductById(order.getProduct().getId());
+        LOGGER.info("Checking isProductAvailable");
+        if (isProductsAvailable(product, orderQuantity)) {
+            /** Apply discount. */
+            LOGGER.info("Calculating total amount");
+            BigDecimal totalOrderAmount = findAmount(order, product);
+            order.setAmount(totalOrderAmount);
+            LOGGER.info("Amount updated in order");
             /** update product -> decrease the available quantity of product. */
             product.setCount(product.getCount() - orderQuantity);
             productService.updateProduct(product.getId(), product);
-            logger.info("Updating product quantity");
-            /** Apply discount. */
-            logger.info("Calculating total amount");
-            BigDecimal totalOrderAmount = findAmount(order);
-            order.setAmount(totalOrderAmount);
-            logger.info("Amount updated in order");
-            logger.info("Saving order");
+            LOGGER.info("Updating product quantity");
+            LOGGER.info("Saving order");
             return orderRepository.save(order); // Successfully placed order
         } else {
-            logger.info("Creating Backorder");
+            LOGGER.info("Creating Backorder");
             Backorder backorder = createBackorder(order.getCustomer(), product, orderQuantity, order.getTimestamp());
-            logger.info("Backorder saved with Id : {}", backorder.getId());
+            LOGGER.info("Backorder saved with Id : {}", backorder.getId());
             throw new CustomException("Ordered quantity is more then quantity left in stock : Backorder created", backorder);
+
         }
     }
     /**
@@ -129,7 +135,7 @@ public class OrderService {
         backorder.setCustomer(customer);
         backorder.setProduct(product);
         backorder.setTimestamp(timestamp);
-        logger.info("Saving Backorder");
+        LOGGER.info("Saving Backorder");
         return backorderService.saveBackorder(backorder);
     }
     /**
@@ -138,18 +144,19 @@ public class OrderService {
      * @return The total amount after applying any applicable discount.
      * @throws CustomException Throws exception if amount is less than minimum price
      */
-    private BigDecimal findAmount(final Order order) {
-        BigDecimal totalPrice = order.getProduct().getPrice().multiply(BigDecimal.valueOf(order.getQuantity()));
-        Discount discount = order.getDiscount();
-        if (discount != null
-                && discount.getMinPrice() != null
+    private BigDecimal findAmount(final Order order, final Product product) {
+        BigDecimal totalPrice = product.getPrice().multiply(BigDecimal.valueOf(order.getQuantity()));
+        Discount discount = discountService.getDiscountById(order.getDiscount().getId());
+        if (discount == null) {
+            return totalPrice;
+        } else if (discount.getMinPrice() != null
                 && discount.getMinPrice().compareTo(totalPrice) <= 0) {
             BigDecimal discountAmount = totalPrice.multiply(discount.getValue().divide(BigDecimal.valueOf(100))); // Calculate discount amount
             totalPrice = totalPrice.subtract(discountAmount); // Subtract discount amount from total price
             return totalPrice;
         }
-        logger.error("This discount can not be applied.");
-        throw new CustomException("This Discount can not be applied : amount is less than minimum price", order.getDiscount());
+        LOGGER.error("This discount can not be applied.");
+        throw new CustomException("This Discount can not be applied : amount is less than minimum price", discount);
          // else discount not applied
     }
 
@@ -164,10 +171,10 @@ public class OrderService {
      */
     private Boolean isProductsAvailable(final Product product, final int quantity) {
         if (product.isAvailability() && product.getCount() >= quantity) {
-            logger.info("Product available.");
+            LOGGER.info("Product available.");
             return true;
         }
-        logger.error("Product not available");
+        LOGGER.error("Product not available");
         return false;
     }
     /**
@@ -211,52 +218,52 @@ public class OrderService {
      *                                   quantity exceeds the available stock.
      */
     public Order updateOrder(final Long orderId, final Order order) {
-        logger.info("Updating order with Id : {}", orderId);
+        LOGGER.info("Updating order with Id : {}", orderId);
         Order previousOrder = orderRepository
                 .findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException(ORDERCONSTANT, "Id", orderId));
         Product previousProduct = previousOrder.getProduct();
-        logger.info("Check if the customer, product, and discount are the same or different");
-        if (!previousOrder.getCustomer().equals(order.getCustomer())
-            || !previousOrder.getProduct().equals(order.getProduct())
-            || !previousOrder.getDiscount().equals(order.getDiscount())
+        LOGGER.info("Check if the customer, product, and discount are the same or different");
+        if (!previousOrder.getCustomer().getId().equals(order.getCustomer().getId())
+            || !previousOrder.getProduct().getId().equals(order.getProduct().getId())
+            || !previousOrder.getDiscount().getId().equals(order.getDiscount().getId())
         ) {
-            logger.error("Can't update " +
-                    ": Customer or Product or Discount is not same " +
-                    ": Only Quantity can be updated");
+            LOGGER.error("Can't update "
+                    + ": Customer or Product or Discount is not same "
+                    + ": Only Quantity can be updated");
             throw new CustomException("Can't update  "
                     + ": Customer or Product or Discount is not same "
                     + ": Only Quantity can be updated", order);
         }
         int requiredQuantity = previousOrder.getQuantity() - order.getQuantity();
         if (requiredQuantity == 0) {
-            logger.error("No change in previous and current quantity : not updated");
+            LOGGER.error("No change in previous and current quantity : not updated");
             throw new CustomException("No change in previous and current quantity", null);
         } else if (requiredQuantity < 0) { //increase in quantity
-            logger.info("Product quantity increased : Checking is Product available");
-            if (Boolean.TRUE.equals(isProductsAvailable(order.getProduct(), -requiredQuantity))) {
+            LOGGER.info("Product quantity increased : Checking is Product available");
+            if (Boolean.TRUE.equals(isProductsAvailable(previousProduct, -requiredQuantity))) {
                 // here requiredQuantity is negative, hence decreases overall quantity
                 previousProduct.setCount(previousProduct.getCount() + requiredQuantity);
                 productService.updateProduct(previousProduct.getId(), previousProduct);
                 order.setId(orderId);
-                order.setAmount(findAmount(order));
-                logger.info("Updated Order, product, orderAmount");
+                order.setAmount(findAmount(order, previousProduct));
+                LOGGER.info("Updated Order, product, orderAmount");
                 return orderRepository.save(order);
             } else {
-                logger.error("Ordered quantity is more then quantity left in stock : not updated");
+                LOGGER.error("Ordered quantity is more then quantity left in stock : not updated");
                 throw new CustomException("Can't update the order :"
                         + " Ordered quantity is more then quantity left in stock", null);
             }
         } else { // requiredQuantity > 0  // decrease in quantity
-        logger.info("Product quantity decreased");
-        order.setId(orderId);
-        previousProduct.setCount(previousProduct.getCount() + requiredQuantity); // here requiredQuantity is positive
-        productService.updateProduct(previousProduct.getId(), previousProduct); //increase quantity, save
-        logger.info("Checking backorder which can be fulfilled");
-        removeFromBackOrder(previousProduct, requiredQuantity); //remove from backorder
-        order.setAmount(findAmount(order)); // update amount
-        logger.info("Updated Order, product, orderAmount");
-        return orderRepository.save(order); //update order
+            LOGGER.info("Product quantity decreased");
+            order.setId(orderId);
+            previousProduct.setCount(previousProduct.getCount() + requiredQuantity); // here requiredQuantity is positive
+            productService.updateProduct(previousProduct.getId(), previousProduct); //increase quantity, save
+            LOGGER.info("Checking backorder which can be fulfilled");
+            removeFromBackOrder(previousProduct, requiredQuantity); //remove from backorder
+            order.setAmount(findAmount(order, previousProduct)); // update amount
+            LOGGER.info("Updated Order, product, orderAmount");
+            return orderRepository.save(order); //update order
         }
     }
     /**
@@ -268,7 +275,7 @@ public class OrderService {
      * @throws ResourceNotFoundException If the order with the given ID does not exist.
      */
     public Boolean deleteOrder(final Long orderId) {
-        logger.info("Deleting order with Id : {}", orderId);
+        LOGGER.info("Deleting order with Id : {}", orderId);
         Order optionalOrder = orderRepository
                 .findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException(ORDERCONSTANT, "Id", orderId));
@@ -278,23 +285,23 @@ public class OrderService {
              * then check backorder if it can be fulfilled then send notification and delete that backorder from backorder table.
              * reset discount - optional
              */
-            logger.info("Updating product");
+            LOGGER.info("Updating product");
             Product product = optionalOrder.getProduct();
             Long productId = product.getId();
             product.setCount(product.getCount() + optionalOrder.getQuantity());
             Product updatedProduct = productService.updateProduct(productId, product);
-            logger.info("Product quantity increased in product");
+            LOGGER.info("Product quantity increased in product");
             /**
              * Atomic Integer is used because the variable inside lambda expression should be final
              * Therefor we can not use productQuantity = productQuantity - b.getQuantity(); in lambda expression
              */
-            logger.info("Checking backorder which can be fulfilled");
+            LOGGER.info("Checking backorder which can be fulfilled");
             removeFromBackOrder(updatedProduct, updatedProduct.getCount());
             orderRepository.deleteById(orderId);
-            logger.info("Order deleted with Id : {}", orderId);
+            LOGGER.info("Order deleted with Id : {}", orderId);
             return true;
         } else {
-            logger.info("Order not available with Id : {}", orderId);
+            LOGGER.info("Order not available with Id : {}", orderId);
             return false;
         }
     }
@@ -308,14 +315,14 @@ public class OrderService {
      */
     private void removeFromBackOrder(final Product updatedProduct, final int quantity) {
         AtomicInteger productQuantity = new AtomicInteger(quantity);
-        logger.info("Fetching all backorder associated with Ordered product");
+        LOGGER.info("Fetching all backorder associated with Ordered product");
         List<Backorder> backorderList = backorderService.getAllBackordersByProductId(updatedProduct.getId());
-        logger.info("performing operation on backorder.");
+        LOGGER.info("performing operation on backorder.");
         backorderList.forEach(backorder -> {
             if (backorder.getQuantity() <= productQuantity.get()) {
                 sendNotification(backorder); // send notification or mail that the product is available now.
                 backorderService.deleteBackorder(backorder.getId()); // Delete backorder
-                logger.info("Backorder with Id : {} is fulfilled, Backorder : {}", backorder.getId(), backorder);
+                LOGGER.info("Backorder with Id : {} is fulfilled, Backorder : {}", backorder.getId(), backorder);
                 productQuantity.addAndGet(-backorder.getQuantity()); // Reduce product quantity
             }
         });
@@ -327,7 +334,8 @@ public class OrderService {
      * @param backorder The backorder for which the notification is being sent.
      */
     private void sendNotification(final Backorder backorder) {
-        logger.info("Backorder fulfilled, notification send to respective customer");
+        LOGGER.info("Backorder fulfilled, notification send to respective customer");
         /** implement method not yet implemented. */
     }
+
 }

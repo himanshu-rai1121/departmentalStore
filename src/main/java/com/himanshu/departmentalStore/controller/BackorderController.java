@@ -2,12 +2,8 @@ package com.himanshu.departmentalStore.controller;
 
 import com.himanshu.departmentalStore.dto.BackOrderRequestBody;
 import com.himanshu.departmentalStore.model.Backorder;
-import com.himanshu.departmentalStore.model.Customer;
-import com.himanshu.departmentalStore.model.Product;
 import com.himanshu.departmentalStore.service.BackorderService;
-import com.himanshu.departmentalStore.service.CustomerService;
-import com.himanshu.departmentalStore.service.DiscountService;
-import com.himanshu.departmentalStore.service.ProductService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -30,8 +25,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/backorders")
 public class BackorderController {
-
-    private static final Logger logger = LoggerFactory.getLogger(BackorderController.class);
+    /**
+     * Logger for logging messages related to BackorderController class.
+     * This logger is used to log various messages, such as debug, info, error, etc.,
+     * related to the operations performed within the BackorderController class.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(BackorderController.class);
 
 
     /**
@@ -39,23 +38,12 @@ public class BackorderController {
      */
     @Autowired
     private BackorderService backorderService;
-    /**
-     * The ProductService responsible for handling product-related business logic.
-     */
-    @Autowired
-    private ProductService productService;
 
     /**
-     * The CustomerService responsible for handling customer-related business logic.
+     * The ModelMapper responsible for converting BackorderRequestBody (dto) to Backorder.
      */
     @Autowired
-    private CustomerService customerService;
-
-    /**
-     * The DiscountService responsible for handling discount-related business logic.
-     */
-    @Autowired
-    private DiscountService discountService;
+    private ModelMapper modelMapper;
 
     /**
      * Retrieves all backorders.
@@ -63,9 +51,9 @@ public class BackorderController {
      */
     @GetMapping
     public ResponseEntity<List<Backorder>> getAllBackorders() {
-        logger.info("Received request to fetch all backorders");
+        LOGGER.info("Received request to fetch all backorders");
         List<Backorder> backorders = backorderService.getAllBackorders();
-        logger.info("Fetched backorders");
+        LOGGER.info("Fetched backorders");
         return ResponseEntity.ok(backorders);
     }
 
@@ -76,9 +64,9 @@ public class BackorderController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Backorder> getBackorderById(@PathVariable("id") final Long id) {
-        logger.info("Received request to fetch backorder by ID: {}", id);
+        LOGGER.info("Received request to fetch backorder by ID: {}", id);
         Backorder backorder = backorderService.getBackorderById(id);
-        logger.info("Fetched backorder with Id: {}", id);
+        LOGGER.info("Fetched backorder with Id: {}", id);
         return ResponseEntity.ok(backorder);
     }
 
@@ -89,17 +77,16 @@ public class BackorderController {
      */
     @PostMapping
     public ResponseEntity<Backorder> createBackorder(@RequestBody final BackOrderRequestBody backOrderRequestBody) {
-        logger.info("Received request to create new backorder with request body: {}", backOrderRequestBody);
-        logger.info("Converting RequestBody to backorder");
+        LOGGER.info("Received request to create new backorder with request body: {}", backOrderRequestBody);
+        LOGGER.info("Converting RequestBody to backorder");
         Backorder backorder = backorderDtoToBackorder(backOrderRequestBody);
-        logger.info("RequestBody converted to backorder");
+        LOGGER.info("RequestBody converted to backorder");
         Backorder createdBackorder = backorderService.saveBackorder(backorder);
-        logger.info("Backorder created with ID : {}", createdBackorder.getId());
+        LOGGER.info("Backorder created with ID : {}", createdBackorder.getId());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(createdBackorder);
     }
-
 
     /**
      * Updates an existing backorder.
@@ -109,14 +96,15 @@ public class BackorderController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Backorder> updateBackorder(@PathVariable("id") final Long id, @RequestBody final BackOrderRequestBody backOrderRequestBody) {
-        logger.info("Received request to update backorder with ID {}: {}", id, backOrderRequestBody);
-        logger.info("Converting RequestBody to backorder");
+        LOGGER.info("Received request to update backorder with ID {}: {}", id, backOrderRequestBody);
+        LOGGER.info("Converting RequestBody to backorder");
         Backorder backorder = backorderDtoToBackorder(backOrderRequestBody);
-        logger.info("RequestBody converted to backorder");
+        LOGGER.info("RequestBody converted to backorder");
         Backorder updatedBackorder = backorderService.updateBackorder(id, backorder);
-        logger.info("Backorder updated with ID : {}", updatedBackorder.getId());
+        LOGGER.info("Backorder updated with ID : {}", updatedBackorder.getId());
         return ResponseEntity.ok(updatedBackorder);
     }
+
     /**
      * Deletes a backorder by its ID.
      * @param id The ID of the backorder to delete
@@ -124,48 +112,20 @@ public class BackorderController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBackorder(@PathVariable("id") final Long id) {
-        logger.info("Received request to delete backorder with ID: {}", id);
-        boolean deleted = backorderService.deleteBackorder(id);
-        if (deleted) {
-            logger.info("Backorder deleted with ID: {}", id);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Resource with ID " + id + " deleted successfully.");
-        } else {
-            logger.error("No backorder found with ID: {}", id);
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("Resource with ID " + id + " not found.");
-        }
+        LOGGER.info("Received request to delete backorder with ID: {}", id);
+        backorderService.deleteBackorder(id);
+        LOGGER.info("Backorder deleted with ID: {}", id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Resource with ID " + id + " deleted successfully.");
     }
+
     /**
      * Converts a BackOrderRequestBody object to a Backorder object.
-     * @param orderRequestBody The request body containing backorder details
+     * @param backorderRequestBody The request body containing backorder details
      * @return The converted Backorder object
      */
-    private Backorder backorderDtoToBackorder(final BackOrderRequestBody orderRequestBody) {
-        Customer customer = customerService.getCustomerById(orderRequestBody.getCustomerId());
-        Product product = productService.getProductById(orderRequestBody.getProductId());
-
-        Backorder backorder = new Backorder();
-        backorder.setProduct(product);
-        backorder.setCustomer(customer);
-        backorder.setTimestamp(LocalDateTime.now());
-        backorder.setQuantity(orderRequestBody.getQuantity());
-        return  backorder;
+    private Backorder backorderDtoToBackorder(final BackOrderRequestBody backorderRequestBody) {
+        return this.modelMapper.map(backorderRequestBody, Backorder.class);
     }
-//    @DeleteMapping("/{id}")
-//    public CompletableFuture<ResponseEntity<String>> deleteBackorder(@PathVariable("id") Long id){
-//        return backorderService.deleteBackorder(id)
-//                .thenApply(deleted -> {
-////                    if (deleted.booleanValue()) {
-//                    if (deleted) {
-//                        return ResponseEntity.status(HttpStatus.OK).body("Resource with ID " + id + " deleted successfully.");
-//                    } else {
-//                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource with ID " + id + " not found.");
-//                    }
-//                })
-//                .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the consumer."));
-//    }
 }
-

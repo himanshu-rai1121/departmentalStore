@@ -16,10 +16,15 @@ import java.util.List;
 @Service
 public class CustomerService {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
+    /**
+     * Logger for logging messages related to CustomerService class.
+     * This logger is used to log various messages, such as debug, info, error, etc.,
+     * related to the operations performed within the CustomerService class.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
     /**
-     * Constant representing the entity type - Customer
+     * Constant representing the entity type - Customer.
      */
     private static final String CUSTOMERCONSTANT = "Customer";
 
@@ -35,9 +40,9 @@ public class CustomerService {
      * @return A list of all customers.
      */
     public List<Customer> getAllCustomers() {
-        logger.info("Fetching all customers from the database");
+        LOGGER.info("Fetching all customers from the database");
         List<Customer> customers = customerRepository.findAll();
-        logger.info("Fetched {} customers", customers.size());
+        LOGGER.info("Fetched {} customers", customers.size());
         return customers;
     }
 
@@ -48,11 +53,11 @@ public class CustomerService {
      * @throws ResourceNotFoundException If the customer with the given ID is not found.
      */
     public Customer getCustomerById(final Long id) {
-        logger.info("Fetching customer with ID {}", id);
+        LOGGER.info("Fetching customer with ID {}", id);
         Customer customer = customerRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(CUSTOMERCONSTANT, "Id", id));
-        logger.info("Fetched customer: {}", customer);
+        LOGGER.info("Fetched customer: {}", customer);
         return customer;
     }
 
@@ -62,9 +67,8 @@ public class CustomerService {
      * @return The saved or updated customer.
      */
     public Customer saveCustomer(final Customer customer) {
-        logger.info("Saving new customer: {}", customer);
-        Customer savedCustomer = customerRepository.save(customer);
-        return savedCustomer;
+        LOGGER.info("Saving new customer: {}", customer);
+        return customerRepository.save(customer);
     }
 
 
@@ -76,13 +80,13 @@ public class CustomerService {
      * @throws ResourceNotFoundException If the customer with the given ID is not found.
      */
     public Customer updateCustomer(final Long id, final Customer customer) {
-        logger.info("Updating customer with ID {}: {}", id, customer);
+        LOGGER.info("Updating customer with ID {}: {}", id, customer);
         boolean isCustomerExist = customerRepository.existsById(id);
         if (isCustomerExist) {
             customer.setId(id);
             return customerRepository.save(customer);
         } else {
-            logger.error("Customer with ID {} not found", id);
+            LOGGER.error("Customer with ID {} not found", id);
             throw new ResourceNotFoundException(CUSTOMERCONSTANT, "Id", id);
         }
     }
@@ -95,7 +99,7 @@ public class CustomerService {
      * @throws ResourceNotFoundException If the customer with the given ID is not found.
      */
     public Boolean deleteCustomer(final Long id) {
-        logger.info("Deleting customer with ID {}", id);
+        LOGGER.info("Deleting customer with ID {}", id);
         Customer optionalCustomer = customerRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(CUSTOMERCONSTANT, "Id", id));
@@ -106,5 +110,4 @@ public class CustomerService {
             return false;
         }
     }
-
 }

@@ -7,10 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,14 +34,16 @@ public class Order {
     /**
      * The product associated with the order.
      */
-    @ManyToOne
+    @NotNull(message = "Give the product id")
+    @ManyToOne(optional = false)
     @JoinColumn(name = "product_id")
     private Product product;
 
     /**
      * The customer who placed the order.
      */
-    @ManyToOne
+    @NotNull(message = "Give the customer_id")
+    @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -54,6 +55,7 @@ public class Order {
     /**
      * The quantity of the product ordered.
      */
+    @NotNull(message = "Please provide the quantity")
     private int quantity;
 
     /**
