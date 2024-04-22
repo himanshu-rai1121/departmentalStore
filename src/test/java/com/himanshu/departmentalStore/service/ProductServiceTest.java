@@ -98,6 +98,7 @@ class ProductServiceTest {
         product.setAvailability(true);
         when(productRepository.save(product)).thenReturn(product);
         when(productRepository.existsById(productId)).thenReturn(true);
+        when(productRepository.findById(productId)).thenReturn(Optional.of(product));
 
         product.setName("Updated Product");
         // Test

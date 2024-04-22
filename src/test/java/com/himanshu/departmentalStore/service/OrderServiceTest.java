@@ -175,11 +175,6 @@ class OrderServiceTest {
         Discount discount = new Discount();
         discount.setName("50% Discount");
         discount.setValue(new BigDecimal(50.00));
-//        String startDateTimeString = "2024-03-15 00:00:00";
-//        String endDateTimeString = "2025-03-15T00:00:00";
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-//        discount.setStartDateTime(LocalDateTime.parse(startDateTimeString, formatter));
-//        discount.setEndDateTime(LocalDateTime.parse(endDateTimeString, formatter));
         discount.setStartDateTime(LocalDateTime.now().minusDays(7));
         discount.setEndDateTime(LocalDateTime.now().plusDays(10));
         discount.setDescription("Enjoy 50% discount on all orders.");

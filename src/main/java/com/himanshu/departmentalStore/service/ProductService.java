@@ -1,6 +1,7 @@
 package com.himanshu.departmentalStore.service;
 
 import com.himanshu.departmentalStore.exception.ResourceNotFoundException;
+import com.himanshu.departmentalStore.model.Backorder;
 import com.himanshu.departmentalStore.model.Product;
 import com.himanshu.departmentalStore.repository.ProductRepository;
 import org.slf4j.Logger;
@@ -34,6 +35,12 @@ public class ProductService {
      */
     @Autowired
     private ProductRepository productRepository;
+
+    /**
+     * service for managing Backorder.
+     */
+    @Autowired
+    private BackorderService backorderService;
 
     /**
      * Retrieves all products from the database.
@@ -80,8 +87,16 @@ public class ProductService {
         LOGGER.info("Updating product with ID {}: {}", id, product);
         boolean isProductExist  = productRepository.existsById(id);
         if (isProductExist) {
+            Product previousProduct = productRepository
+                    .findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
             product.setId(id);
+            if(product.getCount() > previousProduct.getCount()) {
+                backorderService.removeFromBackOrder(previousProduct.getId(), product.getCount());
+            }
             return productRepository.save(product);
+            // if product quantity is increased then handel backorder
+
         } else {
             LOGGER.error("Product with ID {} not found", id);
             throw new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id);

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Service class for managing Backorder entities.
@@ -26,7 +27,7 @@ public class BackorderService {
     /**
      * Constant representing the entity type - Backorder.
      */
-    private static final String BACKORDERCONSTANT = "Customer";
+    private static final String BACKORDERCONSTANT = "Backorder";
 
     /**
      * Autowired field for accessing the BackorderRepository.
@@ -115,6 +116,37 @@ public class BackorderService {
         } else {
             return false;
         }
+    }
+    /**
+     * Removes fulfilled backorders associated with the updated product quantity.
+     * This method retrieves all backorders associated with the updated product.
+     * It then iterates through the list of backorders, checking if each backorder can be fulfilled with the updated product quantity.
+     * If a backorder can be fulfilled, it sends a notification or mail and deletes the backorder from the database.
+     * @param productId The productId which quantity is updated.
+     * @param quantity The updated quantity of the product.
+     */
+    public void removeFromBackOrder(final Long productId, final int quantity) {
+        AtomicInteger productQuantity = new AtomicInteger(quantity);
+        LOGGER.info("Fetching all backorder associated with Ordered product");
+        List<Backorder> backorderList = getAllBackordersByProductId(productId);
+        LOGGER.info("performing operation on backorder.");
+        backorderList.forEach(backorder -> {
+            if (backorder.getQuantity() <= productQuantity.get()) {
+                sendNotification(backorder); // send notification or mail that the product is available now.
+                deleteBackorder(backorder.getId()); // Delete backorder
+                LOGGER.info("Backorder with Id : {} is fulfilled, Backorder : {}", backorder.getId(), backorder);
+                productQuantity.addAndGet(-backorder.getQuantity()); // Reduce product quantity
+            }
+        });
+    }
+    /**
+     * Sends a notification or mail to inform the customer that the product associated with the backorder is now available.
+     * This method is responsible for sending notifications to customers when their backorders can be fulfilled.
+     * @param backorder The backorder for which the notification is being sent.
+     */
+    private void sendNotification(final Backorder backorder) {
+        LOGGER.info("Backorder fulfilled, notification send to respective customer");
+        /** implement method not yet implemented. */
     }
 
 }

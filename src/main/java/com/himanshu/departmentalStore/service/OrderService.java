@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Service class for managing orders in the departmental store system.
@@ -260,7 +259,7 @@ public class OrderService {
             previousProduct.setCount(previousProduct.getCount() + requiredQuantity); // here requiredQuantity is positive
             productService.updateProduct(previousProduct.getId(), previousProduct); //increase quantity, save
             LOGGER.info("Checking backorder which can be fulfilled");
-            removeFromBackOrder(previousProduct, requiredQuantity); //remove from backorder
+            backorderService.removeFromBackOrder(previousProduct.getId(), previousProduct.getCount()); //remove from backorder
             order.setAmount(findAmount(order, previousProduct)); // update amount
             LOGGER.info("Updated Order, product, orderAmount");
             return orderRepository.save(order); //update order
@@ -296,7 +295,7 @@ public class OrderService {
              * Therefor we can not use productQuantity = productQuantity - b.getQuantity(); in lambda expression
              */
             LOGGER.info("Checking backorder which can be fulfilled");
-            removeFromBackOrder(updatedProduct, updatedProduct.getCount());
+            backorderService.removeFromBackOrder(updatedProduct.getId(), updatedProduct.getCount());
             orderRepository.deleteById(orderId);
             LOGGER.info("Order deleted with Id : {}", orderId);
             return true;
@@ -305,37 +304,4 @@ public class OrderService {
             return false;
         }
     }
-    /**
-     * Removes fulfilled backorders associated with the updated product quantity.
-     * This method retrieves all backorders associated with the updated product.
-     * It then iterates through the list of backorders, checking if each backorder can be fulfilled with the updated product quantity.
-     * If a backorder can be fulfilled, it sends a notification or mail and deletes the backorder from the database.
-     * @param updatedProduct The product with its quantity updated.
-     * @param quantity The updated quantity of the product.
-     */
-    private void removeFromBackOrder(final Product updatedProduct, final int quantity) {
-        AtomicInteger productQuantity = new AtomicInteger(quantity);
-        LOGGER.info("Fetching all backorder associated with Ordered product");
-        List<Backorder> backorderList = backorderService.getAllBackordersByProductId(updatedProduct.getId());
-        LOGGER.info("performing operation on backorder.");
-        backorderList.forEach(backorder -> {
-            if (backorder.getQuantity() <= productQuantity.get()) {
-                sendNotification(backorder); // send notification or mail that the product is available now.
-                backorderService.deleteBackorder(backorder.getId()); // Delete backorder
-                LOGGER.info("Backorder with Id : {} is fulfilled, Backorder : {}", backorder.getId(), backorder);
-                productQuantity.addAndGet(-backorder.getQuantity()); // Reduce product quantity
-            }
-        });
-    }
-
-    /**
-     * Sends a notification or mail to inform the customer that the product associated with the backorder is now available.
-     * This method is responsible for sending notifications to customers when their backorders can be fulfilled.
-     * @param backorder The backorder for which the notification is being sent.
-     */
-    private void sendNotification(final Backorder backorder) {
-        LOGGER.info("Backorder fulfilled, notification send to respective customer");
-        /** implement method not yet implemented. */
-    }
-
 }
