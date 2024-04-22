@@ -226,7 +226,7 @@ public class OrderService {
         LOGGER.info("Check if the customer, product, and discount are the same or different");
         if (!previousOrder.getCustomer().getId().equals(order.getCustomer().getId())
             || !previousOrder.getProduct().getId().equals(order.getProduct().getId())
-            || !previousOrder.getDiscount().getId().equals(order.getDiscount().getId())
+//            || !previousOrder.getDiscount().getId().equals(order.getDiscount().getId())
         ) {
             LOGGER.error("Can't update "
                     + ": Customer or Product or Discount is not same "

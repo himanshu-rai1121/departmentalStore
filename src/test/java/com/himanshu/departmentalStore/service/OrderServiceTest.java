@@ -33,6 +33,9 @@ class OrderServiceTest {
     @Mock
     private BackorderService backorderService;
 
+    @Mock
+    private DiscountService discountService;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -74,6 +77,9 @@ class OrderServiceTest {
         // Mocking behavior
         Order order = createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), createDiscountMock(), 5);
         when(orderRepository.save(order)).thenReturn(order);
+        when(discountService.getDiscountById(any())).thenReturn(null);
+        when(productService.getProductById(any())).thenReturn(order.getProduct());
+
 
         // Test
         Order result = orderService.createOrder(order);
@@ -94,6 +100,7 @@ class OrderServiceTest {
         when(orderRepository.save(updatedOrder)).thenReturn(updatedOrder);
         when(orderRepository.findById(orderId)).thenReturn(Optional.of(previousOrder));
         when(productService.updateProduct(orderId, updatedOrder.getProduct())).thenReturn(updatedOrder.getProduct());
+        when(discountService.getDiscountById(any())).thenReturn(previousOrder.getDiscount());
 
         // Test
         Order result = orderService.updateOrder(orderId, updatedOrder);
