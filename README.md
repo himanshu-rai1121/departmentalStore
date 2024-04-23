@@ -1,6 +1,6 @@
 # Departmental Store Management System
 
-Welcome to our Departmental Store Management System! This repository houses the codebase for a robust system designed to efficiently manage customers, products, orders, and discounts. Below, you'll find an overview of the system's features and guidelines for using it effectively.
+Welcome to our Departmental Store Management System! This repository houses the codebase for a robust system designed to efficiently manage customers, products, orders, backorders, and discounts. Below, you'll find an overview of the system's features and guidelines for using it effectively.
 
 ## Features
 
