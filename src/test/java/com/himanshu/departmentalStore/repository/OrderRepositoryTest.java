@@ -5,16 +5,18 @@ import com.himanshu.departmentalStore.model.Customer;
 import com.himanshu.departmentalStore.model.Order;
 import com.himanshu.departmentalStore.model.Product;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest(classes = DepartmentalStoreApplication.class)
 class OrderRepositoryTest {
@@ -28,6 +30,13 @@ class OrderRepositoryTest {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @BeforeEach
+    void setUp() {
+        // Clear any existing data before each test
+        orderRepository.deleteAll();
+        productRepository.deleteAll();
+        customerRepository.deleteAll();
+    }
     @AfterEach
     void tearDown() {
         orderRepository.deleteAll();
@@ -36,64 +45,14 @@ class OrderRepositoryTest {
     }
 
     @Test
-    void testSaveOrder() {
-        // Create a sample product
-        Product product = new Product();
-        product.setName("Sample Product");
-        product.setPrice(BigDecimal.valueOf(10.50));
-        product.setCount(100);
-        product.setAvailability(true);
-        Product savedProduct = productRepository.save(product);
-
-        // Create a sample customer
-        Customer customer = new Customer();
-        customer.setFullName("John Doe");
-        customer.setAddress("123 Main St");
-        customer.setContactNumber("1234567890");
-        Customer savedCustomer = customerRepository.save(customer);
-
-        // Create a sample order
-        Order order = new Order();
-        order.setProduct(savedProduct);
-        order.setCustomer(savedCustomer);
-        order.setTimestamp(LocalDateTime.now());
-        order.setQuantity(5);
-        Order savedOrder = orderRepository.save(order);
-
-        // Check if the order is saved with an ID
-        assertNotNull(savedOrder.getId());
-    }
-
-    @Test
     void testFindAllOrders() {
         // Save sample orders
-        // Create a sample product
-        Product product = new Product();
-        product.setName("Sample Product");
-        product.setPrice(BigDecimal.valueOf(10.50));
-        product.setCount(100);
-        product.setAvailability(true);
-        Product savedProduct = productRepository.save(product);
+        Order order1 = createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), 5);
 
-        // Create a sample customer
-        Customer customer = new Customer();
-        customer.setFullName("John Doe");
-        customer.setAddress("123 Main St");
-        customer.setContactNumber("1234567890");
-        Customer savedCustomer = customerRepository.save(customer);
-
-        Order order1 = new Order();
-        order1.setProduct(savedProduct);
-        order1.setCustomer(savedCustomer);
-        order1.setTimestamp(LocalDateTime.now());
-        order1.setQuantity(5);
         orderRepository.save(order1);
 
-        Order order2 = new Order();
-        order2.setProduct(savedProduct);
-        order2.setCustomer(savedCustomer);
-        order2.setTimestamp(LocalDateTime.now());
-        order2.setQuantity(10);
+        Order order2 = createOrderMock(2L, createProductMock(), createCustomerMock(), LocalDateTime.now(), 10);
+
         orderRepository.save(order2);
 
         // Retrieve all orders
@@ -105,27 +64,8 @@ class OrderRepositoryTest {
 
     @Test
     void testFindById() {
-        // Create a sample product
-        Product product = new Product();
-        product.setName("Sample Product");
-        product.setPrice(BigDecimal.valueOf(10.50));
-        product.setCount(100);
-        product.setAvailability(true);
-        Product savedProduct = productRepository.save(product);
+        Order order = createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), 5);
 
-        // Create a sample customer
-        Customer customer = new Customer();
-        customer.setFullName("John Doe");
-        customer.setAddress("123 Main St");
-        customer.setContactNumber("1234567890");
-        Customer savedCustomer = customerRepository.save(customer);
-
-        // Create a sample order
-        Order order = new Order();
-        order.setProduct(savedProduct);
-        order.setCustomer(savedCustomer);
-        order.setTimestamp(LocalDateTime.now());
-        order.setQuantity(5);
         Order savedOrder = orderRepository.save(order);
 
         // Retrieve the order by ID
@@ -138,28 +78,18 @@ class OrderRepositoryTest {
     }
 
     @Test
+    void testSaveOrder() {
+        Order order = createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), 5);
+
+        Order savedOrder = orderRepository.save(order);
+
+        // Check if the order is saved with an ID
+        assertNotNull(savedOrder.getId());
+    }
+    @Test
     void testUpdateOrder() {
-        // Create a sample product
-        Product product = new Product();
-        product.setName("Sample Product");
-        product.setPrice(BigDecimal.valueOf(10.50));
-        product.setCount(100);
-        product.setAvailability(true);
-        Product savedProduct = productRepository.save(product);
+        Order order = createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), 5);
 
-        // Create a sample customer
-        Customer customer = new Customer();
-        customer.setFullName("John Doe");
-        customer.setAddress("123 Main St");
-        customer.setContactNumber("1234567890");
-        Customer savedCustomer = customerRepository.save(customer);
-
-        // Create a sample order
-        Order order = new Order();
-        order.setProduct(savedProduct);
-        order.setCustomer(savedCustomer);
-        order.setTimestamp(LocalDateTime.now());
-        order.setQuantity(5);
         Order savedOrder = orderRepository.save(order);
 
         // Update the order's quantity
@@ -179,27 +109,8 @@ class OrderRepositoryTest {
 
     @Test
     void testDeleteOrder() {
-        // Create a sample product
-        Product product = new Product();
-        product.setName("Sample Product");
-        product.setPrice(BigDecimal.valueOf(10.50));
-        product.setCount(100);
-        product.setAvailability(true);
-        Product savedProduct = productRepository.save(product);
+        Order order = createOrderMock(1L, createProductMock(), createCustomerMock(), LocalDateTime.now(), 5);
 
-        // Create a sample customer
-        Customer customer = new Customer();
-        customer.setFullName("John Doe");
-        customer.setAddress("123 Main St");
-        customer.setContactNumber("1234567890");
-        Customer savedCustomer = customerRepository.save(customer);
-
-        // Create a sample order
-        Order order = new Order();
-        order.setProduct(savedProduct);
-        order.setCustomer(savedCustomer);
-        order.setTimestamp(LocalDateTime.now());
-        order.setQuantity(5);
         Order savedOrder = orderRepository.save(order);
 
         // Delete the order
@@ -207,5 +118,37 @@ class OrderRepositoryTest {
 
         // Check if the order is deleted
         assertFalse(orderRepository.existsById(savedOrder.getId()));
+    }
+
+
+    private Order createOrderMock(Long id, Product product, Customer customer, LocalDateTime timestamp, int quantity) {
+        Order order = new Order();
+        order.setId(id);
+        order.setProduct(product);
+        order.setCustomer(customer);
+        order.setTimestamp(timestamp);
+        order.setQuantity(quantity);
+        return order;
+    }
+
+    private Product createProductMock() {
+        Product product = new Product();
+        product.setId(1L);
+        product.setName("Sample Product");
+        product.setDescription("Sample Description");
+        product.setPrice(BigDecimal.valueOf(10.50));
+        product.setExpiry(null);
+        product.setCount(100);
+        product.setAvailability(true);
+        return productRepository.save(product);
+    }
+
+    private Customer createCustomerMock() {
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setFullName("John Doe");
+        customer.setAddress("123 Main St");
+        customer.setContactNumber("1234567890");
+        return customerRepository.save(customer);
     }
 }

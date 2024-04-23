@@ -1,0 +1,117 @@
+2024-04-23 15:06:32.363 [background-preinit] INFO  --- o.h.validator.internal.util.Version     :   HV000001: Hibernate Validator 8.0.1.Final
+2024-04-23 15:06:32.426 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   Starting DepartmentalStoreApplication using Java 21.0.2 with PID 10844 (C:\Users\himanshu.kumar\IdeaProjects\departmentalStore\target\classes started by Himanshu.Kumar in C:\Users\himanshu.kumar\IdeaProjects\departmentalStore)
+2024-04-23 15:06:32.428 [main] DEBUG --- c.h.d.DepartmentalStoreApplication     :   Running with Spring Boot v3.2.4, Spring v6.1.5
+2024-04-23 15:06:32.434 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   No active profile set, falling back to 1 default profile: "default"
+2024-04-23 15:06:33.383 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-23 15:06:33.462 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Finished Spring Data repository scanning in 70 ms. Found 5 JPA repository interfaces.
+2024-04-23 15:06:34.060 [main] INFO  --- o.s.b.w.e.tomcat.TomcatWebServer     :   Tomcat initialized with port 8080 (http)
+2024-04-23 15:06:34.072 [main] INFO  --- o.a.coyote.http11.Http11NioProtocol     :   Initializing ProtocolHandler ["http-nio-8080"]
+2024-04-23 15:06:34.074 [main] INFO  --- o.a.catalina.core.StandardService     :   Starting service [Tomcat]
+2024-04-23 15:06:34.074 [main] INFO  --- o.a.catalina.core.StandardEngine     :   Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-04-23 15:06:34.149 [main] INFO  --- o.a.c.c.C.[Tomcat].[localhost].[/]     :   Initializing Spring embedded WebApplicationContext
+2024-04-23 15:06:34.149 [main] INFO  --- o.s.b.w.s.c.ServletWebServerApplicationContext     :   Root WebApplicationContext: initialization completed in 1670 ms
+2024-04-23 15:06:34.370 [main] INFO  --- o.h.jpa.internal.util.LogHelper     :   HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-23 15:06:34.450 [main] INFO  --- org.hibernate.Version     :   HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-04-23 15:06:34.491 [main] INFO  --- o.h.c.i.RegionFactoryInitiator     :   HHH000026: Second-level cache disabled
+2024-04-23 15:06:34.774 [main] INFO  --- o.s.o.j.p.SpringPersistenceUnitInfo     :   No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-04-23 15:06:34.806 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Starting...
+2024-04-23 15:06:35.174 [main] INFO  --- com.zaxxer.hikari.pool.HikariPool     :   HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1073c664
+2024-04-23 15:06:35.177 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Start completed.
+2024-04-23 15:06:36.226 [main] INFO  --- o.h.e.t.j.p.i.JtaPlatformInitiator     :   HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-04-23 15:06:36.322 [main] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-23 15:06:37.338 [main] WARN  --- o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration     :   spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-23 15:06:37.851 [main] INFO  --- o.a.coyote.http11.Http11NioProtocol     :   Starting ProtocolHandler ["http-nio-8080"]
+2024-04-23 15:06:37.881 [main] INFO  --- o.s.b.w.e.tomcat.TomcatWebServer     :   Tomcat started on port 8080 (http) with context path ''
+2024-04-23 15:06:37.897 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   Started DepartmentalStoreApplication in 5.909 seconds (process running for 6.591)
+2024-04-23 15:06:55.180 [http-nio-8080-exec-1] INFO  --- o.a.c.c.C.[Tomcat].[localhost].[/]     :   Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-04-23 15:06:55.180 [http-nio-8080-exec-1] INFO  --- o.s.web.servlet.DispatcherServlet     :   Initializing Servlet 'dispatcherServlet'
+2024-04-23 15:06:55.182 [http-nio-8080-exec-1] INFO  --- o.s.web.servlet.DispatcherServlet     :   Completed initialization in 2 ms
+2024-04-23 15:06:55.227 [http-nio-8080-exec-1] INFO  --- c.h.d.controller.BackorderController     :   Received request to fetch all backorders
+2024-04-23 15:06:55.227 [http-nio-8080-exec-1] INFO  --- c.h.d.service.BackorderService     :   Fetching all backorders
+2024-04-23 15:06:55.334 [http-nio-8080-exec-1] INFO  --- c.h.d.controller.BackorderController     :   Fetched backorders
+2024-04-23 15:07:09.312 [http-nio-8080-exec-3] INFO  --- c.h.d.controller.OrderController     :   Received request to create order.
+2024-04-23 15:07:09.313 [http-nio-8080-exec-3] INFO  --- c.h.d.controller.OrderController     :   Converting OrderRequestBody to Order.
+2024-04-23 15:07:09.320 [http-nio-8080-exec-3] INFO  --- c.h.d.controller.OrderController     :   OrderRequestBody converted to Order
+2024-04-23 15:07:09.321 [http-nio-8080-exec-3] INFO  --- c.h.d.service.OrderService     :   Placing order.
+2024-04-23 15:07:09.321 [http-nio-8080-exec-3] INFO  --- c.h.d.service.ProductService     :   Fetching product with ID 4
+2024-04-23 15:07:09.361 [http-nio-8080-exec-3] INFO  --- c.h.d.service.ProductService     :   Fetched product: com.himanshu.departmentalStore.model.Product@13c79579
+2024-04-23 15:07:09.361 [http-nio-8080-exec-3] INFO  --- c.h.d.service.OrderService     :   Checking isProductAvailable
+2024-04-23 15:07:09.361 [http-nio-8080-exec-3] ERROR --- c.h.d.service.OrderService     :   Product not available
+2024-04-23 15:07:09.362 [http-nio-8080-exec-3] INFO  --- c.h.d.service.OrderService     :   Creating Backorder
+2024-04-23 15:07:09.362 [http-nio-8080-exec-3] INFO  --- c.h.d.service.OrderService     :   Saving Backorder
+2024-04-23 15:07:09.362 [http-nio-8080-exec-3] INFO  --- c.h.d.service.BackorderService     :   Saving backorder
+2024-04-23 15:07:09.456 [http-nio-8080-exec-3] INFO  --- c.h.d.service.OrderService     :   Backorder saved with Id : 5
+2024-04-23 15:07:09.459 [http-nio-8080-exec-3] ERROR --- c.h.d.e.GlobalExceptionHandler     :   Custom Exception: Ordered quantity is more then quantity left in stock : Backorder created
+2024-04-23 15:07:16.973 [http-nio-8080-exec-4] INFO  --- c.h.d.controller.BackorderController     :   Received request to fetch all backorders
+2024-04-23 15:07:16.973 [http-nio-8080-exec-4] INFO  --- c.h.d.service.BackorderService     :   Fetching all backorders
+2024-04-23 15:07:16.982 [http-nio-8080-exec-4] INFO  --- c.h.d.controller.BackorderController     :   Fetched backorders
+2024-04-23 15:08:35.885 [SpringApplicationShutdownHook] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-23 15:08:35.892 [SpringApplicationShutdownHook] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown initiated...
+2024-04-23 15:08:35.949 [SpringApplicationShutdownHook] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown completed.
+2024-04-23 15:08:42.801 [background-preinit] INFO  --- o.h.validator.internal.util.Version     :   HV000001: Hibernate Validator 8.0.1.Final
+2024-04-23 15:08:42.868 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   Starting DepartmentalStoreApplication using Java 21.0.2 with PID 21660 (C:\Users\himanshu.kumar\IdeaProjects\departmentalStore\target\classes started by Himanshu.Kumar in C:\Users\himanshu.kumar\IdeaProjects\departmentalStore)
+2024-04-23 15:08:42.868 [main] DEBUG --- c.h.d.DepartmentalStoreApplication     :   Running with Spring Boot v3.2.4, Spring v6.1.5
+2024-04-23 15:08:42.869 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   No active profile set, falling back to 1 default profile: "default"
+2024-04-23 15:08:43.950 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-23 15:08:44.024 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Finished Spring Data repository scanning in 64 ms. Found 5 JPA repository interfaces.
+2024-04-23 15:08:44.802 [main] INFO  --- o.s.b.w.e.tomcat.TomcatWebServer     :   Tomcat initialized with port 8080 (http)
+2024-04-23 15:08:44.812 [main] INFO  --- o.a.coyote.http11.Http11NioProtocol     :   Initializing ProtocolHandler ["http-nio-8080"]
+2024-04-23 15:08:44.814 [main] INFO  --- o.a.catalina.core.StandardService     :   Starting service [Tomcat]
+2024-04-23 15:08:44.815 [main] INFO  --- o.a.catalina.core.StandardEngine     :   Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-04-23 15:08:44.887 [main] INFO  --- o.a.c.c.C.[Tomcat].[localhost].[/]     :   Initializing Spring embedded WebApplicationContext
+2024-04-23 15:08:44.887 [main] INFO  --- o.s.b.w.s.c.ServletWebServerApplicationContext     :   Root WebApplicationContext: initialization completed in 1964 ms
+2024-04-23 15:08:45.141 [main] INFO  --- o.h.jpa.internal.util.LogHelper     :   HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-23 15:08:45.286 [main] INFO  --- org.hibernate.Version     :   HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-04-23 15:08:45.323 [main] INFO  --- o.h.c.i.RegionFactoryInitiator     :   HHH000026: Second-level cache disabled
+2024-04-23 15:08:45.576 [main] INFO  --- o.s.o.j.p.SpringPersistenceUnitInfo     :   No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-04-23 15:08:45.603 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Starting...
+2024-04-23 15:08:46.049 [main] INFO  --- com.zaxxer.hikari.pool.HikariPool     :   HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@182e4365
+2024-04-23 15:08:46.051 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Start completed.
+2024-04-23 15:08:47.058 [main] INFO  --- o.h.e.t.j.p.i.JtaPlatformInitiator     :   HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-04-23 15:08:47.135 [main] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-23 15:08:48.076 [main] WARN  --- o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration     :   spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-23 15:08:48.348 [main] WARN  --- o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext     :   Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'handlerExceptionResolver' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Failed to instantiate [org.springframework.web.servlet.HandlerExceptionResolver]: Factory method 'handlerExceptionResolver' threw exception with message: Ambiguous @ExceptionHandler method mapped for [class com.himanshu.departmentalStore.exception.CustomException]: {public org.springframework.http.ResponseEntity com.himanshu.departmentalStore.exception.GlobalExceptionHandler.customException(java.lang.Exception), public org.springframework.http.ResponseEntity com.himanshu.departmentalStore.exception.GlobalExceptionHandler.customException(java.lang.Exception,org.springframework.http.HttpStatus)}
+2024-04-23 15:08:48.349 [main] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-23 15:08:48.351 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown initiated...
+2024-04-23 15:08:48.361 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown completed.
+2024-04-23 15:08:48.363 [main] INFO  --- o.a.catalina.core.StandardService     :   Stopping service [Tomcat]
+2024-04-23 15:08:48.375 [main] INFO  --- o.s.b.a.l.ConditionEvaluationReportLogger     :   
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-04-23 15:08:48.398 [main] ERROR --- o.s.boot.SpringApplication     :   Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'handlerExceptionResolver' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Failed to instantiate [org.springframework.web.servlet.HandlerExceptionResolver]: Factory method 'handlerExceptionResolver' threw exception with message: Ambiguous @ExceptionHandler method mapped for [class com.himanshu.departmentalStore.exception.CustomException]: {public org.springframework.http.ResponseEntity com.himanshu.departmentalStore.exception.GlobalExceptionHandler.customException(java.lang.Exception), public org.springframework.http.ResponseEntity com.himanshu.departmentalStore.exception.GlobalExceptionHandler.customException(java.lang.Exception,org.springframework.http.HttpStatus)}
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:648)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:636)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1335)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1165)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at com.himanshu.departmentalStore.DepartmentalStoreApplication.main(DepartmentalStoreApplication.java:10)
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.web.servlet.HandlerExceptionResolver]: Factory method 'handlerExceptionResolver' threw exception with message: Ambiguous @ExceptionHandler method mapped for [class com.himanshu.departmentalStore.exception.CustomException]: {public org.springframework.http.ResponseEntity com.himanshu.departmentalStore.exception.GlobalExceptionHandler.customException(java.lang.Exception), public org.springframework.http.ResponseEntity com.himanshu.departmentalStore.exception.GlobalExceptionHandler.customException(java.lang.Exception,org.springframework.http.HttpStatus)}
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:177)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644)
+	... 19 common frames omitted
+Caused by: java.lang.IllegalStateException: Ambiguous @ExceptionHandler method mapped for [class com.himanshu.departmentalStore.exception.CustomException]: {public org.springframework.http.ResponseEntity com.himanshu.departmentalStore.exception.GlobalExceptionHandler.customException(java.lang.Exception), public org.springframework.http.ResponseEntity com.himanshu.departmentalStore.exception.GlobalExceptionHandler.customException(java.lang.Exception,org.springframework.http.HttpStatus)}
+	at org.springframework.web.method.annotation.ExceptionHandlerMethodResolver.addExceptionMapping(ExceptionHandlerMethodResolver.java:114)
+	at org.springframework.web.method.annotation.ExceptionHandlerMethodResolver.<init>(ExceptionHandlerMethodResolver.java:78)
+	at org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver.initExceptionHandlerAdviceCache(ExceptionHandlerExceptionResolver.java:289)
+	at org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver.afterPropertiesSet(ExceptionHandlerExceptionResolver.java:256)
+	at org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport.addDefaultHandlerExceptionResolvers(WebMvcConfigurationSupport.java:1063)
+	at org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport.handlerExceptionResolver(WebMvcConfigurationSupport.java:1005)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:140)
+	... 20 common frames omitted

@@ -2,6 +2,8 @@ package com.himanshu.departmentalStore.exception;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
+
 import java.util.Optional;
 
 /**
@@ -21,15 +23,17 @@ public class CustomException  extends RuntimeException {
      * This can contain additional information related to the exception.
      */
     private final Optional<Object> body;
+    private final HttpStatus httpStatus;
 
     /**
      * Constructs a new CustomException with the specified message and body.
      * @param message The detail message (which is saved for later retrieval by the getMessage() method)
      * @param body    Optional additional information related to the exception
      */
-    public CustomException(final String message, final Object body) {
+    public CustomException(final String message, final Object body, final HttpStatus httpStatus) {
         super(message);
         this.message = message;
         this.body = Optional.ofNullable(body);
+        this.httpStatus = httpStatus;
     }
 }

@@ -7,15 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doNothing;
 
 class ProductServiceTest {
 
@@ -67,14 +68,9 @@ class ProductServiceTest {
     @Test
     void saveProduct() {
         // Mocking behavior
-        Product product = new Product();
-        product.setId(1L);
-        product.setName("Product 1");
-        product.setDescription("Description 1");
-        product.setPrice(BigDecimal.valueOf(10.99));
-        product.setExpiry(LocalDate.now().plusMonths(6));
-        product.setCount(100);
-        product.setAvailability(true);
+        Long productId = 1L;
+        Product product = createProductMock(productId, "Product 1", "Description 1",
+                BigDecimal.valueOf(10.99), LocalDate.now().plusMonths(6), 100, true);
         when(productRepository.save(product)).thenReturn(product);
 
         // Test
@@ -88,14 +84,8 @@ class ProductServiceTest {
     void updateProduct() {
         // Mocking behavior
         Long productId = 1L;
-        Product product = new Product();
-        product.setId(productId);
-        product.setName("Product 1");
-        product.setDescription("Description 1");
-        product.setPrice(BigDecimal.valueOf(10.99));
-        product.setExpiry(LocalDate.now().plusMonths(6));
-        product.setCount(100);
-        product.setAvailability(true);
+        Product product = createProductMock(productId, "Product 1", "Description 1",
+                BigDecimal.valueOf(10.99), LocalDate.now().plusMonths(6), 100, true);
         when(productRepository.save(product)).thenReturn(product);
         when(productRepository.existsById(productId)).thenReturn(true);
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));

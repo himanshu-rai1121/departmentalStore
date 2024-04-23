@@ -7,13 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doNothing;
 
 class CustomerServiceTest {
 
@@ -32,8 +33,8 @@ class CustomerServiceTest {
     void getAllCustomers() {
         // Mocking behavior
         List<Customer> customers = Arrays.asList(
-                createCustomerMock(1L, "John Doe", "123 Main St", "1234567890"),
-                createCustomerMock(2L, "Jane Smith", "456 Elm St", "9876543210")
+                createCustomerMock(1L, "John", "Delhi", "1234567890"),
+                createCustomerMock(2L, "Rahul", "Gurgaon", "9876543210")
         );
         when(customerRepository.findAll()).thenReturn(customers);
 
@@ -48,7 +49,7 @@ class CustomerServiceTest {
     void getCustomerById() {
         // Mocking behavior
         Long customerId = 1L;
-        Customer customer = createCustomerMock(customerId, "John Doe", "123 Main St", "1234567890");
+        Customer customer = createCustomerMock(customerId, "John", "Delhi", "1234567890");
         when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));
 
         // Test
@@ -64,14 +65,13 @@ class CustomerServiceTest {
         // Mocking behavior
         Customer customer = new Customer();
         customer.setId(1L);
-        customer.setFullName("John Doe");
-        customer.setAddress("123 Main St");
+        customer.setFullName("John");
+        customer.setAddress("Delhi");
         customer.setContactNumber("1234567890");
         when(customerRepository.save(customer)).thenReturn(customer);
 
         // Test
         Customer result = customerService.saveCustomer(customer);
-//        System.out.println((result.getAddress()));
 
         // Verification
         assertNotNull(result.getId());
@@ -83,14 +83,14 @@ class CustomerServiceTest {
         Long customerId = 1L;
         Customer customer = new Customer();
         customer.setId(customerId);
-        customer.setFullName("John Doe");
-        customer.setAddress("123 Main St");
+        customer.setFullName("John");
+        customer.setAddress("Delhi");
         customer.setContactNumber("1234567890");
         when(customerRepository.save(customer)).thenReturn(customer);
         when(customerRepository.existsById(customerId)).thenReturn(true);
 
 
-        customer.setFullName("John");
+        customer.setFullName("Rahul");
         // Test
         Customer result = customerService.updateCustomer(customerId, customer);
 

@@ -1,53 +1,55 @@
 package com.himanshu.departmentalStore.repository;
 
-
 import com.himanshu.departmentalStore.DepartmentalStoreApplication;
 import com.himanshu.departmentalStore.model.Customer;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest(classes = DepartmentalStoreApplication.class)
 class CustomerRepositoryTest {
 
     @Autowired
     private CustomerRepository customerRepository;
+    @BeforeEach
+    void setUp() {
+        // Clear any existing data before each test
+        customerRepository.deleteAll();
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Clean up after each test
+        customerRepository.deleteAll();
+    }
 
     @Test
     void testSaveCustomer() {
         // Create a sample customer
-        Customer customer = new Customer();
-        customer.setFullName("John Doe");
-        customer.setAddress("123 Main St");
-        customer.setContactNumber("1234567890");
+        Customer customer = createMockCustomer("John Doe", "Delhi", "1234567890");
 
         // Save the customer
         Customer savedCustomer = customerRepository.save(customer);
 
         // Check if the customer is saved with an ID
         assertNotNull(savedCustomer.getId());
-
-
-
-        customerRepository.delete(customer);
     }
 
     @Test
     void testFindAllCustomers() {
         // Save sample customers
-        Customer customer1 = new Customer();
-        customer1.setFullName("John Doe");
-        customer1.setAddress("123 Main St");
-        customer1.setContactNumber("1234567890");
+        Customer customer1 = createMockCustomer("John Doe", "Delhi", "1234567890");
         customerRepository.save(customer1);
 
-        Customer customer2 = new Customer();
-        customer2.setFullName("Jane Smith");
-        customer2.setAddress("456 Elm St");
-        customer2.setContactNumber("9876543210");
+        Customer customer2 = createMockCustomer("John Doe", "Delhi", "1234567890");
         customerRepository.save(customer2);
 
         // Retrieve all customers
@@ -56,17 +58,12 @@ class CustomerRepositoryTest {
         // Check if all customers are retrieved
         assertEquals(2, customers.size());
 
-        customerRepository.delete(customer1);
-        customerRepository.delete(customer2);
     }
 
     @Test
     void testFindById() {
         // Save a sample customer
-        Customer customer = new Customer();
-        customer.setFullName("John Doe");
-        customer.setAddress("123 Main St");
-        customer.setContactNumber("1234567890");
+        Customer customer = createMockCustomer("John Doe", "Delhi", "1234567890");
         Customer savedCustomer = customerRepository.save(customer);
 
         // Retrieve the customer by ID
@@ -79,16 +76,12 @@ class CustomerRepositoryTest {
         assertEquals(savedCustomer.getAddress(), foundCustomer.getAddress());
         assertEquals(savedCustomer.getContactNumber(), foundCustomer.getContactNumber());
 
-        customerRepository.delete(customer);
     }
 
     @Test
     void testDeleteCustomer() {
         // Save a sample customer
-        Customer customer = new Customer();
-        customer.setFullName("John Doe");
-        customer.setAddress("123 Main St");
-        customer.setContactNumber("1234567890");
+        Customer customer = createMockCustomer("John Doe", "Delhi", "1234567890");
         Customer savedCustomer = customerRepository.save(customer);
 
         // Delete the customer
@@ -101,10 +94,7 @@ class CustomerRepositoryTest {
     @Test
     void testUpdateCustomer() {
         // Save a sample customer
-        Customer customer = new Customer();
-        customer.setFullName("John Doe");
-        customer.setAddress("123 Main St");
-        customer.setContactNumber("1234567890");
+        Customer customer = createMockCustomer("John Doe", "Delhi", "1234567890");
         Customer savedCustomer = customerRepository.save(customer);
 
         // Update the customer's information
@@ -125,7 +115,13 @@ class CustomerRepositoryTest {
         assertEquals("456 Elm St", foundUpdatedCustomer.getAddress());
         assertEquals("9876543210", foundUpdatedCustomer.getContactNumber());
 
-        // Clean up: delete the customer
-        customerRepository.delete(updatedCustomer);
+    }
+    private Customer createMockCustomer(String fullName, String address, String contactNumber) {
+        Customer customer = new Customer();
+        customer.setFullName(fullName);
+        customer.setAddress(address);
+        customer.setContactNumber(contactNumber);
+        Customer savedCustomer = customerRepository.save(customer);
+        return customer;
     }
 }

@@ -11,6 +11,7 @@ import com.himanshu.departmentalStore.repository.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -116,7 +117,7 @@ public class OrderService {
             LOGGER.info("Creating Backorder");
             Backorder backorder = createBackorder(order.getCustomer(), product, orderQuantity, order.getTimestamp());
             LOGGER.info("Backorder saved with Id : {}", backorder.getId());
-            throw new CustomException("Ordered quantity is more then quantity left in stock : Backorder created", backorder);
+            throw new CustomException("Ordered quantity is more then quantity left in stock : Backorder created", backorder, HttpStatus.ACCEPTED);
 
         }
     }
@@ -155,7 +156,7 @@ public class OrderService {
             return totalPrice;
         }
         LOGGER.error("This discount can not be applied.");
-        throw new CustomException("This Discount can not be applied : amount is less than minimum price", discount);
+        throw new CustomException("This Discount can not be applied : amount is less than minimum price", discount, HttpStatus.BAD_REQUEST);
          // else discount not applied
     }
 
@@ -232,12 +233,12 @@ public class OrderService {
                     + ": Only Quantity can be updated");
             throw new CustomException("Can't update  "
                     + ": Customer or Product or Discount is not same "
-                    + ": Only Quantity can be updated", order);
+                    + ": Only Quantity can be updated", null, HttpStatus.BAD_REQUEST);
         }
         int requiredQuantity = previousOrder.getQuantity() - order.getQuantity();
         if (requiredQuantity == 0) {
             LOGGER.error("No change in previous and current quantity : not updated");
-            throw new CustomException("No change in previous and current quantity", null);
+            throw new CustomException("No change in previous and current quantity", null, HttpStatus.BAD_REQUEST);
         } else if (requiredQuantity < 0) { //increase in quantity
             LOGGER.info("Product quantity increased : Checking is Product available");
             if (Boolean.TRUE.equals(isProductsAvailable(previousProduct, -requiredQuantity))) {
@@ -251,7 +252,7 @@ public class OrderService {
             } else {
                 LOGGER.error("Ordered quantity is more then quantity left in stock : not updated");
                 throw new CustomException("Can't update the order :"
-                        + " Ordered quantity is more then quantity left in stock", null);
+                        + " Ordered quantity is more then quantity left in stock", null, HttpStatus.CONFLICT);
             }
         } else { // requiredQuantity > 0  // decrease in quantity
             LOGGER.info("Product quantity decreased");

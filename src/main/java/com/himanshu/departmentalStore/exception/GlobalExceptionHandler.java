@@ -61,6 +61,6 @@ public class GlobalExceptionHandler {
                 .getBody()
                 .orElse(null); // Get the body from CustomException
         ApiResponse apiResponse = new ApiResponse(message, false, body);
-        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(apiResponse, ((CustomException) ex).getHttpStatus());
     }
 }

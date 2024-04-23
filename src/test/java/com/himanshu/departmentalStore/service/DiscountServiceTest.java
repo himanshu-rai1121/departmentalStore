@@ -7,15 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doNothing;
 
 class DiscountServiceTest {
 
@@ -64,15 +65,8 @@ class DiscountServiceTest {
     @Test
     void saveDiscount() {
         // Mocking behavior
-        Discount discount = new Discount();
-        discount.setId(1L);
-        discount.setName("50% off");
-        discount.setValue(new BigDecimal("50"));
-        discount.setStartDateTime(LocalDateTime.now());
-        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
-        discount.setDescription("Half price sale");
-        discount.setMinPrice(BigDecimal.ZERO);
-        discount.setCouponCode("HALFOFF");
+        Long discountId = 1L;
+        Discount discount = createDiscountMock(discountId, "50% off", new BigDecimal("50"), LocalDateTime.now(), LocalDateTime.now().plusDays(7), "Half price sale", BigDecimal.ZERO, "HALFOFF");
         when(discountRepository.save(discount)).thenReturn(discount);
 
         // Test
@@ -86,15 +80,7 @@ class DiscountServiceTest {
     void updateDiscount() {
         // Mocking behavior
         Long discountId = 1L;
-        Discount discount = new Discount();
-        discount.setId(discountId);
-        discount.setName("50% off");
-        discount.setValue(new BigDecimal("50"));
-        discount.setStartDateTime(LocalDateTime.now());
-        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
-        discount.setDescription("Half price sale");
-        discount.setMinPrice(BigDecimal.ZERO);
-        discount.setCouponCode("HALFOFF");
+        Discount discount = createDiscountMock(discountId, "50% off", new BigDecimal("50"), LocalDateTime.now(), LocalDateTime.now().plusDays(7), "Half price sale", BigDecimal.ZERO, "HALFOFF");
         when(discountRepository.save(discount)).thenReturn(discount);
         when(discountRepository.existsById(discountId)).thenReturn(true);
 
@@ -104,6 +90,7 @@ class DiscountServiceTest {
 
         // Verification
         assertEquals(discountId, result.getId());
+        assertEquals("40% off", result.getName());
     }
 
     @Test

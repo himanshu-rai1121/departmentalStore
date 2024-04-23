@@ -7,14 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest(classes = DepartmentalStoreApplication.class)
 class DiscountRepositoryTest {
@@ -34,47 +34,13 @@ class DiscountRepositoryTest {
         discountRepository.deleteAll();
     }
 
-    @Test
-    void testSaveDiscount() {
-        // Create a sample discount
-        Discount discount = new Discount();
-        discount.setName("50% off");
-        discount.setValue(new BigDecimal("50"));
-        discount.setStartDateTime(LocalDateTime.now());
-        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
-        discount.setDescription("Half price sale");
-        discount.setMinPrice(BigDecimal.ZERO);
-        discount.setCouponCode("HALFOFF");
-
-        // Save the discount
-        Discount savedDiscount = discountRepository.save(discount);
-
-        // Check if the discount is saved with an ID
-        assertNotNull(savedDiscount.getId());
-        discountRepository.delete(discount);
-    }
 
     @Test
     void testFindAllDiscounts() {
         // Save sample discounts
-        Discount discount1 = new Discount();
-        discount1.setName("50% off");
-        discount1.setValue(new BigDecimal("50"));
-        discount1.setStartDateTime(LocalDateTime.now());
-        discount1.setEndDateTime(LocalDateTime.now().plusDays(7));
-        discount1.setDescription("Half price sale");
-        discount1.setMinPrice(BigDecimal.ZERO);
-        discount1.setCouponCode("HALFOFF");
+        Discount discount1 = createDiscountMock(1l, "50% off", new BigDecimal("50"), LocalDateTime.now(), LocalDateTime.now().plusDays(7), "Half price sale", new BigDecimal("0"), "HALFOFF");
+        Discount discount2 = createDiscountMock(2l, "20% off", new BigDecimal("20"), LocalDateTime.now(), LocalDateTime.now().plusDays(5), "Spring sale", new BigDecimal("50"), "SPRING20");
         discountRepository.save(discount1);
-
-        Discount discount2 = new Discount();
-        discount2.setName("20% off");
-        discount2.setValue(new BigDecimal("20"));
-        discount2.setStartDateTime(LocalDateTime.now());
-        discount2.setEndDateTime(LocalDateTime.now().plusDays(5));
-        discount2.setDescription("Spring sale");
-        discount2.setMinPrice(new BigDecimal("50"));
-        discount2.setCouponCode("SPRING20");
         discountRepository.save(discount2);
 
         // Retrieve all discounts
@@ -90,17 +56,8 @@ class DiscountRepositoryTest {
     @Test
     void testFindById() {
         // Save a sample discount
-        Discount discount = new Discount();
-        discount.setName("50% off");
-        discount.setValue(new BigDecimal("50.00"));
-        discount.setStartDateTime(LocalDateTime.now());
-//        LocalDateTime expectedDateTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-
-
-        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
-        discount.setDescription("Half price sale");
-        discount.setMinPrice(new BigDecimal("0.00"));
-        discount.setCouponCode("HALFOFF");
+        Discount discount = createDiscountMock(1L, "50% off", new BigDecimal("50.00"), LocalDateTime.now(), LocalDateTime.now().plusDays(7), "Half price sale", new BigDecimal("0.00"), "HALFOFF");
+        discount.setId(1L);
         Discount savedDiscount = discountRepository.save(discount);
 
         // Retrieve the discount by ID
@@ -121,37 +78,24 @@ class DiscountRepositoryTest {
         discountRepository.delete(discount);
     }
 
+
     @Test
-    void testDeleteDiscount() {
-        // Save a sample discount
-        Discount discount = new Discount();
-        discount.setName("50% off");
-        discount.setValue(new BigDecimal("50"));
-        discount.setStartDateTime(LocalDateTime.now());
-        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
-        discount.setDescription("Half price sale");
-        discount.setMinPrice(BigDecimal.ZERO);
-        discount.setCouponCode("HALFOFF");
+    void testSaveDiscount() {
+        // Create a sample discount
+        Discount discount = createDiscountMock(1l,"50% off", new BigDecimal("50"), LocalDateTime.now(), LocalDateTime.now().plusDays(7), "Half price sale", new BigDecimal("0"), "HALFOFF");
+
+        // Save the discount
         Discount savedDiscount = discountRepository.save(discount);
 
-        // Delete the discount
-        discountRepository.deleteById(savedDiscount.getId());
-
-        // Check if the discount is deleted
-        assertFalse(discountRepository.existsById(savedDiscount.getId()));
+        // Check if the discount is saved with an ID
+        assertNotNull(savedDiscount.getId());
+        discountRepository.delete(discount);
     }
-
     @Test
     void testUpdateDiscount() {
         // Save a sample discount
-        Discount discount = new Discount();
-        discount.setName("50% off");
-        discount.setValue(new BigDecimal("50"));
-        discount.setStartDateTime(LocalDateTime.now());
-        discount.setEndDateTime(LocalDateTime.now().plusDays(7));
-        discount.setDescription("Half price sale");
-        discount.setMinPrice(BigDecimal.ZERO);
-        discount.setCouponCode("HALFOFF");
+        Discount discount = createDiscountMock(1L, "50% off", new BigDecimal("50"), LocalDateTime.now(), LocalDateTime.now().plusDays(7), "Half price sale", new BigDecimal("0"), "HALFOFF");
+
         Discount savedDiscount = discountRepository.save(discount);
 
         // Update the discount's information
@@ -176,5 +120,31 @@ class DiscountRepositoryTest {
 
         // Clean up: delete the discount
         discountRepository.delete(updatedDiscount);
+    }
+
+    @Test
+    void testDeleteDiscount() {
+        // Save a sample discount
+        Discount discount = createDiscountMock(1L, "50% off", new BigDecimal("50"), LocalDateTime.now(), LocalDateTime.now().plusDays(7), "Half price sale", new BigDecimal("0"), "HALFOFF");
+
+        Discount savedDiscount = discountRepository.save(discount);
+
+        // Delete the discount
+        discountRepository.deleteById(savedDiscount.getId());
+
+        // Check if the discount is deleted
+        assertFalse(discountRepository.existsById(savedDiscount.getId()));
+    }
+    private Discount createDiscountMock(Long id, String name, BigDecimal value, LocalDateTime startDate, LocalDateTime endDate, String description, BigDecimal minPrice, String couponCode) {
+        Discount discount = new Discount();
+        discount.setId(id);
+        discount.setName(name);
+        discount.setValue(value);
+        discount.setStartDateTime(startDate);
+        discount.setEndDateTime(endDate);
+        discount.setDescription(description);
+        discount.setMinPrice(minPrice);
+        discount.setCouponCode(couponCode);
+        return discount;
     }
 }
