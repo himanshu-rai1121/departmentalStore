@@ -20,6 +20,10 @@ Welcome to our Departmental Store Management System! This repository houses the 
 - **Exception Handling**: The system throws exceptions for invalid operations, such as attempting to update a product quantity without changes or reducing a product quantity without sufficient availability.
 - **Notifications**: Notifications are sent to relevant parties when backorders are resolved or when orders are updated (not implemented working code to send notification).
 
+## Database Schema
+![Click Here to view Database Schema](https://geminisolutionsindpvtltd-my.sharepoint.com/:i:/g/personal/himanshu_kumar_geminisolutions_com/EcTV0pF7kW1AlMKvQVIOySEBO2gzj54y_3H8FC3VRrxLmw?e=5LGgpx)
+
+
 ## Usage
 
 1. Clone this repository to your local machine.
