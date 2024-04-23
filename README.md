@@ -21,9 +21,16 @@ Welcome to our Departmental Store Management System! This repository houses the 
 - **Notifications**: Notifications are sent to relevant parties when backorders are resolved or when orders are updated (not implemented working code to send notification).
 
 ## Database Schema
+<<<<<<< HEAD
 <img src="https://github.com/GEM-himanshu-kumar/departmentalStore/assets/167817739/cf820c06-7fd6-4341-b92c-54df50487e2f" alt="Database Schema" width="800px">
 
 ## Usage
+=======
+![Click Here to view Database Schema](https://geminisolutionsindpvtltd-my.sharepoint.com/:i:/g/personal/himanshu_kumar_geminisolutions_com/EcTV0pF7kW1AlMKvQVIOySEBO2gzj54y_3H8FC3VRrxLmw?e=5LGgpx)
+
+
+## How to Run
+>>>>>>> 6d07b1390f3cc6f39cac90e1e75b90c7398399bc
 
 1. Clone this repository to your local machine.
 2. Set up the database and configure database connections according to the provided schema.
