@@ -67,6 +67,9 @@ public class CustomerService {
      * @return The saved or updated customer.
      */
     public Customer saveCustomer(final Customer customer) {
+        if (customer.equals(null)) {
+            throw new NullPointerException();
+        }
         LOGGER.info("Saving new customer: {}", customer);
         return customerRepository.save(customer);
     }

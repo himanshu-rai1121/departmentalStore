@@ -77,6 +77,9 @@ public class BackorderService {
      * @return The saved backorder.
      */
     public Backorder saveBackorder(final Backorder backorder) {
+        if (backorder.equals(null)) {
+            throw new NullPointerException();
+        }
         LOGGER.info("Saving backorder");
         return backorderRepository.save(backorder);
     }

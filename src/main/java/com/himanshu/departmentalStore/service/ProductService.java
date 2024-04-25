@@ -71,6 +71,9 @@ public class ProductService {
      * @return The saved or updated product
      */
     public Product saveProduct(final Product product) {
+        if (product.equals(null)) {
+            throw new NullPointerException();
+        }
         LOGGER.info("Saving new product: {}", product);
         return productRepository.save(product);
     }
