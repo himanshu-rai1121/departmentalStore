@@ -104,7 +104,7 @@ public class DiscountService {
      * @return The saved discount.
      */
     public Discount saveDiscount(final Discount discount) {
-        if (discount.equals(null)) {
+        if (discount == null) {
             throw new NullPointerException();
         }
         LOGGER.info("Saving discount: {}", discount);

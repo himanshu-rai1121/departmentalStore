@@ -1,183 +1,38 @@
-2024-04-25 15:13:41.031 [SpringApplicationShutdownHook] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-04-25 15:13:41.040 [SpringApplicationShutdownHook] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown initiated...
-2024-04-25 15:13:41.051 [SpringApplicationShutdownHook] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown completed.
-2024-04-25 15:13:44.647 [background-preinit] INFO  --- o.h.validator.internal.util.Version     :   HV000001: Hibernate Validator 8.0.1.Final
-2024-04-25 15:13:44.720 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   Starting DepartmentalStoreApplication using Java 21.0.2 with PID 1700 (C:\Users\himanshu.kumar\IdeaProjects\departmentalStore\target\classes started by Himanshu.Kumar in C:\Users\himanshu.kumar\IdeaProjects\departmentalStore)
-2024-04-25 15:13:44.721 [main] DEBUG --- c.h.d.DepartmentalStoreApplication     :   Running with Spring Boot v3.2.4, Spring v6.1.5
-2024-04-25 15:13:44.722 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   No active profile set, falling back to 1 default profile: "default"
-2024-04-25 15:13:45.787 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-04-25 15:13:45.859 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Finished Spring Data repository scanning in 63 ms. Found 5 JPA repository interfaces.
-2024-04-25 15:13:46.494 [main] INFO  --- o.s.b.w.e.tomcat.TomcatWebServer     :   Tomcat initialized with port 8080 (http)
-2024-04-25 15:13:46.504 [main] INFO  --- o.a.coyote.http11.Http11NioProtocol     :   Initializing ProtocolHandler ["http-nio-8080"]
-2024-04-25 15:13:46.506 [main] INFO  --- o.a.catalina.core.StandardService     :   Starting service [Tomcat]
-2024-04-25 15:13:46.507 [main] INFO  --- o.a.catalina.core.StandardEngine     :   Starting Servlet engine: [Apache Tomcat/10.1.19]
-2024-04-25 15:13:46.579 [main] INFO  --- o.a.c.c.C.[Tomcat].[localhost].[/]     :   Initializing Spring embedded WebApplicationContext
-2024-04-25 15:13:46.580 [main] INFO  --- o.s.b.w.s.c.ServletWebServerApplicationContext     :   Root WebApplicationContext: initialization completed in 1802 ms
-2024-04-25 15:13:46.775 [main] INFO  --- o.h.jpa.internal.util.LogHelper     :   HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-04-25 15:13:46.859 [main] INFO  --- org.hibernate.Version     :   HHH000412: Hibernate ORM core version 6.4.4.Final
-2024-04-25 15:13:46.895 [main] INFO  --- o.h.c.i.RegionFactoryInitiator     :   HHH000026: Second-level cache disabled
-2024-04-25 15:13:47.160 [main] INFO  --- o.s.o.j.p.SpringPersistenceUnitInfo     :   No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-04-25 15:13:47.193 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Starting...
-2024-04-25 15:13:47.551 [main] INFO  --- com.zaxxer.hikari.pool.HikariPool     :   HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@38fb151a
-2024-04-25 15:13:47.553 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Start completed.
-2024-04-25 15:13:48.636 [main] INFO  --- o.h.e.t.j.p.i.JtaPlatformInitiator     :   HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-04-25 15:13:48.729 [main] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-04-25 15:13:49.700 [main] WARN  --- o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration     :   spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-04-25 15:13:50.167 [main] INFO  --- o.a.coyote.http11.Http11NioProtocol     :   Starting ProtocolHandler ["http-nio-8080"]
-2024-04-25 15:13:50.195 [main] INFO  --- o.s.b.w.e.tomcat.TomcatWebServer     :   Tomcat started on port 8080 (http) with context path ''
-2024-04-25 15:13:50.205 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   Started DepartmentalStoreApplication in 6.137 seconds (process running for 6.947)
-2024-04-25 15:19:39.212 [main] INFO  --- c.h.d.service.OrderService     :   Deleting order with Id : 1
-2024-04-25 15:19:39.219 [main] INFO  --- c.h.d.service.OrderService     :   Updating product
-2024-04-25 15:19:39.220 [main] INFO  --- c.h.d.service.OrderService     :   Product quantity increased in product
-2024-04-25 15:19:39.220 [main] INFO  --- c.h.d.service.OrderService     :   Checking backorder which can be fulfilled
-2024-04-25 15:19:39.221 [main] INFO  --- c.h.d.service.OrderService     :   Order deleted with Id : 1
-2024-04-25 15:19:39.248 [main] INFO  --- c.h.d.service.OrderService     :   Updating order with Id : 1
-2024-04-25 15:19:39.249 [main] INFO  --- c.h.d.service.OrderService     :   Check if the customer, product, and discount are the same or different
-2024-04-25 15:19:39.249 [main] INFO  --- c.h.d.service.OrderService     :   Product quantity increased : Checking is Product available
-2024-04-25 15:19:39.250 [main] INFO  --- c.h.d.service.OrderService     :   Product available.
-2024-04-25 15:19:39.250 [main] INFO  --- c.h.d.service.OrderService     :   Updated Order, product, orderAmount
-2024-04-25 15:19:39.260 [main] INFO  --- c.h.d.service.OrderService     :   Fetching all orders
-2024-04-25 15:19:39.261 [main] INFO  --- c.h.d.service.OrderService     :   Order Fetched
-2024-04-25 15:19:39.269 [main] INFO  --- c.h.d.service.OrderService     :   Fetching all orders with Id : 1
-2024-04-25 15:19:39.270 [main] INFO  --- c.h.d.service.OrderService     :   Order fetched with Id : 1, order : com.himanshu.departmentalStore.model.Order@14229fa7
-2024-04-25 15:19:39.277 [main] INFO  --- c.h.d.service.OrderService     :   Placing order.
-2024-04-25 15:19:39.278 [main] INFO  --- c.h.d.service.OrderService     :   Checking isProductAvailable
-2024-04-25 15:19:39.278 [main] INFO  --- c.h.d.service.OrderService     :   Product available.
-2024-04-25 15:19:39.278 [main] INFO  --- c.h.d.service.OrderService     :   Calculating total amount
-2024-04-25 15:19:39.278 [main] INFO  --- c.h.d.service.OrderService     :   Amount updated in order
-2024-04-25 15:19:39.279 [main] INFO  --- c.h.d.service.OrderService     :   Updating product quantity
-2024-04-25 15:19:39.279 [main] INFO  --- c.h.d.service.OrderService     :   Saving order
-2024-04-25 15:19:39.313 [main] INFO  --- c.h.d.controller.CustomerController     :   Request received to fetch customer with ID 1
-2024-04-25 15:19:39.314 [main] INFO  --- c.h.d.controller.CustomerController     :   Returning customer with ID 1: com.himanshu.departmentalStore.model.Customer@1835d3ed
-2024-04-25 15:19:39.328 [main] INFO  --- c.h.d.controller.CustomerController     :   Request received to delete customer with ID 1
-2024-04-25 15:19:39.328 [main] INFO  --- c.h.d.controller.CustomerController     :   Customer with ID 1 deleted successfully
-2024-04-25 15:19:39.333 [main] INFO  --- c.h.d.controller.CustomerController     :   Received request to retrieve all customers.
-2024-04-25 15:19:39.334 [main] INFO  --- c.h.d.controller.CustomerController     :   Retrieved 2 customers.
-2024-04-25 15:19:39.339 [main] INFO  --- c.h.d.controller.CustomerController     :   Request received to save a new customer: com.himanshu.departmentalStore.model.Customer@28737371
-2024-04-25 15:19:39.340 [main] INFO  --- c.h.d.controller.CustomerController     :   Saved customer: com.himanshu.departmentalStore.model.Customer@28737371
-2024-04-25 15:19:39.345 [main] INFO  --- c.h.d.controller.CustomerController     :   Request received to update customer with ID 1: com.himanshu.departmentalStore.model.Customer@bbf9e07
-2024-04-25 15:19:39.346 [main] INFO  --- c.h.d.controller.CustomerController     :   Updated customer with ID 1: com.himanshu.departmentalStore.model.Customer@bbf9e07
-2024-04-25 15:19:39.898 [background-preinit] INFO  --- o.h.validator.internal.util.Version     :   HV000001: Hibernate Validator 8.0.1.Final
-2024-04-25 15:19:39.933 [main] INFO  --- c.h.d.repository.OrderRepositoryTest     :   Starting OrderRepositoryTest using Java 21.0.2 with PID 21956 (started by Himanshu.Kumar in C:\Users\himanshu.kumar\IdeaProjects\departmentalStore)
-2024-04-25 15:19:39.934 [main] DEBUG --- c.h.d.repository.OrderRepositoryTest     :   Running with Spring Boot v3.2.4, Spring v6.1.5
-2024-04-25 15:19:39.934 [main] INFO  --- c.h.d.repository.OrderRepositoryTest     :   No active profile set, falling back to 1 default profile: "default"
-2024-04-25 15:19:40.860 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-04-25 15:19:40.927 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Finished Spring Data repository scanning in 58 ms. Found 5 JPA repository interfaces.
-2024-04-25 15:19:41.422 [main] INFO  --- o.h.jpa.internal.util.LogHelper     :   HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-04-25 15:19:41.496 [main] INFO  --- org.hibernate.Version     :   HHH000412: Hibernate ORM core version 6.4.4.Final
-2024-04-25 15:19:41.541 [main] INFO  --- o.h.c.i.RegionFactoryInitiator     :   HHH000026: Second-level cache disabled
-2024-04-25 15:19:41.676 [main] INFO  --- o.s.o.j.p.SpringPersistenceUnitInfo     :   No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-04-25 15:19:41.709 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Starting...
-2024-04-25 15:19:42.120 [main] INFO  --- com.zaxxer.hikari.pool.HikariPool     :   HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@dbcf7c3
-2024-04-25 15:19:42.122 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Start completed.
-2024-04-25 15:19:43.133 [main] INFO  --- o.h.e.t.j.p.i.JtaPlatformInitiator     :   HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-04-25 15:19:43.221 [main] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-04-25 15:19:44.315 [main] WARN  --- o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration     :   spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-04-25 15:19:44.830 [main] INFO  --- c.h.d.repository.OrderRepositoryTest     :   Started OrderRepositoryTest in 5.14 seconds (process running for 8.341)
-2024-04-25 15:19:46.235 [main] INFO  --- c.h.d.service.ProductService     :   Fetching product with ID 1
-2024-04-25 15:19:46.235 [main] INFO  --- c.h.d.service.ProductService     :   Fetched product: com.himanshu.departmentalStore.model.Product@16fc5679
-2024-04-25 15:19:46.238 [main] INFO  --- c.h.d.service.ProductService     :   Updating product with ID 1: com.himanshu.departmentalStore.model.Product@53f40ead
-2024-04-25 15:19:46.243 [main] INFO  --- c.h.d.service.ProductService     :   Fetching all products from the database
-2024-04-25 15:19:46.243 [main] INFO  --- c.h.d.service.ProductService     :   Fetched 2 products
-2024-04-25 15:19:46.245 [main] INFO  --- c.h.d.service.ProductService     :   Deleting product with ID 1
-2024-04-25 15:19:46.248 [main] INFO  --- c.h.d.service.ProductService     :   Saving new product: com.himanshu.departmentalStore.model.Product@580882fb
-2024-04-25 15:19:46.382 [main] INFO  --- c.h.d.service.ProductService     :   Deleting product with ID null
-2024-04-25 15:19:46.387 [main] INFO  --- c.h.d.service.ProductService     :   Deleting product with ID -1
-2024-04-25 15:19:46.390 [main] INFO  --- c.h.d.service.ProductService     :   Updating product with ID -1: com.himanshu.departmentalStore.model.Product@5c608988
-2024-04-25 15:19:46.390 [main] ERROR --- c.h.d.service.ProductService     :   Product with ID -1 not found
-2024-04-25 15:19:46.393 [main] INFO  --- c.h.d.service.ProductService     :   Updating product with ID 1: null
-2024-04-25 15:19:46.393 [main] ERROR --- c.h.d.service.ProductService     :   Product with ID 1 not found
-2024-04-25 15:19:46.396 [main] INFO  --- c.h.d.service.ProductService     :   Fetching product with ID -1
-2024-04-25 15:19:46.517 [main] INFO  --- c.h.d.controller.OrderController     :   Received request to delete order with ID: 1
-2024-04-25 15:19:46.517 [main] INFO  --- c.h.d.controller.OrderController     :   Order deleted with ID: 1
-2024-04-25 15:19:46.521 [main] INFO  --- c.h.d.controller.OrderController     :   Received request to update the order with Id : 1.
-2024-04-25 15:19:46.521 [main] INFO  --- c.h.d.controller.OrderController     :   Converting OrderRequestBody to Order.
-2024-04-25 15:19:46.521 [main] INFO  --- c.h.d.controller.OrderController     :   OrderRequestBody converted to Order
-2024-04-25 15:19:46.522 [main] INFO  --- c.h.d.controller.OrderController     :   Order placed
-2024-04-25 15:19:46.524 [main] INFO  --- c.h.d.controller.OrderController     :   Received request to fetch all orders.
-2024-04-25 15:19:46.528 [main] INFO  --- c.h.d.controller.OrderController     :   Received request to fetch all orders by Id : 1
-2024-04-25 15:19:46.528 [main] INFO  --- c.h.d.controller.OrderController     :   Fetched order with id : 1, order : com.himanshu.departmentalStore.model.Order@36072e34
-2024-04-25 15:19:46.532 [main] INFO  --- c.h.d.controller.OrderController     :   Received request to create order.
-2024-04-25 15:19:46.532 [main] INFO  --- c.h.d.controller.OrderController     :   Converting OrderRequestBody to Order.
-2024-04-25 15:19:46.532 [main] INFO  --- c.h.d.controller.OrderController     :   OrderRequestBody converted to Order
-2024-04-25 15:19:46.533 [main] INFO  --- c.h.d.controller.OrderController     :   Order Placed.
-2024-04-25 15:19:46.730 [main] INFO  --- c.h.d.service.CustomerService     :   Fetching customer with ID 1
-2024-04-25 15:19:46.731 [main] INFO  --- c.h.d.service.CustomerService     :   Fetched customer: com.himanshu.departmentalStore.model.Customer@2d158175
-2024-04-25 15:19:46.732 [main] INFO  --- c.h.d.service.CustomerService     :   Deleting customer with ID 1
-2024-04-25 15:19:46.735 [main] INFO  --- c.h.d.service.CustomerService     :   Fetching all customers from the database
-2024-04-25 15:19:46.735 [main] INFO  --- c.h.d.service.CustomerService     :   Fetched 2 customers
-2024-04-25 15:19:46.737 [main] INFO  --- c.h.d.service.CustomerService     :   Saving new customer: com.himanshu.departmentalStore.model.Customer@55456711
-2024-04-25 15:19:46.739 [main] INFO  --- c.h.d.service.CustomerService     :   Updating customer with ID 1: com.himanshu.departmentalStore.model.Customer@4a4ba507
-2024-04-25 15:19:46.743 [main] INFO  --- c.h.d.controller.BackorderController     :   Received request to fetch backorder by ID: 1
-2024-04-25 15:19:46.744 [main] INFO  --- c.h.d.controller.BackorderController     :   Fetched backorder with Id: 1
-2024-04-25 15:19:46.747 [main] INFO  --- c.h.d.controller.BackorderController     :   Received request to update backorder with ID 1: BackOrderRequestBody(productId=1, customerId=1, quantity=10)
-2024-04-25 15:19:46.750 [main] INFO  --- c.h.d.controller.BackorderController     :   Converting RequestBody to backorder
-2024-04-25 15:19:46.751 [main] INFO  --- c.h.d.controller.BackorderController     :   RequestBody converted to backorder
-2024-04-25 15:19:46.751 [main] INFO  --- c.h.d.controller.BackorderController     :   Backorder updated with ID : 1
-2024-04-25 15:19:46.754 [main] INFO  --- c.h.d.controller.BackorderController     :   Received request to create new backorder with request body: BackOrderRequestBody(productId=1, customerId=1, quantity=5)
-2024-04-25 15:19:46.755 [main] INFO  --- c.h.d.controller.BackorderController     :   Converting RequestBody to backorder
-2024-04-25 15:19:46.755 [main] INFO  --- c.h.d.controller.BackorderController     :   RequestBody converted to backorder
-2024-04-25 15:19:46.755 [main] INFO  --- c.h.d.controller.BackorderController     :   Backorder created with ID : 1
-2024-04-25 15:19:46.757 [main] INFO  --- c.h.d.controller.BackorderController     :   Received request to fetch all backorders
-2024-04-25 15:19:46.758 [main] INFO  --- c.h.d.controller.BackorderController     :   Fetched backorders
-2024-04-25 15:19:46.760 [main] INFO  --- c.h.d.controller.BackorderController     :   Received request to delete backorder with ID: 1
-2024-04-25 15:19:46.761 [main] INFO  --- c.h.d.controller.BackorderController     :   Backorder deleted with ID: 1
-2024-04-25 15:19:46.850 [main] INFO  --- c.h.d.service.BackorderService     :   Deleting backorder
-2024-04-25 15:19:46.854 [main] INFO  --- c.h.d.service.BackorderService     :   Deleting backorder
-2024-04-25 15:19:46.857 [main] INFO  --- c.h.d.service.BackorderService     :   Updating backorder
-2024-04-25 15:19:46.861 [main] INFO  --- c.h.d.service.BackorderService     :   Fetching backorder by Id : -1
-2024-04-25 15:19:46.863 [main] INFO  --- c.h.d.service.BackorderService     :   Updating backorder
-2024-04-25 15:19:46.933 [main] INFO  --- c.h.d.service.DiscountService     :   Fetching discount by ID: -1
-2024-04-25 15:19:46.937 [main] INFO  --- c.h.d.service.DiscountService     :   Updating discount with ID -1: com.himanshu.departmentalStore.model.Discount@3bc079f1
-2024-04-25 15:19:46.943 [main] INFO  --- c.h.d.service.DiscountService     :   Deleting discount with ID: -1
-2024-04-25 15:19:46.947 [main] INFO  --- c.h.d.service.DiscountService     :   Updating discount with ID 1: null
-2024-04-25 15:19:46.950 [main] INFO  --- c.h.d.service.DiscountService     :   Deleting discount with ID: null
-2024-04-25 15:19:46.954 [main] INFO  --- c.h.d.service.BackorderService     :   Fetching backorder by Id : 1
-2024-04-25 15:19:46.957 [main] INFO  --- c.h.d.service.BackorderService     :   Updating backorder
-2024-04-25 15:19:46.960 [main] INFO  --- c.h.d.service.BackorderService     :   Saving backorder
-2024-04-25 15:19:46.963 [main] INFO  --- c.h.d.service.BackorderService     :   Fetching all backorders
-2024-04-25 15:19:46.966 [main] INFO  --- c.h.d.service.BackorderService     :   Deleting backorder
-2024-04-25 15:19:46.970 [main] INFO  --- c.h.d.controller.DiscountController     :   Received request to Fetch discount by Id : 1
-2024-04-25 15:19:46.971 [main] INFO  --- c.h.d.controller.DiscountController     :   Fetched discounts with Id : 1, discount : com.himanshu.departmentalStore.model.Discount@57110a9d
-2024-04-25 15:19:46.972 [main] INFO  --- c.h.d.controller.DiscountController     :   Received request to delete discount with ID 1
-2024-04-25 15:19:46.975 [main] INFO  --- c.h.d.controller.DiscountController     :   Received request to Fetch all active discounts
-2024-04-25 15:19:46.975 [main] INFO  --- c.h.d.controller.DiscountController     :   Fetched all active discounts : [com.himanshu.departmentalStore.model.Discount@6b981dea, com.himanshu.departmentalStore.model.Discount@3482b7e6]
-2024-04-25 15:19:46.977 [main] INFO  --- c.h.d.controller.DiscountController     :   Received request to create new discount: com.himanshu.departmentalStore.model.Discount@5467016f
-2024-04-25 15:19:46.979 [main] INFO  --- c.h.d.controller.DiscountController     :   Received request to update discount with ID 1: com.himanshu.departmentalStore.model.Discount@5ea794d2
-2024-04-25 15:19:46.985 [main] INFO  --- c.h.d.service.OrderService     :   Placing order.
-2024-04-25 15:19:46.986 [main] INFO  --- c.h.d.service.OrderService     :   Checking isProductAvailable
-2024-04-25 15:19:46.986 [main] ERROR --- c.h.d.service.OrderService     :   Product not available
-2024-04-25 15:19:46.986 [main] INFO  --- c.h.d.service.OrderService     :   Creating Backorder
-2024-04-25 15:19:46.986 [main] INFO  --- c.h.d.service.OrderService     :   Saving Backorder
-2024-04-25 15:19:46.987 [main] INFO  --- c.h.d.service.OrderService     :   Backorder saved with Id : 1
-2024-04-25 15:19:46.991 [main] INFO  --- c.h.d.service.OrderService     :   Deleting order with Id : 1
-2024-04-25 15:19:46.996 [main] INFO  --- c.h.d.service.OrderService     :   Updating order with Id : 1
-2024-04-25 15:19:46.996 [main] INFO  --- c.h.d.service.OrderService     :   Check if the customer, product, and discount are the same or different
-2024-04-25 15:19:46.996 [main] ERROR --- c.h.d.service.OrderService     :   No change in previous and current quantity : not updated
-2024-04-25 15:19:46.999 [main] INFO  --- c.h.d.service.OrderService     :   Updating order with Id : 1
-2024-04-25 15:19:47.003 [main] INFO  --- c.h.d.service.CustomerService     :   Deleting customer with ID -1
-2024-04-25 15:19:47.008 [main] INFO  --- c.h.d.service.CustomerService     :   Updating customer with ID 1: null
-2024-04-25 15:19:47.008 [main] ERROR --- c.h.d.service.CustomerService     :   Customer with ID 1 not found
-2024-04-25 15:19:47.011 [main] INFO  --- c.h.d.service.CustomerService     :   Updating customer with ID -1: com.himanshu.departmentalStore.model.Customer@9573850
-2024-04-25 15:19:47.011 [main] ERROR --- c.h.d.service.CustomerService     :   Customer with ID -1 not found
-2024-04-25 15:19:47.014 [main] INFO  --- c.h.d.service.CustomerService     :   Fetching customer with ID -1
-2024-04-25 15:19:47.016 [main] INFO  --- c.h.d.service.CustomerService     :   Deleting customer with ID null
-2024-04-25 15:19:47.019 [main] INFO  --- c.h.d.service.CustomerService     :   Deleting customer with ID -1
-2024-04-25 15:19:47.023 [main] INFO  --- c.h.d.controller.ProductController     :   Request received to fetch product with ID 1
-2024-04-25 15:19:47.023 [main] INFO  --- c.h.d.controller.ProductController     :   Returning product with ID 1: com.himanshu.departmentalStore.model.Product@58c9bef9
-2024-04-25 15:19:47.025 [main] INFO  --- c.h.d.controller.ProductController     :   Request received to update product with ID 1: com.himanshu.departmentalStore.model.Product@4e2abbac
-2024-04-25 15:19:47.026 [main] INFO  --- c.h.d.controller.ProductController     :   Updated product with ID 1: com.himanshu.departmentalStore.model.Product@4e2abbac
-2024-04-25 15:19:47.027 [main] INFO  --- c.h.d.controller.ProductController     :   Request received to fetch all products
-2024-04-25 15:19:47.028 [main] INFO  --- c.h.d.controller.ProductController     :   Returning 2 products
-2024-04-25 15:19:47.029 [main] INFO  --- c.h.d.controller.ProductController     :   Request received to delete product with ID 1
-2024-04-25 15:19:47.030 [main] INFO  --- c.h.d.controller.ProductController     :   Product with ID 1 deleted successfully
-2024-04-25 15:19:47.032 [main] INFO  --- c.h.d.controller.ProductController     :   Request received to save a new product: com.himanshu.departmentalStore.model.Product@2a84aed7
-2024-04-25 15:19:47.032 [main] INFO  --- c.h.d.controller.ProductController     :   Saved product: com.himanshu.departmentalStore.model.Product@2a84aed7
-2024-04-25 15:19:47.035 [main] INFO  --- c.h.d.service.DiscountService     :   Fetching discount by ID: 1
-2024-04-25 15:19:47.037 [main] INFO  --- c.h.d.service.DiscountService     :   Deleting discount with ID: 1
-2024-04-25 15:19:47.039 [main] INFO  --- c.h.d.service.DiscountService     :   Fetching all active discounts
-2024-04-25 15:19:47.041 [main] INFO  --- c.h.d.service.DiscountService     :   Saving discount: com.himanshu.departmentalStore.model.Discount@649920aa
-2024-04-25 15:19:47.043 [main] INFO  --- c.h.d.service.DiscountService     :   Updating discount with ID 1: com.himanshu.departmentalStore.model.Discount@459d81f1
-2024-04-25 15:19:47.186 [SpringApplicationShutdownHook] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-04-25 15:19:47.188 [SpringApplicationShutdownHook] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown initiated...
-2024-04-25 15:19:47.194 [SpringApplicationShutdownHook] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown completed.
+2024-04-25 15:36:03.270 [background-preinit] INFO  --- o.h.validator.internal.util.Version     :   HV000001: Hibernate Validator 8.0.1.Final
+2024-04-25 15:36:03.333 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   Starting DepartmentalStoreApplication using Java 21.0.2 with PID 1852 (C:\Users\himanshu.kumar\IdeaProjects\departmentalStore\target\classes started by Himanshu.Kumar in C:\Users\himanshu.kumar\IdeaProjects\departmentalStore)
+2024-04-25 15:36:03.334 [main] DEBUG --- c.h.d.DepartmentalStoreApplication     :   Running with Spring Boot v3.2.4, Spring v6.1.5
+2024-04-25 15:36:03.340 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   No active profile set, falling back to 1 default profile: "default"
+2024-04-25 15:36:04.345 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-25 15:36:04.413 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Finished Spring Data repository scanning in 59 ms. Found 5 JPA repository interfaces.
+2024-04-25 15:36:05.025 [main] INFO  --- o.s.b.w.e.tomcat.TomcatWebServer     :   Tomcat initialized with port 8080 (http)
+2024-04-25 15:36:05.038 [main] INFO  --- o.a.coyote.http11.Http11NioProtocol     :   Initializing ProtocolHandler ["http-nio-8080"]
+2024-04-25 15:36:05.039 [main] INFO  --- o.a.catalina.core.StandardService     :   Starting service [Tomcat]
+2024-04-25 15:36:05.040 [main] INFO  --- o.a.catalina.core.StandardEngine     :   Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-04-25 15:36:05.111 [main] INFO  --- o.a.c.c.C.[Tomcat].[localhost].[/]     :   Initializing Spring embedded WebApplicationContext
+2024-04-25 15:36:05.111 [main] INFO  --- o.s.b.w.s.c.ServletWebServerApplicationContext     :   Root WebApplicationContext: initialization completed in 1725 ms
+2024-04-25 15:36:05.304 [main] INFO  --- o.h.jpa.internal.util.LogHelper     :   HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-25 15:36:05.377 [main] INFO  --- org.hibernate.Version     :   HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-04-25 15:36:05.414 [main] INFO  --- o.h.c.i.RegionFactoryInitiator     :   HHH000026: Second-level cache disabled
+2024-04-25 15:36:05.651 [main] INFO  --- o.s.o.j.p.SpringPersistenceUnitInfo     :   No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-04-25 15:36:05.681 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Starting...
+2024-04-25 15:36:06.037 [main] INFO  --- com.zaxxer.hikari.pool.HikariPool     :   HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7db47323
+2024-04-25 15:36:06.040 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Start completed.
+2024-04-25 15:36:07.164 [main] INFO  --- o.h.e.t.j.p.i.JtaPlatformInitiator     :   HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-04-25 15:36:07.243 [main] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-25 15:36:08.385 [main] WARN  --- o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration     :   spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-25 15:36:09.035 [main] INFO  --- o.a.coyote.http11.Http11NioProtocol     :   Starting ProtocolHandler ["http-nio-8080"]
+2024-04-25 15:36:09.069 [main] INFO  --- o.s.b.w.e.tomcat.TomcatWebServer     :   Tomcat started on port 8080 (http) with context path ''
+2024-04-25 15:36:09.084 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   Started DepartmentalStoreApplication in 6.175 seconds (process running for 6.87)
+2024-04-25 15:36:17.353 [http-nio-8080-exec-2] INFO  --- o.a.c.c.C.[Tomcat].[localhost].[/]     :   Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-04-25 15:36:17.354 [http-nio-8080-exec-2] INFO  --- o.s.web.servlet.DispatcherServlet     :   Initializing Servlet 'dispatcherServlet'
+2024-04-25 15:36:17.355 [http-nio-8080-exec-2] INFO  --- o.s.web.servlet.DispatcherServlet     :   Completed initialization in 1 ms
+2024-04-25 15:36:17.463 [http-nio-8080-exec-2] INFO  --- c.h.d.controller.CustomerController     :   Request received to save a new customer: com.himanshu.departmentalStore.model.Customer@76f34596
+2024-04-25 15:36:17.463 [http-nio-8080-exec-2] INFO  --- c.h.d.service.CustomerService     :   Saving new customer: com.himanshu.departmentalStore.model.Customer@76f34596
+2024-04-25 15:36:17.548 [http-nio-8080-exec-2] INFO  --- c.h.d.controller.CustomerController     :   Saved customer: com.himanshu.departmentalStore.model.Customer@76f34596
+2024-04-25 15:36:24.558 [http-nio-8080-exec-3] ERROR --- c.h.d.e.GlobalExceptionHandler     :   Global Exception: JSON parse error: No content to map due to end-of-input
+2024-04-25 15:36:30.449 [http-nio-8080-exec-5] ERROR --- c.h.d.e.GlobalExceptionHandler     :   Global Exception: Required request body is missing: public org.springframework.http.ResponseEntity<com.himanshu.departmentalStore.model.Customer> com.himanshu.departmentalStore.controller.CustomerController.saveCustomer(com.himanshu.departmentalStore.model.Customer)
+2024-04-25 15:36:46.275 [http-nio-8080-exec-7] ERROR --- c.h.d.e.GlobalExceptionHandler     :   Global Exception: JSON parse error: Unexpected character ('n' (code 110)): was expecting double-quote to start field name
+2024-04-25 15:37:34.256 [http-nio-8080-exec-9] ERROR --- c.h.d.e.GlobalExceptionHandler     :   Global Exception: JSON parse error: No content to map due to end-of-input
+2024-04-25 15:37:48.738 [http-nio-8080-exec-1] INFO  --- c.h.d.controller.CustomerController     :   Request received to save a new customer: com.himanshu.departmentalStore.model.Customer@7f3fa669
+2024-04-25 15:37:48.739 [http-nio-8080-exec-1] INFO  --- c.h.d.service.CustomerService     :   Saving new customer: com.himanshu.departmentalStore.model.Customer@7f3fa669
+2024-04-25 15:37:48.751 [http-nio-8080-exec-1] INFO  --- c.h.d.controller.CustomerController     :   Saved customer: com.himanshu.departmentalStore.model.Customer@7f3fa669
