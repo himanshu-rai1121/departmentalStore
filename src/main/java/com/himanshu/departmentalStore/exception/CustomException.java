@@ -16,14 +16,14 @@ public class CustomException  extends RuntimeException {
     /**
      * Message associated with the exception.
      */
-    private final String message;
+    private final String exceptionMessage;
 
     /**
      * Optional body associated with the exception.
      * This can contain additional information related to the exception.
      */
-    private final Optional<Object> body;
-    private final HttpStatus httpStatus;
+    private final Optional<Object> exceptionBody;
+    private final HttpStatus exceptionHttpStatus;
 
     /**
      * Constructs a new CustomException with the specified message and body.
@@ -32,8 +32,8 @@ public class CustomException  extends RuntimeException {
      */
     public CustomException(final String message, final Object body, final HttpStatus httpStatus) {
         super(message);
-        this.message = message;
-        this.body = Optional.ofNullable(body);
-        this.httpStatus = httpStatus;
+        this.exceptionMessage = message;
+        this.exceptionBody = Optional.ofNullable(body);
+        this.exceptionHttpStatus = httpStatus;
     }
 }

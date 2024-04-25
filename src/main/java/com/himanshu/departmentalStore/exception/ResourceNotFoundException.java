@@ -13,17 +13,17 @@ public class ResourceNotFoundException extends RuntimeException {
     /**
      * The name of the resource that was not found.
      */
-    private final String resourceName;
+    private final String execptionResourceName;
 
     /**
      * The name of the field used to search for the resource.
      */
-    private final String fieldName;
+    private final String execptionFieldName;
 
     /**
      * The value of the field used to search for the resource.
      */
-    private final long fieldValue;
+    private final long execptionFieldValue;
 
     /**
      * Constructs a new ResourceNotFoundException with the specified detail message.
@@ -33,9 +33,9 @@ public class ResourceNotFoundException extends RuntimeException {
      */
     public ResourceNotFoundException(final String resourceName, final String fieldName, final long fieldValue) {
         super(String.format("%s not found with %s : %s", resourceName, fieldName, fieldValue));
-        this.resourceName = resourceName;
-        this.fieldName = fieldName;
-        this.fieldValue = fieldValue;
+        this.execptionResourceName = resourceName;
+        this.execptionFieldName = fieldName;
+        this.execptionFieldValue = fieldValue;
     }
 
 }

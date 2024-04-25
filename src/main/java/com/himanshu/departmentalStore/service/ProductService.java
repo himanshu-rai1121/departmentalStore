@@ -1,7 +1,6 @@
 package com.himanshu.departmentalStore.service;
 
 import com.himanshu.departmentalStore.exception.ResourceNotFoundException;
-import com.himanshu.departmentalStore.model.Backorder;
 import com.himanshu.departmentalStore.model.Product;
 import com.himanshu.departmentalStore.repository.ProductRepository;
 import org.slf4j.Logger;
@@ -91,7 +90,7 @@ public class ProductService {
                     .findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
             product.setId(id);
-            if(product.getCount() > previousProduct.getCount()) {
+            if (product.getCount() > previousProduct.getCount()) {
                 backorderService.removeFromBackOrder(previousProduct.getId(), product.getCount());
             }
             return productRepository.save(product);

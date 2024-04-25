@@ -58,9 +58,9 @@ public class GlobalExceptionHandler {
         CustomException customException = (CustomException) ex;
         String message = ex.getMessage();
         Object body = customException
-                .getBody()
+                .getExceptionBody()
                 .orElse(null); // Get the body from CustomException
         ApiResponse apiResponse = new ApiResponse(message, false, body);
-        return new ResponseEntity<>(apiResponse, ((CustomException) ex).getHttpStatus());
+        return new ResponseEntity<>(apiResponse, ((CustomException) ex).getExceptionHttpStatus());
     }
 }
