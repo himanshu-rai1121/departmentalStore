@@ -1,0 +1,69 @@
+2024-04-30 03:19:55.141 [SpringApplicationShutdownHook] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-30 03:19:55.153 [SpringApplicationShutdownHook] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown initiated...
+2024-04-30 03:19:55.168 [SpringApplicationShutdownHook] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown completed.
+2024-04-30 03:20:01.093 [background-preinit] INFO  --- o.h.validator.internal.util.Version     :   HV000001: Hibernate Validator 8.0.1.Final
+2024-04-30 03:20:01.208 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   Starting DepartmentalStoreApplication using Java 21.0.2 with PID 20432 (C:\Users\himanshu.kumar\IdeaProjects\departmentalStore\target\classes started by Himanshu.Kumar in C:\Users\himanshu.kumar\IdeaProjects\departmentalStore)
+2024-04-30 03:20:01.209 [main] DEBUG --- c.h.d.DepartmentalStoreApplication     :   Running with Spring Boot v3.2.4, Spring v6.1.5
+2024-04-30 03:20:01.210 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   No active profile set, falling back to 1 default profile: "default"
+2024-04-30 03:20:03.757 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-30 03:20:03.901 [main] INFO  --- o.s.d.r.c.RepositoryConfigurationDelegate     :   Finished Spring Data repository scanning in 127 ms. Found 5 JPA repository interfaces.
+2024-04-30 03:20:05.670 [main] INFO  --- o.s.b.w.e.tomcat.TomcatWebServer     :   Tomcat initialized with port 8080 (http)
+2024-04-30 03:20:05.691 [main] INFO  --- o.a.coyote.http11.Http11NioProtocol     :   Initializing ProtocolHandler ["http-nio-8080"]
+2024-04-30 03:20:05.695 [main] INFO  --- o.a.catalina.core.StandardService     :   Starting service [Tomcat]
+2024-04-30 03:20:05.695 [main] INFO  --- o.a.catalina.core.StandardEngine     :   Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-04-30 03:20:05.863 [main] INFO  --- o.a.c.c.C.[Tomcat].[localhost].[/]     :   Initializing Spring embedded WebApplicationContext
+2024-04-30 03:20:05.864 [main] INFO  --- o.s.b.w.s.c.ServletWebServerApplicationContext     :   Root WebApplicationContext: initialization completed in 4530 ms
+2024-04-30 03:20:06.473 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Starting...
+2024-04-30 03:20:07.313 [main] INFO  --- com.zaxxer.hikari.pool.HikariPool     :   HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@376498da
+2024-04-30 03:20:07.318 [main] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Start completed.
+2024-04-30 03:20:07.560 [main] INFO  --- o.f.c.i.license.VersionPrinter     :   Flyway Community Edition 9.22.3 by Redgate
+2024-04-30 03:20:07.561 [main] INFO  --- o.f.c.i.license.VersionPrinter     :   See release notes here: https://rd.gt/416ObMi
+2024-04-30 03:20:07.561 [main] INFO  --- o.f.c.i.license.VersionPrinter     :   
+2024-04-30 03:20:07.602 [main] INFO  --- org.flywaydb.core.FlywayExecutor     :   Database: jdbc:mysql://localhost:3306/flyway (MySQL 8.0)
+2024-04-30 03:20:07.691 [main] INFO  --- o.f.c.i.s.JdbcTableSchemaHistory     :   Schema history table `flyway`.`flyway_schema_history` does not exist yet
+2024-04-30 03:20:07.699 [main] INFO  --- o.f.core.internal.command.DbValidate     :   Successfully validated 6 migrations (execution time 00:00.056s)
+2024-04-30 03:20:07.736 [main] INFO  --- o.f.c.i.s.JdbcTableSchemaHistory     :   Creating Schema History table `flyway`.`flyway_schema_history` ...
+2024-04-30 03:20:07.883 [main] INFO  --- o.f.core.internal.command.DbMigrate     :   Current version of schema `flyway`: << Empty Schema >>
+2024-04-30 03:20:07.898 [main] INFO  --- o.f.core.internal.command.DbMigrate     :   Migrating schema `flyway` to version "1 - createCustomer"
+2024-04-30 03:20:07.984 [main] INFO  --- o.f.core.internal.command.DbMigrate     :   Migrating schema `flyway` to version "2 - createProduct"
+2024-04-30 03:20:08.074 [main] INFO  --- o.f.core.internal.command.DbMigrate     :   Migrating schema `flyway` to version "3 - createDiscount"
+2024-04-30 03:20:08.158 [main] INFO  --- o.f.core.internal.command.DbMigrate     :   Migrating schema `flyway` to version "4 - createOrder"
+2024-04-30 03:20:08.247 [main] INFO  --- o.f.core.internal.command.DbMigrate     :   Migrating schema `flyway` to version "5 - createBackorder"
+2024-04-30 03:20:08.367 [main] INFO  --- o.f.core.internal.command.DbMigrate     :   Migrating schema `flyway` to version "6 - query"
+2024-04-30 03:20:08.446 [main] INFO  --- o.f.core.internal.command.DbMigrate     :   Successfully applied 6 migrations to schema `flyway`, now at version v6 (execution time 00:00.278s)
+2024-04-30 03:20:08.661 [main] INFO  --- o.h.jpa.internal.util.LogHelper     :   HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-30 03:20:08.811 [main] INFO  --- org.hibernate.Version     :   HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-04-30 03:20:08.900 [main] INFO  --- o.h.c.i.RegionFactoryInitiator     :   HHH000026: Second-level cache disabled
+2024-04-30 03:20:09.451 [main] INFO  --- o.s.o.j.p.SpringPersistenceUnitInfo     :   No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-04-30 03:20:11.323 [main] INFO  --- o.h.e.t.j.p.i.JtaPlatformInitiator     :   HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-04-30 03:20:11.372 [main] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-30 03:20:13.448 [main] WARN  --- o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration     :   spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-30 03:20:15.323 [main] INFO  --- o.s.b.a.e.web.EndpointLinksResolver     :   Exposing 14 endpoint(s) beneath base path '/actuator'
+2024-04-30 03:20:15.472 [main] INFO  --- o.a.coyote.http11.Http11NioProtocol     :   Starting ProtocolHandler ["http-nio-8080"]
+2024-04-30 03:20:15.520 [main] INFO  --- o.s.b.w.e.tomcat.TomcatWebServer     :   Tomcat started on port 8080 (http) with context path ''
+2024-04-30 03:20:15.557 [main] INFO  --- c.h.d.DepartmentalStoreApplication     :   Started DepartmentalStoreApplication in 15.157 seconds (process running for 16.645)
+2024-04-30 03:20:24.120 [http-nio-8080-exec-2] INFO  --- o.a.c.c.C.[Tomcat].[localhost].[/]     :   Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-04-30 03:20:24.121 [http-nio-8080-exec-2] INFO  --- o.s.web.servlet.DispatcherServlet     :   Initializing Servlet 'dispatcherServlet'
+2024-04-30 03:20:24.125 [http-nio-8080-exec-2] INFO  --- o.s.web.servlet.DispatcherServlet     :   Completed initialization in 4 ms
+2024-04-30 03:20:24.229 [http-nio-8080-exec-2] INFO  --- c.h.d.controller.CustomerController     :   Received request to retrieve all customers.
+2024-04-30 03:20:24.230 [http-nio-8080-exec-2] INFO  --- c.h.d.service.CustomerService     :   Fetching all customers from the database
+2024-04-30 03:20:24.562 [http-nio-8080-exec-2] INFO  --- c.h.d.service.CustomerService     :   Fetched 3 customers
+2024-04-30 03:20:24.563 [http-nio-8080-exec-2] INFO  --- c.h.d.controller.CustomerController     :   Retrieved 3 customers.
+2024-04-30 03:20:33.608 [http-nio-8080-exec-3] INFO  --- c.h.d.controller.CustomerController     :   Request received to save a new customer: com.himanshu.departmentalStore.model.Customer@31ab0651
+2024-04-30 03:20:33.609 [http-nio-8080-exec-3] INFO  --- c.h.d.service.CustomerService     :   Saving new customer: com.himanshu.departmentalStore.model.Customer@31ab0651
+2024-04-30 03:20:33.730 [http-nio-8080-exec-3] INFO  --- c.h.d.controller.CustomerController     :   Saved customer: com.himanshu.departmentalStore.model.Customer@31ab0651
+2024-04-30 03:20:37.130 [http-nio-8080-exec-4] INFO  --- c.h.d.controller.CustomerController     :   Received request to retrieve all customers.
+2024-04-30 03:20:37.132 [http-nio-8080-exec-4] INFO  --- c.h.d.service.CustomerService     :   Fetching all customers from the database
+2024-04-30 03:20:37.144 [http-nio-8080-exec-4] INFO  --- c.h.d.service.CustomerService     :   Fetched 4 customers
+2024-04-30 03:20:37.144 [http-nio-8080-exec-4] INFO  --- c.h.d.controller.CustomerController     :   Retrieved 4 customers.
+2024-04-30 03:20:47.266 [http-nio-8080-exec-5] INFO  --- c.h.d.controller.CustomerController     :   Request received to save a new customer: com.himanshu.departmentalStore.model.Customer@6dae4098
+2024-04-30 03:20:47.267 [http-nio-8080-exec-5] INFO  --- c.h.d.service.CustomerService     :   Saving new customer: com.himanshu.departmentalStore.model.Customer@6dae4098
+2024-04-30 03:20:47.373 [http-nio-8080-exec-5] WARN  --- o.h.e.jdbc.spi.SqlExceptionHelper     :   SQL Error: 1406, SQLState: 22001
+2024-04-30 03:20:47.374 [http-nio-8080-exec-5] ERROR --- o.h.e.jdbc.spi.SqlExceptionHelper     :   Data truncation: Data too long for column 'contact_number' at row 1
+2024-04-30 03:20:47.396 [http-nio-8080-exec-5] ERROR --- c.h.d.e.GlobalExceptionHandler     :   Global Exception: could not execute statement [Data truncation: Data too long for column 'contact_number' at row 1] [insert into customer (address,contact_number,full_name) values (?,?,?)]; SQL [insert into customer (address,contact_number,full_name) values (?,?,?)]
+2024-04-30 03:21:31.377 [http-nio-8080-exec-7] INFO  --- c.h.d.controller.CustomerController     :   Request received to save a new customer: com.himanshu.departmentalStore.model.Customer@356850be
+2024-04-30 03:21:31.378 [http-nio-8080-exec-7] INFO  --- c.h.d.service.CustomerService     :   Saving new customer: com.himanshu.departmentalStore.model.Customer@356850be
+2024-04-30 03:21:31.393 [http-nio-8080-exec-7] INFO  --- c.h.d.controller.CustomerController     :   Saved customer: com.himanshu.departmentalStore.model.Customer@356850be
+2024-04-30 03:22:52.903 [SpringApplicationShutdownHook] INFO  --- o.s.o.j.LocalContainerEntityManagerFactoryBean     :   Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-30 03:22:52.908 [SpringApplicationShutdownHook] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown initiated...
+2024-04-30 03:22:52.926 [SpringApplicationShutdownHook] INFO  --- com.zaxxer.hikari.HikariDataSource     :   HikariPool-1 - Shutdown completed.

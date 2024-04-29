@@ -1,9 +1,6 @@
 package com.himanshu.departmentalStore.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +34,7 @@ public class Discount {
      * (in percentage)
      */
     @NotNull(message = "Value must not be null")
+    @Column(name = "discount_value")
     private BigDecimal value;
 
     /**
