@@ -19,22 +19,30 @@ class CustomerRepositoryTest {
 
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private BackorderRepository backorderRepository;
     @BeforeEach
     void setUp() {
         // Clear any existing data before each test
+        orderRepository.deleteAll();
+        backorderRepository.deleteAll();
         customerRepository.deleteAll();
     }
 
     @AfterEach
     void tearDown() {
         // Clean up after each test
+        orderRepository.deleteAll();
+        backorderRepository.deleteAll();
         customerRepository.deleteAll();
     }
 
     @Test
     void testSaveCustomer() {
         // Create a sample customer
-        Customer customer = createMockCustomer("John Doe", "Delhi", "1234567890");
+        Customer customer = createMockCustomer("Himanshu Kumar", "Delhi", "1234567890");
 
         // Save the customer
         Customer savedCustomer = customerRepository.save(customer);
@@ -46,10 +54,10 @@ class CustomerRepositoryTest {
     @Test
     void testFindAllCustomers() {
         // Save sample customers
-        Customer customer1 = createMockCustomer("John Doe", "Delhi", "1234567890");
+        Customer customer1 = createMockCustomer("Himanshu Kumar", "Delhi", "1234567890");
         customerRepository.save(customer1);
 
-        Customer customer2 = createMockCustomer("John Doe", "Delhi", "1234567890");
+        Customer customer2 = createMockCustomer("Himanshu Kumar", "Delhi", "1234567890");
         customerRepository.save(customer2);
 
         // Retrieve all customers
@@ -63,7 +71,7 @@ class CustomerRepositoryTest {
     @Test
     void testFindById() {
         // Save a sample customer
-        Customer customer = createMockCustomer("John Doe", "Delhi", "1234567890");
+        Customer customer = createMockCustomer("Himanshu Kumar", "Delhi", "1234567890");
         Customer savedCustomer = customerRepository.save(customer);
 
         // Retrieve the customer by ID
@@ -81,7 +89,7 @@ class CustomerRepositoryTest {
     @Test
     void testDeleteCustomer() {
         // Save a sample customer
-        Customer customer = createMockCustomer("John Doe", "Delhi", "1234567890");
+        Customer customer = createMockCustomer("Himanshu Kumar", "Delhi", "1234567890");
         Customer savedCustomer = customerRepository.save(customer);
 
         // Delete the customer
@@ -94,12 +102,12 @@ class CustomerRepositoryTest {
     @Test
     void testUpdateCustomer() {
         // Save a sample customer
-        Customer customer = createMockCustomer("John Doe", "Delhi", "1234567890");
+        Customer customer = createMockCustomer("Himanshu Kumar", "Delhi", "1234567890");
         Customer savedCustomer = customerRepository.save(customer);
 
         // Update the customer's information
         savedCustomer.setFullName("Updated Name");
-        savedCustomer.setAddress("456 Elm St");
+        savedCustomer.setAddress("Gurgaon");
         savedCustomer.setContactNumber("9876543210");
 
         // Save the updated customer
@@ -112,7 +120,7 @@ class CustomerRepositoryTest {
 
         // Check if the updated customer matches the changes
         assertEquals("Updated Name", foundUpdatedCustomer.getFullName());
-        assertEquals("456 Elm St", foundUpdatedCustomer.getAddress());
+        assertEquals("Gurgaon", foundUpdatedCustomer.getAddress());
         assertEquals("9876543210", foundUpdatedCustomer.getContactNumber());
 
     }

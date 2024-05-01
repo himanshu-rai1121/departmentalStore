@@ -33,8 +33,8 @@ class CustomerControllerTest {
     void getAllCustomers() {
         // Mocking behavior
         List<Customer> customers = Arrays.asList(
-                createCustomerMock(1L, "John Doe", "123 Main St", "1234567890"),
-                createCustomerMock(2L, "Jane Smith", "456 Elm St", "9876543210")
+                createCustomerMock(1L, "Himanshu Kumar", "Delhi", "1234567890"),
+                createCustomerMock(2L, "Rahul Singh", "Gurgaon", "9876543210")
         );
         when(customerService.getAllCustomers()).thenReturn(customers);
 
@@ -49,7 +49,7 @@ class CustomerControllerTest {
     void getCustomerById() {
         // Mocking behavior
         Long customerId = 1L;
-        Customer customer = createCustomerMock(customerId, "John Doe", "123 Main St", "1234567890");
+        Customer customer = createCustomerMock(customerId, "Himanshu Kumar", "Delhi", "1234567890");
         when(customerService.getCustomerById(customerId)).thenReturn(customer);
 
         // Test
@@ -62,7 +62,7 @@ class CustomerControllerTest {
     @Test
     void saveCustomer() {
         // Mocking behavior
-        Customer customer = createCustomerMock(1L, "John Doe", "123 Main St", "1234567890");
+        Customer customer = createCustomerMock(1L, "Himanshu Kumar", "Delhi", "1234567890");
         when(customerService.saveCustomer(customer)).thenReturn(customer);
 
         // Test
@@ -76,8 +76,8 @@ class CustomerControllerTest {
     void updateCustomer() {
         // Mocking behavior
         Long customerId = 1L;
-        Customer originalCustomer = createCustomerMock(customerId, "John Doe", "123 Main St", "1234567890");
-        Customer updatedCustomer = createCustomerMock(customerId, "John", "123 Main St", "1234567890");
+        Customer originalCustomer = createCustomerMock(customerId, "Himanshu Kumar", "Delhi", "1234567890");
+        Customer updatedCustomer = createCustomerMock(customerId, "Himanshu", "123 Main St", "1234567890");
         when(customerService.updateCustomer(eq(customerId), any(Customer.class))).thenReturn(updatedCustomer);
 
         // Test

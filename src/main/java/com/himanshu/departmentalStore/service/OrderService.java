@@ -118,7 +118,6 @@ public class OrderService {
             Backorder backorder = createBackorder(order.getCustomer(), product, orderQuantity, order.getTimestamp());
             LOGGER.info("Backorder saved with Id : {}", backorder.getId());
             throw new CustomException("Ordered quantity is more then quantity left in stock : Backorder created", backorder, HttpStatus.ACCEPTED);
-
         }
     }
     /**
@@ -146,6 +145,9 @@ public class OrderService {
      */
     private BigDecimal findAmount(final Order order, final Product product) {
         BigDecimal totalPrice = product.getPrice().multiply(BigDecimal.valueOf(order.getQuantity()));
+        if (order.getDiscount() == null) {
+            return totalPrice;
+        }
         Discount discount = discountService.getDiscountById(order.getDiscount().getId());
         if (discount == null) {
             return totalPrice;

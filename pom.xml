@@ -81,6 +81,13 @@
 			<artifactId>flyway-mysql</artifactId>
 		</dependency>
 
+<!--		<dependency>-->
+<!--			<groupId>com.github.spotbugs</groupId>-->
+<!--			<artifactId>spotbugs-annotations</artifactId>-->
+<!--			<version>4.2.3</version> &lt;!&ndash; Use the latest version &ndash;&gt;-->
+<!--			<scope>provided</scope>-->
+<!--		</dependency>-->
+
 
 
 
@@ -133,7 +140,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.1.2</version>
+				<version>3.3.1</version>
 				<configuration>
 					<configLocation>checkstyle.xml</configLocation>
 				</configuration>

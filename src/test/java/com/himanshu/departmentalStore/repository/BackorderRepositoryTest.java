@@ -139,7 +139,7 @@ class BackorderRepositoryTest {
     private Customer createCustomerMock() {
         Customer customer = new Customer();
         customer.setId(1L);
-        customer.setFullName("John Doe");
+        customer.setFullName("Himanshu Kumar");
         customer.setAddress("123 Main St");
         customer.setContactNumber("1234567890");
         return customerRepository.save(customer);

@@ -21,16 +21,24 @@ class DiscountRepositoryTest {
 
     @Autowired
     private DiscountRepository discountRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private BackorderRepository backorderRepository;
 
     @BeforeEach
     void setUp() {
         // Clear any existing data before each test
+        orderRepository.deleteAll();
+        backorderRepository.deleteAll();
         discountRepository.deleteAll();
     }
 
     @AfterEach
     void tearDown() {
         // Clean up after each test
+        orderRepository.deleteAll();
+        backorderRepository.deleteAll();
         discountRepository.deleteAll();
     }
 

@@ -22,15 +22,23 @@ class ProductRepositoryTest {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private BackorderRepository backorderRepository;
     @BeforeEach
     void setUp() {
         // Clear any existing data before each test
+        orderRepository.deleteAll();
+        backorderRepository.deleteAll();
         productRepository.deleteAll();
     }
 
     @AfterEach
     void tearDown() {
         // Clean up after each test
+        orderRepository.deleteAll();
+        backorderRepository.deleteAll();
         productRepository.deleteAll();
     }
 
