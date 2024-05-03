@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class BackorderIntegrationTest {
+public class BackorderIntegrationTest extends AbstractTestContainer {
 
     @Autowired
     private MockMvc mockMvc;

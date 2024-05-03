@@ -1,5 +1,6 @@
 package com.himanshu.departmentalStore.exception;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * Global exception handler for handling exceptions.
  */
 @RestControllerAdvice
+@SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST")
 public class GlobalExceptionHandler {
     /**
      * Logger for logging messages related to GlobalExceptionHandler class.

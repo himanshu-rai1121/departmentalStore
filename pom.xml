@@ -81,12 +81,31 @@
 			<artifactId>flyway-mysql</artifactId>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>com.github.spotbugs</groupId>-->
-<!--			<artifactId>spotbugs-annotations</artifactId>-->
-<!--			<version>4.2.3</version> &lt;!&ndash; Use the latest version &ndash;&gt;-->
-<!--			<scope>provided</scope>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>com.github.spotbugs</groupId>
+			<artifactId>spotbugs-annotations</artifactId>
+			<version>4.2.3</version> <!-- Use the latest version -->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- used for test containers -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-testcontainers</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!--  https://mvnrepository.com/artifact/org.testcontainers/mysql  -->
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mysql</artifactId>
+			<version>1.19.7</version>
+			<scope>test</scope>
+		</dependency>
 
 
 
