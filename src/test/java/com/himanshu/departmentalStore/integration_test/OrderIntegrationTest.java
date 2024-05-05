@@ -221,6 +221,42 @@ public class OrderIntegrationTest extends AbstractTestContainer {
     }
 
     @Test
+    public void updateOrderWithDifferentCustomer() throws Exception {
+        orderRepository.save(order);
+
+        OrderRequestBody orderRequestBody = new OrderRequestBody();
+        orderRequestBody.setProductId(product.getId());
+        orderRequestBody.setCustomerId(customer.getId() + 100L);
+        orderRequestBody.setQuantity(2);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/orders/{id}", order.getId())
+                        .contentType("application/json")
+                        .content(asJsonString(orderRequestBody))
+                        .accept("application/json"))
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(false));
+    }
+
+    @Test
+    public void updateOrderWithDifferentProduct() throws Exception {
+        orderRepository.save(order);
+
+        OrderRequestBody orderRequestBody = new OrderRequestBody();
+        orderRequestBody.setProductId(product.getId() + 100L);
+        orderRequestBody.setCustomerId(customer.getId());
+        orderRequestBody.setQuantity(2);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/orders/{id}", order.getId())
+                        .contentType("application/json")
+                        .content(asJsonString(orderRequestBody))
+                        .accept("application/json"))
+                .andExpect(status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(false));
+    }
+
+    @Test
     public void deleteOrder() throws Exception {
         orderRepository.save(order);
 

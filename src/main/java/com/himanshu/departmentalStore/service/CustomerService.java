@@ -103,14 +103,10 @@ public class CustomerService {
      */
     public Boolean deleteCustomer(final Long id) {
         LOGGER.info("Deleting customer with ID {}", id);
-        Customer optionalCustomer = customerRepository
+        customerRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(CUSTOMERCONSTANT, "Id", id));
-        if (optionalCustomer != null) {
-            customerRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
-        }
+        customerRepository.deleteById(id);
+        return true;
     }
 }

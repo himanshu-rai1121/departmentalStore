@@ -1,12 +1,12 @@
 package com.himanshu.departmentalStore.exception;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
 /**
  * Represents an API response containing a message and status.
  */
-@Data
+@Getter
 @AllArgsConstructor
 public class ApiResponse {
 

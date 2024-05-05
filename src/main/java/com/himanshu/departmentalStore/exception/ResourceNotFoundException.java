@@ -1,29 +1,27 @@
 package com.himanshu.departmentalStore.exception;
 
-import lombok.Getter;
 import lombok.Setter;
 
 /**
  * Exception thrown when a requested resource is not found.
  */
-@Getter
 @Setter
 public class ResourceNotFoundException extends RuntimeException {
 
     /**
      * The name of the resource that was not found.
      */
-    private final String execptionResourceName;
+    private final String excptionResourceName;
 
     /**
      * The name of the field used to search for the resource.
      */
-    private final String execptionFieldName;
+    private final String exceptionFieldName;
 
     /**
      * The value of the field used to search for the resource.
      */
-    private final long execptionFieldValue;
+    private final long excptionFieldValue;
 
     /**
      * Constructs a new ResourceNotFoundException with the specified detail message.
@@ -33,9 +31,9 @@ public class ResourceNotFoundException extends RuntimeException {
      */
     public ResourceNotFoundException(final String resourceName, final String fieldName, final long fieldValue) {
         super(String.format("%s not found with %s : %s", resourceName, fieldName, fieldValue));
-        this.execptionResourceName = resourceName;
-        this.execptionFieldName = fieldName;
-        this.execptionFieldValue = fieldValue;
+        this.excptionResourceName = resourceName;
+        this.exceptionFieldName = fieldName;
+        this.excptionFieldValue = fieldValue;
     }
 
 }

@@ -281,7 +281,6 @@ public class OrderService {
         Order optionalOrder = orderRepository
                 .findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException(ORDERCONSTANT, "Id", orderId));
-        if (optionalOrder != null) {
             /**
              * increase product quantity
              * then check backorder if it can be fulfilled then send notification and delete that backorder from backorder table.
@@ -302,9 +301,5 @@ public class OrderService {
             orderRepository.deleteById(orderId);
             LOGGER.info("Order deleted with Id : {}", orderId);
             return true;
-        } else {
-            LOGGER.info("Order not available with Id : {}", orderId);
-            return false;
-        }
     }
 }

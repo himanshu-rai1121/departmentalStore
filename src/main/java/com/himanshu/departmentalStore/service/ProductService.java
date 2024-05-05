@@ -87,22 +87,15 @@ public class ProductService {
      */
     public Product updateProduct(final Long id, final Product product) {
         LOGGER.info("Updating product with ID {}: {}", id, product);
-        boolean isProductExist  = productRepository.existsById(id);
-        if (isProductExist) {
-            Product previousProduct = productRepository
-                    .findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
-            product.setId(id);
-            if (product.getCount() > previousProduct.getCount()) {
-                backorderService.removeFromBackOrder(previousProduct.getId(), product.getCount());
-            }
-            return productRepository.save(product);
-            // if product quantity is increased then handel backorder
-
-        } else {
-            LOGGER.error("Product with ID {} not found", id);
-            throw new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id);
+        Product previousProduct = productRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
+        product.setId(id);
+        if (product.getCount() > previousProduct.getCount()) {
+            backorderService.removeFromBackOrder(previousProduct.getId(), product.getCount());
         }
+        return productRepository.save(product);
+        // if product quantity is increased then handel backorder
     }
 
     /**
@@ -113,14 +106,11 @@ public class ProductService {
      */
     public boolean deleteProduct(final Long id) {
         LOGGER.info("Deleting product with ID {}", id);
-        Product optionalProduct = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
-        if (optionalProduct != null) {
-            productRepository.deleteById(id);
-            return true;
-        } else {
-            LOGGER.info("Product with ID {} not found", id);
-            return false;
-        }
+        productRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(PRODUCTCONSTANT, "Id", id));
+        productRepository.deleteById(id);
+        return true;
     }
 }
 

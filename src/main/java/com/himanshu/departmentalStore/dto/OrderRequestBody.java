@@ -1,13 +1,15 @@
 package com.himanshu.departmentalStore.dto;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * DTO (Data Transfer Object) class representing the request body for creating an order.
  * Contains information about the product ID, customer ID, quantity, and discount ID.
  */
-@Data
+@Getter
+@Setter
 public class OrderRequestBody {
 
     /**

@@ -110,15 +110,11 @@ public class BackorderService {
      */
     public Boolean deleteBackorder(final Long id) {
         LOGGER.info("Deleting backorder");
-        Backorder optionalBackorder = backorderRepository
+        backorderRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(BACKORDERCONSTANT, "Id", id));
-        if (optionalBackorder != null) {
-            backorderRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
-        }
+        backorderRepository.deleteById(id);
+        return true;
     }
     /**
      * Removes fulfilled backorders associated with the updated product quantity.

@@ -137,14 +137,10 @@ public class DiscountService {
      */
     public Boolean deleteDiscount(final Long id) {
         LOGGER.info("Deleting discount with ID: {}", id);
-        Discount optionalDiscount = discountRepository
+        discountRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(DISCOUNTCONSTANT, "Id", id));
-        if (optionalDiscount != null) {
-            discountRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
-        }
+        discountRepository.deleteById(id);
+        return true;
     }
 }
