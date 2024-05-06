@@ -12,9 +12,8 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doNothing;
 
@@ -35,16 +34,17 @@ class DiscountServiceTest {
     void getAllDiscounts() {
         // Mocking behavior
         List<Discount> discounts = Arrays.asList(
-                createDiscountMock(1L, "50% off", new BigDecimal("50"), LocalDateTime.now(), LocalDateTime.now().plusDays(7), "Half price sale", BigDecimal.ZERO, "HALFOFF"),
-                createDiscountMock(2L, "20% off", new BigDecimal("20"), LocalDateTime.now(), LocalDateTime.now().plusDays(5), "Spring sale", new BigDecimal("50"), "SPRING20")
-        );
+                createDiscountMock(1L, "50% off", new BigDecimal("50"), LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(7), "Half price sale", BigDecimal.ZERO, "HALFOFF"),
+                createDiscountMock(2L, "20% off", new BigDecimal("20"), LocalDateTime.now(), LocalDateTime.now().plusDays(5), "Spring sale", new BigDecimal("50"), "SPRING20"),
+                createDiscountMock(4L, "50% off", new BigDecimal("50"), LocalDateTime.now().minusDays(2), LocalDateTime.now().plusDays(2), "Half price sale", BigDecimal.ZERO, "HALFOFF")
+                );
         when(discountRepository.findAll()).thenReturn(discounts);
 
         // Test
         List<Discount> result = discountService.getAllActiveDiscounts();
 
         // Verification
-        assertEquals(discounts, result);
+        assertEquals(2, result.size()); // because 1 discount is not active.
     }
 
     @Test
@@ -58,6 +58,34 @@ class DiscountServiceTest {
         Discount result = discountService.getDiscountById(discountId);
 
         // Verification
+        assertNotNull(result);
+        assertEquals(discountId, result.getId());
+    }
+
+    @Test
+    void getDiscountByIdForOrderWithIdNull() {
+        // Mocking behavior
+        Long discountId = null;
+        Discount discount = createDiscountMock(discountId, "50% off", new BigDecimal("50"), LocalDateTime.now(), LocalDateTime.now().plusDays(7), "Half price sale", BigDecimal.ZERO, "HALFOFF");
+        when(discountRepository.findById(discountId)).thenReturn(Optional.of(discount));
+
+        // Test
+        Discount result = discountService.getDiscountByIdForOrder(discountId);
+
+        // Verification
+        assertNull(result);
+    }
+
+    @Test
+    void getDiscountByIdForOrderWithIdNotNull() {
+        // Mocking behavior
+        Long discountId = 1L;
+        Discount discount = createDiscountMock(discountId, "50% off", new BigDecimal("50"), LocalDateTime.now(), LocalDateTime.now().plusDays(7), "Half price sale", BigDecimal.ZERO, "HALFOFF");
+        when(discountRepository.findById(discountId)).thenReturn(Optional.of(discount));
+
+        // Test
+        Discount result = discountService.getDiscountByIdForOrder(discountId);
+
         assertNotNull(result);
         assertEquals(discountId, result.getId());
     }

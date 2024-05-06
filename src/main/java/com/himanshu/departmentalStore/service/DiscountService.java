@@ -85,7 +85,7 @@ public class DiscountService {
      * @return The discount with the specified ID.
      *          or null if not available.
      *          used so that set discount to null if discount not applied
-     * in getDiscountById() method it through exception instead of null
+     * in getDiscountById() method it throws  exception instead of null
      * therefore created a new method which send null
      * it will only be used for order
      */
