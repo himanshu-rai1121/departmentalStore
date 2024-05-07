@@ -3,6 +3,12 @@ package com.himanshu.departmentalStore.controller;
 import com.himanshu.departmentalStore.dto.BackOrderRequestBody;
 import com.himanshu.departmentalStore.model.Backorder;
 import com.himanshu.departmentalStore.service.BackorderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +55,10 @@ public class BackorderController {
      * Retrieves all backorders.
      * @return ResponseEntity containing a list of all backorders and HTTP status 200 (OK)
      */
+    @Operation(summary = "Get all backorders", description = "Retrieves a list of all backorders.")
+    @ApiResponse(responseCode = "200", description = "Backorders found", content = {
+            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Backorder.class)))
+    })
     @GetMapping
     public ResponseEntity<List<Backorder>> getAllBackorders() {
         LOGGER.info("Received request to fetch all backorders");
@@ -62,6 +72,15 @@ public class BackorderController {
      * @param id The ID of the backorder to retrieve
      * @return ResponseEntity containing the backorder with the specified ID and HTTP status 200 (OK)
      */
+    @Operation(summary = "Get backorder by ID", description = "Retrieves a backorder by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Backorder found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Backorder.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Backorder not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Backorder> getBackorderById(@PathVariable("id") final Long id) {
         LOGGER.info("Received request to fetch backorder by ID: {}", id);
@@ -75,6 +94,16 @@ public class BackorderController {
      * @param backOrderRequestBody The request body containing backorder details
      * @return ResponseEntity containing the created backorder and HTTP status 201 (Created)
      */
+    @Operation(summary = "Create new backorder", description = "Creates a new backorder.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Backorder created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Backorder.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Backorder is null"),
+            @ApiResponse(responseCode = "404", description = "Product or Customer or Both not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @PostMapping
     public ResponseEntity<Backorder> createBackorder(@RequestBody final BackOrderRequestBody backOrderRequestBody) {
         LOGGER.info("Received request to create new backorder with request body: {}", backOrderRequestBody);
@@ -94,6 +123,15 @@ public class BackorderController {
      * @param backOrderRequestBody The request body containing updated backorder details
      * @return ResponseEntity containing the updated backorder and HTTP status 200 (OK)
      */
+    @Operation(summary = "Update existing backorder", description = "Updates an existing backorder.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Backorder updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Backorder.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Backorder or Product or Customer not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Backorder> updateBackorder(@PathVariable("id") final Long id, @RequestBody final BackOrderRequestBody backOrderRequestBody) {
         LOGGER.info("Received request to update backorder with ID {}: {}", id, backOrderRequestBody);
@@ -110,6 +148,13 @@ public class BackorderController {
      * @param id The ID of the backorder to delete
      * @return ResponseEntity indicating success or failure of the deletion operation
      */
+    @Operation(summary = "Delete backorder by ID", description = "Deletes a backorder by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Backorder deleted"),
+            @ApiResponse(responseCode = "404", description = "Backorder not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBackorder(@PathVariable("id") final Long id) {
         LOGGER.info("Received request to delete backorder with ID: {}", id);

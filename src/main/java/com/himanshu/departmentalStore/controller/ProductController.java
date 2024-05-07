@@ -2,6 +2,12 @@ package com.himanshu.departmentalStore.controller;
 
 import com.himanshu.departmentalStore.model.Product;
 import com.himanshu.departmentalStore.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +48,10 @@ public class ProductController {
      * Retrieves all products.
      * @return ResponseEntity with a list of products and HTTP status 200 (OK)
      */
+    @Operation(summary = "Get all products", description = "Retrieves a list of all products.")
+    @ApiResponse(responseCode = "200", description = "Products found", content = {
+            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Product.class)))
+    })
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         LOGGER.info("Request received to fetch all products");
@@ -55,6 +65,15 @@ public class ProductController {
      * @param id The ID of the product to retrieve
      * @return ResponseEntity with the product and HTTP status 200 (OK)
      */
+    @Operation(summary = "Get product by ID", description = "Retrieves a product by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Product not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") final Long id) {
         LOGGER.info("Request received to fetch product with ID {}", id);
@@ -67,6 +86,13 @@ public class ProductController {
      * @param product The product to be saved
      * @return ResponseEntity with the saved product and HTTP status 201 (Created)
      */
+    @Operation(summary = "Save new product", description = "Saves a new product.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Product created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Product is null")
+    })
     @PostMapping
     public ResponseEntity<Product> saveProduct(@RequestBody final Product product) {
         LOGGER.info("Request received to save a new product: {}", product);
@@ -81,6 +107,15 @@ public class ProductController {
      * @param product The updated product information
      * @return ResponseEntity with the updated product and HTTP status 200 (OK)
      */
+    @Operation(summary = "Update existing product", description = "Updates an existing product.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Product not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") final Long id, @RequestBody final Product product) {
         LOGGER.info("Request received to update product with ID {}: {}", id, product);
@@ -94,6 +129,13 @@ public class ProductController {
      * @param id The ID of the product to delete
      * @return ResponseEntity with a success or error message and appropriate HTTP status
      */
+    @Operation(summary = "Delete product by ID", description = "Deletes a product by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product deleted"),
+            @ApiResponse(responseCode = "404", description = "Product not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") final Long id) {
         LOGGER.info("Request received to delete product with ID {}", id);

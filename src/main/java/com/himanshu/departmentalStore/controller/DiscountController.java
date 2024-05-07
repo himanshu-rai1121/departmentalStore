@@ -2,6 +2,12 @@ package com.himanshu.departmentalStore.controller;
 
 import com.himanshu.departmentalStore.model.Discount;
 import com.himanshu.departmentalStore.service.DiscountService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +48,10 @@ public class DiscountController {
      * Based on Start and End DateTime
      * @return List of active discounts
      */
+    @Operation(summary = "Get all active discounts", description = "Retrieves a list of all active discounts.")
+    @ApiResponse(responseCode = "200", description = "Active discounts found", content = {
+            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Discount.class)))
+    })
     @GetMapping("/active")
     public ResponseEntity<List<Discount>> getAllActiveDiscounts() {
         LOGGER.info("Received request to Fetch all active discounts");
@@ -54,6 +64,10 @@ public class DiscountController {
      * Retrieves all discounts.
      * @return List of discounts
      */
+    @Operation(summary = "Get all discounts", description = "Retrieves a list of all discounts.")
+    @ApiResponse(responseCode = "200", description = "Discounts found", content = {
+            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Discount.class)))
+    })
     @GetMapping
     public ResponseEntity<List<Discount>> getAllDiscounts() {
         LOGGER.info("Received request to Fetch all discounts");
@@ -67,6 +81,15 @@ public class DiscountController {
      * @param id The ID of the discount to retrieve
      * @return The discount with the specified ID
      */
+    @Operation(summary = "Get discount by ID", description = "Retrieves a discount by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Discount found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Discount.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Discount not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Discount> getDiscountById(@PathVariable("id") final Long id) {
         LOGGER.info("Received request to Fetch discount by Id : {}", id);
@@ -80,6 +103,13 @@ public class DiscountController {
      * @param discount The discount to create
      * @return The created discount
      */
+    @Operation(summary = "Create new discount", description = "Creates a new discount.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Discount created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Discount.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Customer is null")
+    })
     @PostMapping
     public ResponseEntity<Discount> createDiscount(@RequestBody final Discount discount) {
         LOGGER.info("Received request to create new discount: {}", discount);
@@ -95,6 +125,15 @@ public class DiscountController {
      * @param discount The updated discount information
      * @return The updated discount
      */
+    @Operation(summary = "Update existing discount", description = "Updates an existing discount.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Discount updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Discount.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Discount not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Discount> updateDiscount(@PathVariable("id") final Long id, @RequestBody final Discount discount) {
         LOGGER.info("Received request to update discount with ID {}: {}", id, discount);
@@ -106,6 +145,13 @@ public class DiscountController {
      * @param id The ID of the discount to delete
      * @return ResponseEntity indicating success or failure of the deletion operation
      */
+    @Operation(summary = "Delete discount by ID", description = "Deletes a discount by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Discount deleted"),
+            @ApiResponse(responseCode = "404", description = "Discount not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteDiscount(@PathVariable("id") final Long id) {
         LOGGER.info("Received request to delete discount with ID {}", id);

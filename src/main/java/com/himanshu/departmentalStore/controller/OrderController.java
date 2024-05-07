@@ -3,6 +3,12 @@ package com.himanshu.departmentalStore.controller;
 import com.himanshu.departmentalStore.dto.OrderRequestBody;
 import com.himanshu.departmentalStore.model.Order;
 import com.himanshu.departmentalStore.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +54,10 @@ public class OrderController {
      * Retrieves all orders.
      * @return ResponseEntity containing a list of all orders and HTTP status 200 (OK)
      */
+    @Operation(summary = "Get all orders", description = "Retrieves a list of all orders.")
+    @ApiResponse(responseCode = "200", description = "Orders found", content = {
+            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Order.class)))
+    })
     @GetMapping
     public ResponseEntity<List<Order>> getAllOrders() {
         LOGGER.info("Received request to fetch all orders.");
@@ -59,6 +69,15 @@ public class OrderController {
      * @param id The ID of the order to retrieve
      * @return ResponseEntity containing the order with the specified ID and HTTP status 200 (OK)
      */
+    @Operation(summary = "Get order by ID", description = "Retrieves an order by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Order not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable("id") final Long id) {
         LOGGER.info("Received request to fetch all orders by Id : {}", id);
@@ -71,6 +90,19 @@ public class OrderController {
      * @param orderRequestBody The request body containing order details
      * @return ResponseEntity containing the created order and HTTP status 201 (Created)
      */
+    @Operation(summary = "Create new order", description = "Creates a new order.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Order created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Customer is null or This Discount can not be applied : amount is less than minimum price"),
+            @ApiResponse(responseCode = "404", description = "Product or Customer or Discount or all not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            }),
+            @ApiResponse(responseCode = "202", description = "Ordered quantity is more then the quantity left in the stock : Request Accepted : Backorder Created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody final OrderRequestBody orderRequestBody) {
         LOGGER.info("Received request to create order.");
@@ -90,6 +122,21 @@ public class OrderController {
      * @param orderRequestBody The request body containing updated order details
      * @return ResponseEntity containing the updated order and HTTP status 200 (OK)
      */
+    @Operation(summary = "Update existing order", description = "Updates an existing order.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Order or Product or Customer or Discount not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Customer or Product or Discount is not same : Only Quantity can be updated : or no change in quantity", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            }),
+            @ApiResponse(responseCode = "409", description = "Ordered quantity is more then quantity left in stock", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            }),
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Order> updateOrder(@PathVariable("id") final Long id, @RequestBody final OrderRequestBody orderRequestBody) {
         LOGGER.info("Received request to update the order with Id : {}.", id);
@@ -106,6 +153,13 @@ public class OrderController {
      * @param id The ID of the order to delete
      * @return ResponseEntity indicating success or failure of the deletion operation
      */
+    @Operation(summary = "Delete order by ID", description = "Deletes an order by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order deleted"),
+            @ApiResponse(responseCode = "404", description = "Order not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteOrder(@PathVariable("id") final Long id) {
         LOGGER.info("Received request to delete order with ID: {}", id);

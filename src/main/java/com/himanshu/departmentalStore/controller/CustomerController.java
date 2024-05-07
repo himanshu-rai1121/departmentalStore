@@ -2,6 +2,12 @@ package com.himanshu.departmentalStore.controller;
 
 import com.himanshu.departmentalStore.model.Customer;
 import com.himanshu.departmentalStore.service.CustomerService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +48,10 @@ public class CustomerController {
      * Retrieves all customers.
      * @return A list of all customers.
      */
+    @Operation(summary = "Get all customers", description = "Retrieves a list of all customers.")
+    @ApiResponse(responseCode = "200", description = "Customers found", content = {
+            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Customer.class)))
+    })
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
         LOGGER.info("Received request to retrieve all customers.");
@@ -56,6 +66,15 @@ public class CustomerController {
      * @param id The ID of the customer to retrieve.
      * @return The customer with the specified ID.
      */
+    @Operation(summary = "Get customer by ID", description = "Retrieves a customer by their ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Customer found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Customer not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @GetMapping(value = "/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable("id") final Long id) {
         LOGGER.info("Request received to fetch customer with ID {}", id);
@@ -69,6 +88,13 @@ public class CustomerController {
      * @param customer The customer to save.
      * @return The saved customer.
      */
+    @Operation(summary = "Save new customer", description = "Saves a new customer.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Customer created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Customer is null")
+    })
     @PostMapping
     public ResponseEntity<Customer> saveCustomer(@RequestBody final Customer customer) {
         LOGGER.info("Request received to save a new customer: {}", customer);
@@ -84,6 +110,15 @@ public class CustomerController {
      * @param customer The updated customer object.
      * @return The updated customer.
      */
+    @Operation(summary = "Update existing customer", description = "Updates an existing customer.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Customer updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Customer not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            })
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable("id") final Long id, @RequestBody final Customer customer) {
         LOGGER.info("Request received to update customer with ID {}: {}", id, customer);
@@ -97,6 +132,14 @@ public class CustomerController {
      * @param id The ID of the customer to delete.
      * @return A CompletableFuture representing the result of the deletion.
      */
+    @Operation(summary = "Delete customer by ID", description = "Deletes a customer by their ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Customer deleted"),
+            @ApiResponse(responseCode = "404", description = "Customer not found with given ID", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = com.himanshu.departmentalStore.exception.ApiResponse.class))
+            }
+            )
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCustomer(@PathVariable("id") final Long id) {
         LOGGER.info("Request received to delete customer with ID {}", id);
