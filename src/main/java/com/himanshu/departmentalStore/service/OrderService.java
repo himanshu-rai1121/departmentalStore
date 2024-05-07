@@ -1,5 +1,6 @@
 package com.himanshu.departmentalStore.service;
 
+import com.himanshu.departmentalStore.dto.OrderRequestBody;
 import com.himanshu.departmentalStore.exception.CustomException;
 import com.himanshu.departmentalStore.exception.ResourceNotFoundException;
 import com.himanshu.departmentalStore.model.Order;
@@ -7,7 +8,10 @@ import com.himanshu.departmentalStore.model.Product;
 import com.himanshu.departmentalStore.model.Backorder;
 import com.himanshu.departmentalStore.model.Discount;
 import com.himanshu.departmentalStore.model.Customer;
+import com.himanshu.departmentalStore.repository.CustomerRepository;
+import com.himanshu.departmentalStore.repository.DiscountRepository;
 import com.himanshu.departmentalStore.repository.OrderRepository;
+import com.himanshu.departmentalStore.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +64,21 @@ public class OrderService {
      */
     @Autowired
     private  DiscountService discountService;
+    /**
+     * This repository is used for database operations related to Product entities.
+     */
+    @Autowired
+    private ProductRepository productRepository;
+    /**
+     * This repository is used for database operations related to Customer entities.
+     */
+    @Autowired
+    private CustomerRepository customerRepository;
+    /**
+     * This repository is used for database operations related to Discount entities.
+     */
+    @Autowired
+    private DiscountRepository discountRepository;
 
     /**
      * Retrieves all orders from the database.
@@ -301,5 +320,25 @@ public class OrderService {
             orderRepository.deleteById(orderId);
             LOGGER.info("Order deleted with Id : {}", orderId);
             return true;
+    }
+
+    /**
+     * Check that product, customer and discount exist with requested ID or not.
+     * If all product, customer and discount exist then proceed to create or update order.
+     * Used in OrderController to update and create Order
+     * @param orderRequestBody The request body containing order details
+     */
+    public void checkExistence(final OrderRequestBody orderRequestBody) {
+        productRepository
+                .findById(orderRequestBody.getProductId())
+                .orElseThrow(() -> new ResourceNotFoundException("Product", "Id", orderRequestBody.getProductId()));
+        customerRepository
+                .findById(orderRequestBody.getCustomerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Customer", "Id", orderRequestBody.getCustomerId()));
+        if (orderRequestBody.getDiscountId() != null) {
+            discountRepository
+                    .findById(orderRequestBody.getDiscountId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Discount", "Id", orderRequestBody.getDiscountId()));
+        }
     }
 }

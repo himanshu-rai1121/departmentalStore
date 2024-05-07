@@ -171,6 +171,9 @@ public class BackorderController {
      * @return The converted Backorder object
      */
     private Backorder backorderDtoToBackorder(final BackOrderRequestBody backorderRequestBody) {
+        LOGGER.info("Checking that Product and customer exist with requested Id or not.");
+        backorderService.checkExistence(backorderRequestBody);
+        LOGGER.info("Product and Customer exist with requested Id.");
         return this.modelMapper.map(backorderRequestBody, Backorder.class);
     }
 }

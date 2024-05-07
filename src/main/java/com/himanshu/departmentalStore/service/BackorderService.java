@@ -1,8 +1,11 @@
 package com.himanshu.departmentalStore.service;
 
+import com.himanshu.departmentalStore.dto.BackOrderRequestBody;
 import com.himanshu.departmentalStore.exception.ResourceNotFoundException;
 import com.himanshu.departmentalStore.model.Backorder;
 import com.himanshu.departmentalStore.repository.BackorderRepository;
+import com.himanshu.departmentalStore.repository.CustomerRepository;
+import com.himanshu.departmentalStore.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,16 @@ public class BackorderService {
      */
     @Autowired
     private BackorderRepository backorderRepository;
+    /**
+     * This repository is used for database operations related to Product entities.
+     */
+    @Autowired
+    private ProductRepository productRepository;
+    /**
+     * This repository is used for database operations related to Customer entities.
+     */
+    @Autowired
+    private CustomerRepository customerRepository;
 
     /**
      * Retrieves all backorders.
@@ -137,6 +150,21 @@ public class BackorderService {
                 productQuantity.addAndGet(-backorder.getQuantity()); // Reduce product quantity
             }
         });
+    }
+
+    /**
+     * Check that product and customer exist with requested ID or not.
+     * If both product and customer exist then proceed to create or update Backorder.
+     * Used in BackorderController to update and create Backorder
+     * @param backOrderRequestBody The request body containing backorder details
+     */
+    public void checkExistence(final BackOrderRequestBody backOrderRequestBody) {
+        productRepository
+                .findById(backOrderRequestBody.getProductId())
+                .orElseThrow(() -> new ResourceNotFoundException("Product", "Id", backOrderRequestBody.getProductId()));
+        customerRepository
+                .findById(backOrderRequestBody.getCustomerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Customer", "Id", backOrderRequestBody.getCustomerId()));
     }
     /**
      * Sends a notification or mail to inform the customer that the product associated with the backorder is now available.

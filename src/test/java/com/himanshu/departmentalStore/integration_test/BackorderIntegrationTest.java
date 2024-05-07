@@ -153,12 +153,15 @@ public class BackorderIntegrationTest extends AbstractTestContainer {
         backorderRepository.save(backorder);
         Long backorderId = backorder.getId() + 100L;
 
-        backorder.setQuantity(200);
+        BackOrderRequestBody requestBody = new BackOrderRequestBody();
+        requestBody.setProductId(product.getId());
+        requestBody.setQuantity(200);
+        requestBody.setCustomerId(customer.getId());
 
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/backorders/{id}", backorderId)
                         .contentType("application/json")
-                        .content(asJsonString(backorder))
+                        .content(asJsonString(requestBody))
                         .accept("application/json"))
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Backorder not found with Id : " + backorderId))

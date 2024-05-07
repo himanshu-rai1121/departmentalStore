@@ -176,7 +176,8 @@ public class OrderController {
      * @return The converted Order object
      */
     private Order orderDtoToOrder(final OrderRequestBody orderRequestBody) {
-
-        return this.modelMapper.map(orderRequestBody, Order.class);
-    }
+        LOGGER.info("Checking that Product, customer and discount exist with requested Id or not.");
+        orderService.checkExistence(orderRequestBody);
+        LOGGER.info("Product, Customer and discount exist with requested Id.");
+        return this.modelMapper.map(orderRequestBody, Order.class);    }
 }

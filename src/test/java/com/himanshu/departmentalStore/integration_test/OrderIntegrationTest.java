@@ -146,7 +146,7 @@ public class OrderIntegrationTest extends AbstractTestContainer {
                         .contentType("application/json")
                         .content(asJsonString(orderRequestBody))
                         .accept("application/json"))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -234,7 +234,7 @@ public class OrderIntegrationTest extends AbstractTestContainer {
                         .contentType("application/json")
                         .content(asJsonString(orderRequestBody))
                         .accept("application/json"))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(false));
     }
 
@@ -252,7 +252,7 @@ public class OrderIntegrationTest extends AbstractTestContainer {
                         .contentType("application/json")
                         .content(asJsonString(orderRequestBody))
                         .accept("application/json"))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(false));
     }
 
